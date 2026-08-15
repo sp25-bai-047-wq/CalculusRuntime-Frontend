@@ -1,4 +1,3 @@
-import MultiVariableCalculus from "./pages/MultiVariableCalculus";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ProgressProvider } from "./pages/ProgressContext";
@@ -43,6 +42,9 @@ import VectorFieldVisualizer from "./pages/VectorFieldVisualizer";
 import CheatSheet from "./pages/CheatSheet";
 import Leaderboard from "./pages/Leaderboard";
 import Certificate from "./pages/calculus/Certificate";
+import CourseQuiz from "./pages/CourseQuiz";
+import MyCertificates from "./pages/MyCertificates";
+import SavedForLater from "./pages/SavedForLater";
 import Chatbot from "./components/Chatbot/Chatbot";
 import BackToTop from "./components/BackToTop";
 
@@ -55,7 +57,14 @@ import {
   SystemsPart2,
   EigenPart1,
   EigenPart2,
+  TransformPart1,
+  TransformPart2,
+  OrthoPart1,
+  OrthoPart2,
+  SvdPart1,
+  SvdPart2,
 } from "./pages/linearAlgebra/LaParts";
+import MatrixSandbox from "./pages/linearAlgebra/MatrixSandbox";
 
 import {
   ProbBasicsPart1,
@@ -75,6 +84,10 @@ import {
   DiffPart2,
   IntPart1,
   IntPart2,
+  SeriesPart1,
+  SeriesPart2,
+  ConicsPart1,
+  ConicsPart2,
 } from "./pages/calculus/CalcParts";
 
 function App() {
@@ -93,9 +106,9 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/dashboard" element={<Layout body={<Dashboard />} />} />
+              <Route path="/saved" element={<Layout body={<SavedForLater />} />} />
 
               {/* Course hubs */}
-              <Route path="/courses/multivariable-calculus" element={<Layout body={<MultiVariableCalculus />} />} />
               <Route path="/courses/:courseId" element={<Layout body={<CourseHub />} />} />
 
               {/* Simple Concepts */}
@@ -131,6 +144,16 @@ function App() {
               <Route path="/integration/1" element={<Layout body={<IntPart1 />} />} />
               <Route path="/integration/2" element={<Layout body={<IntPart2 />} />} />
 
+              {/* Sequences & Series */}
+              <Route path="/sequences-series" element={<Navigate to="/sequences-series/1" replace />} />
+              <Route path="/sequences-series/1" element={<Layout body={<SeriesPart1 />} />} />
+              <Route path="/sequences-series/2" element={<Layout body={<SeriesPart2 />} />} />
+
+              {/* Conic Sections */}
+              <Route path="/conic-sections" element={<Navigate to="/conic-sections/1" replace />} />
+              <Route path="/conic-sections/1" element={<Layout body={<ConicsPart1 />} />} />
+              <Route path="/conic-sections/2" element={<Layout body={<ConicsPart2 />} />} />
+
               {/* Multiple Integrals */}
               <Route path="/multiple-integrals" element={<Navigate to="/multiple-integrals/1" replace />} />
               <Route path="/multiple-integrals/1" element={<Layout body={<IntegralsPart1 />} />} />
@@ -141,7 +164,9 @@ function App() {
               <Route path="/taylor-series/1" element={<Layout body={<TaylorPart1 />} />} />
               <Route path="/taylor-series/2" element={<Layout body={<TaylorPart2 />} />} />
 
+              <Route path="/certificates" element={<Layout body={<MyCertificates />} />} />
               <Route path="/certificate/:courseId" element={<Layout body={<Certificate />} />} />
+              <Route path="/quiz/:courseId" element={<Layout body={<CourseQuiz />} />} />
 
               {/* Lagrange Multipliers */}
               <Route path="/lagrange-multipliers" element={<Navigate to="/lagrange-multipliers/1" replace />} />
@@ -171,6 +196,21 @@ function App() {
               <Route path="/linear-algebra/eigen" element={<Navigate to="/linear-algebra/eigen/1" replace />} />
               <Route path="/linear-algebra/eigen/1" element={<Layout body={<EigenPart1 />} />} />
               <Route path="/linear-algebra/eigen/2" element={<Layout body={<EigenPart2 />} />} />
+              {/* Linear Transformations */}
+              <Route path="/linear-algebra/transformations" element={<Navigate to="/linear-algebra/transformations/1" replace />} />
+              <Route path="/linear-algebra/transformations/1" element={<Layout body={<TransformPart1 />} />} />
+              <Route path="/linear-algebra/transformations/2" element={<Layout body={<TransformPart2 />} />} />
+              
+              {/* Orthogonality & Least Squares */}
+              <Route path="/linear-algebra/orthogonality" element={<Navigate to="/linear-algebra/orthogonality/1" replace />} />
+              <Route path="/linear-algebra/orthogonality/1" element={<Layout body={<OrthoPart1 />} />} />
+              <Route path="/linear-algebra/orthogonality/2" element={<Layout body={<OrthoPart2 />} />} />
+              
+              {/* Singular Value Decomposition */}
+              <Route path="/linear-algebra/svd" element={<Navigate to="/linear-algebra/svd/1" replace />} />
+              <Route path="/linear-algebra/svd/1" element={<Layout body={<SvdPart1 />} />} />
+              <Route path="/linear-algebra/svd/2" element={<Layout body={<SvdPart2 />} />} />
+              <Route path="/linear-algebra/matrix-sandbox" element={<Layout body={<MatrixSandbox />} />} />
 
               {/* Probability & Statistics */}
               <Route path="/probability-statistics/probability-basics" element={<Navigate to="/probability-statistics/probability-basics/1" replace />} />
