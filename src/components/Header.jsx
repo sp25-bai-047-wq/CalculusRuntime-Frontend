@@ -33,7 +33,14 @@ const navLinks = [
   { to: "/ai-solver",       label: "AI Solver",   type: "General" },
   { to: "/cheatsheet",      label: "Cheat Sheet", type: "General" },
   { to: "/practice",        label: "Practice",    type: "General" },
+  { to: "/saved",           label: "Saved",       type: "General" },
   { to: "/leaderboard",     label: "Leaderboard", type: "General" },
+  {
+    to: "/certificates",
+    label: "Certificates",
+    type: "General",
+    match: "/certificate",
+  },
 ];
 
 function Header({ darkMode, onToggleDark }) {

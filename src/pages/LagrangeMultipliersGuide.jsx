@@ -1,11 +1,24 @@
 import React from "react";
+import { GuideMcqSection } from "../components/GuideMcq";
+import {
+  LAGRANGE_GEOMETRY_QUIZ,
+  LAGRANGE_MATH_QUIZ,
+  LAGRANGE_FIELDS_QUIZ,
+  LAGRANGE_CALC_QUIZ,
+  LAGRANGE_MULTI_QUIZ,
+  LAGRANGE_VERIFY_QUIZ,
+  LAGRANGE_INDUSTRY_QUIZ,
+  LAGRANGE_CHALLENGE_QUIZ,
+} from "../data/mvLagrangeQuizzes";
 import { Link } from "react-router-dom";
 import StudyGuideShell from "./StudyGuideShell";
 import "./PartialDerivativesGuide.css";
+import { RealLifeUse } from "./calculus/CalcBlocks";
 import {
   LagrangeExtendedPart1,
   LagrangeExtendedPart2,
 } from "./GuideExtendedMaterials";
+import MvCertificateBoost from "./MvCertificateBoost";
 
 function Divider() {
   return <hr className="divider" />;
@@ -86,71 +99,6 @@ function SectionS151() {
   );
 }
 
-function QuizMcq151() {
-  return (
-    <section className="mcq-section" id="quiz-151">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 15.1"}</span>
-        <h2 className="mcq-section-title">{"Geometric Intuition Assessments"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-geometry">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="lagrange-geometry" data-q="1" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"1"}</div>
-          <div className="mcq-q-text">{"Geometrically, what condition must be met at an optimal point when maximizing an objective function $f(x,y)$ subject to a smooth constraint curve $g(x,y) = c$?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The contour line of $f(x,y)$ must intersect the curve $g(x,y) = c$ at an exact perpendicular right angle."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The contour curve of $f(x,y)$ and the constraint curve $g(x,y) = c$ must become perfectly tangent."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The function $f(x,y)$ must drop down to zero value uniformly across the constraint boundary path."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Tangency ensures that moving a tiny bit along the constraint curve doesn't push you onto a higher or lower contour of $f(x,y)$, meaning you have hit a local constrained extreme value."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-geometry" data-q="2" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"2"}</div>
-          <div className="mcq-q-text">{"If a path $g(x,y) = c$ crosses a level curve contour of $f(x,y) = k$ with a non-zero angle, what does this tell you about that coordinate point?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"It cannot be a constrained extremum because moving along the path will shift you to higher or lower values of $f$."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"It is guaranteed to be a absolute global maximum peak."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The gradient of the constraint function has exploded to infinity."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"If the path cuts across contour lines, your value is actively climbing or falling, which means you haven't hit a peak or valley yet along that path."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-geometry" data-q="3" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"3"}</div>
-          <div className="mcq-q-text">{"What geometric relationship do the normal vectors of two curves share when those curves are perfectly tangent to each other in a 2D plane?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"They point in directions that are exactly perpendicular to each other."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"They sum up together to produce a zero vector value."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"They line up along the same straight axis line, making them scalar multiples of each other."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"Since normal vectors are perpendicular to their respective tangent lines, and the curves share a tangent line, their normal vectors must point along the exact same parallel coordinate axis line."}</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SectionS152() {
   return (
     <section className="section" id="s152">
@@ -167,6 +115,10 @@ function SectionS152() {
         </div>
         {"Where the scalar variable parameter $\\lambda$ (Lambda) is called the Lagrange Multiplier."}
       </div>
+      <RealLifeUse>
+        Budget caps, material limits, and production quotas are constraints $g=c$; Lagrange multipliers find the best design on that boundary — optimize under a fixed budget.
+      </RealLifeUse>
+
       <p>
         {"To solve this practically, we break this vector identity down into individual component algebraic equations. For a standard 2D space coordinate tracking system, this expands into a set of three independent equations with three variables ($x, y, \\lambda$):"}
       </p>
@@ -175,71 +127,6 @@ function SectionS152() {
         {"1. Component X alignment: $$\\frac{\\partial f}{\\partial x} = \\lambda \\frac{\\partial g}{\\partial x}$$"}
         {"2. Component Y alignment: $$\\frac{\\partial f}{\\partial y} = \\lambda \\frac{\\partial g}{\\partial y}$$"}
         {"3. Constraint closure verification: $$g(x, y) = c$$"}
-      </div>
-    </section>
-  );
-}
-
-function QuizMcq152() {
-  return (
-    <section className="mcq-section" id="quiz-152">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 15.2"}</span>
-        <h2 className="mcq-section-title">{"Mathematical Structure Verifications"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-math">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="lagrange-math" data-q="4" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"4"}</div>
-          <div className="mcq-q-text">{"What does the scalar value variable parameter $\\lambda$ signify in the equation vector balance expression $\\nabla f = \\lambda \\nabla g$?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The absolute spatial distance between the two gradient vector coordinate origins."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The angle of tilt between the tangent lines of the two functions."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The scaling ratio needed to balance the lengths of the parallel gradient vectors."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"The gradients point in the same (or opposite) direction, but their lengths are usually different. The multiplier $\\lambda$ scales them so they match perfectly."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-math" data-q="5" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"5"}</div>
-          <div className="mcq-q-text">{"How many independent equations must you set up to solve a standard Lagrange problem involving an objective function with three inputs $f(x, y, z)$ and one constraint?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"3 equations"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"4 equations"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"5 equations"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"You need 3 equations to balance the partial derivatives for $x, y,$ and $z$, plus a 4th equation for the constraint rule itself to solve for your variables ($x, y, z, \\lambda$)."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-math" data-q="6" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"6"}</div>
-          <div className="mcq-q-text">{"If $\\nabla g(x_0, y_0) = \\mathbf{0}$ at a specific coordinate point, what happens to the standard Lagrange evaluation framework?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The method fails at that point; you have to check points where $\\nabla g = \\mathbf{0}$ manually as potential exceptions."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The multiplier value $\\lambda$ automatically collapses down to zero as well."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The objective function gradient values instantly shoot up to infinity."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"The Lagrange multiplier method assumes the constraint boundary is smooth and has a non-zero normal vector. If $\\nabla g = \\mathbf{0}$, that boundary point is singular and has to be checked manually."}</div>
-        </div>
       </div>
     </section>
   );
@@ -256,71 +143,6 @@ function SectionS153() {
       <p>
         {"The constraint function $g(x,y)$, on the other hand, represents a hard limit or rule. It is always locked to a constant value ($g(x,y) = c$). This constant value defines the boundary of your searchable world, restricting you to a specific subset of coordinates inside your input space."}
       </p>
-    </section>
-  );
-}
-
-function QuizMcq153() {
-  return (
-    <section className="mcq-section" id="quiz-153">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 15.3"}</span>
-        <h2 className="mcq-section-title">{"Field Deconstruction Drills"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-fields">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="lagrange-fields" data-q="7" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"7"}</div>
-          <div className="mcq-q-text">{"You need to find the closest distance from the origin $(0,0)$ to the curve $x^2 y = 16$. Identify the correct choice for the objective function $f(x,y)$."}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$f(x,y) = x^2 + y^2$ (or its square root distance variant)"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$f(x,y) = x^2 y$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$f(x,y) = 16$"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"The value you want to minimize is the distance to the origin, which is modeled as $x^2 + y^2$. The curve equation $x^2 y = 16$ is your fixed constraint rule."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-fields" data-q="8" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"8"}</div>
-          <div className="mcq-q-text">{"What distinguishes a level curve of an objective function from a standard constraint function equation?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Objective function level curves never have a continuous derivative."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Constraint functions must always be linear lines."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The objective function value changes across the domain, while the constraint function is locked to a single target constant."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"The constraint function is set to a constant value ($g=c$) to build your boundary path. The objective function's value varies as you move along that path so you can find its peaks and valleys."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-fields" data-q="9" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"9"}</div>
-          <div className="mcq-q-text">{"If you switch the roles of your objective function and constraint function during setup, what happens to your final calculation answers?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The math yields the exact same optimization point solutions."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"You end up solving a completely different problem (dual optimization problem) which changes your coordinate answers."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The partial derivative terms cancel out to zero instantly."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Switching the target function and the boundary rule fundamentally alters the shape of your optimization landscape, leading to a completely different set of coordinate answers."}</div>
-        </div>
-      </div>
     </section>
   );
 }
@@ -396,71 +218,10 @@ function SectionS154() {
         {"$$x^2 + x^2 = 8 \\quad \\Rightarrow \\quad 2x^2 = 8 \\quad \\Rightarrow \\quad x^2 = 4 \\quad \\Rightarrow \\quad x = \\pm 2$$"}
         <p>{"This yields four distinct critical coordinate points to check: $(2,2), (2,-2), (-2,2),$ and $(-2,-2)$."}</p>
       </div>
-    </section>
-  );
-}
+      <RealLifeUse>
+        Packing the most volume into a shipping crate with a fixed surface-area budget, or maximizing utility under income constraints in economics, uses this exact single-constraint workflow.
+      </RealLifeUse>
 
-function QuizMcq154() {
-  return (
-    <section className="mcq-section" id="quiz-154">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 15.4"}</span>
-        <h2 className="mcq-section-title">{"Workflow Calculation Drills"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-calc">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="lagrange-calc" data-q="10" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"10"}</div>
-          <div className="mcq-q-text">{"Evaluating our example problem above, what is the absolute maximum value achieved by $f(x,y) = xy$ along the boundary $x^2 + y^2 = 8$?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"4"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"8"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"2"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"Plugging the critical coordinates into our objective function reveals that $(2,2)$ and $(-2,-2)$ both yield a maximum value of $4$. The other two points yield a minimum value of $-4$."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-calc" data-q="11" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"11"}</div>
-          <div className="mcq-q-text">{"Why is it usually a bad idea to divide both sides of a Lagrange equation by a variable like $x$ or $y$ during the elimination step?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"It forces your multiplier value $\\lambda$ to turn negative."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"It alters the geometric dimensionality of your vector space."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"You risk accidentally destroying valid critical points where that variable equals zero ($x=0$ or $y=0$)."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"Dividing by a variable assumes it can never be zero. If a critical point actually occurs where that variable is zero, you will completely miss it. Always factor expressions instead of dividing them out."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-calc" data-q="12" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"12"}</div>
-          <div className="mcq-q-text">{"If you run a Lagrange calculation and find a point where $\\nabla f = \\mathbf{0}$ and $\\nabla g \\neq \\mathbf{0}$, what does this tell you about the value of your multiplier $\\lambda$?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The multiplier value is undefined."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The multiplier $\\lambda$ equals exactly zero."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The multiplier value has blown up to infinity."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"If $\\nabla f = \\mathbf{0}$, the objective function has hit a natural unconstrained peak or valley that happens to sit directly on your constraint boundary path, forcing $\\lambda = 0$."}</div>
-        </div>
-      </div>
     </section>
   );
 }
@@ -486,71 +247,6 @@ function SectionS155() {
   );
 }
 
-function QuizMcq155() {
-  return (
-    <section className="mcq-section" id="quiz-155">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 15.5"}</span>
-        <h2 className="mcq-section-title">{"Multi-Constraint System Drills"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-multi">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="lagrange-multi" data-q="13" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"13"}</div>
-          <div className="mcq-q-text">{"How many total variables must you keep track of when optimizing a 3D function $f(x,y,z)$ bound by two distinct constraint equations?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"3 variables ($x, y, z$)"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"4 variables ($x, y, z, \\lambda$)"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"5 variables ($x, y, z, \\lambda, \\mu$)"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"You need three spatial coordinates ($x, y, z$) plus two independent multiplier values ($\\lambda$ and $\\mu$) to track and balance both boundary equations simultaneously."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-multi" data-q="14" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"14"}</div>
-          <div className="mcq-q-text">{"Geometrically, what shape is formed by the intersection of two smooth, non-parallel constraint surfaces inside a 3D coordinate space?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"A 1D space intersection curve line."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"A flat 2D bounding plane sheet."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"An isolated single coordinate point location."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"When two 2D surfaces intersect inside a 3D space, they cross along a 1D curve line, creating a single path that your optimization search must follow."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-multi" data-q="15" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"15"}</div>
-          <div className="mcq-q-text">{"What condition must be true for the constraint gradients $\\nabla g$ and $\\nabla h$ to safely run a multi-constraint Lagrange optimization?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"They must point in the exact same direction."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"They must be linearly independent vectors (not parallel to each other)."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Their dot product must equal exactly zero everywhere."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"If the gradients were parallel, the two constraint surfaces would be tangent to each other, which collapses your intersection space and breaks the linear algebra foundation of the method."}</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SectionS156() {
   return (
     <section className="section" id="s156">
@@ -562,71 +258,6 @@ function SectionS156() {
       <p>
         {"If your constraint boundary forms a closed, bounded shape—like a solid sphere or a locked bounding box—the Extreme Value Theorem guarantees that an absolute maximum and minimum must exist. In these scenarios, you can simply calculate the objective function's value at all your critical points and compare them directly: the highest result is your maximum, and the lowest is your minimum."}
       </p>
-    </section>
-  );
-}
-
-function QuizMcq156() {
-  return (
-    <section className="mcq-section" id="quiz-156">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 15.6"}</span>
-        <h2 className="mcq-section-title">{"Verification Theory Assessments"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-verify">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="lagrange-verify" data-q="16" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"16"}</div>
-          <div className="mcq-q-text">{"Why does the standard unconstrained Second Derivative Test fail when evaluating critical points found via Lagrange Multipliers?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Because the multiplier values introduce complex imaginary roots."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Because a point can be a maximum along your restricted path even if it looks like a saddle point in the open 3D space."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Because partial derivatives always cancel out to zero when cross-differentiated."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"The unconstrained landscape might slope downward away from your point, but if your boundary line prevents you from moving in those directions, that point remains a valid maximum along your restricted path."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-verify" data-q="17" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"17"}</div>
-          <div className="mcq-q-text">{"What topological property must your constraint boundary satisfy to guarantee that your critical point list contains both an absolute maximum and minimum value?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The boundary must be a compact set (both closed and bounded)."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The boundary curve must be completely linear."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The boundary domain must stretch out infinitely along at least one coordinate axis."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"The Extreme Value Theorem states that any continuous function evaluated over a compact (closed and bounded) domain must achieve absolute maximum and minimum values."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-verify" data-q="18" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"18"}</div>
-          <div className="mcq-q-text">{"Advanced check: What matrix assembly is used to mathematically classify Lagrange critical points when your domain stretches out infinitely?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"A standard Vandermonde matrix lookup."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The classical Wronskian differential matrix layout."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The Bordered Hessian matrix assembly."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"The Bordered Hessian matrix embeds your constraint equation's derivatives directly into a second-derivative matrix layout, letting you run an exact determinant test to classify high-dimensional constrained critical points."}</div>
-        </div>
-      </div>
     </section>
   );
 }
@@ -645,71 +276,6 @@ function SectionS157() {
           {"$$\\lambda = \\frac{\\partial f^*}{\\partial c}$$"}
         </div>
         {"Where $f^*$ represents the optimal value achieved by your objective function under a constraint level value $c$."}
-      </div>
-    </section>
-  );
-}
-
-function QuizMcq157() {
-  return (
-    <section className="mcq-section" id="quiz-157">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 15.7"}</span>
-        <h2 className="mcq-section-title">{"Industrial Physics Applications"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-industry">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="lagrange-industry" data-q="19" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"19"}</div>
-          <div className="mcq-q-text">{"An industrial plant optimizes its production volume, and calculates a final multiplier value of $\\lambda = 4.5$. What does this value mean?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Increasing your available resource budget by 1 unit will boost your total production output by roughly 4.5 units."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The production lines are operating with a 4.5% error margin."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The system has 4.5 independent optimal configurations."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"The multiplier acts as a marginal value indicator, revealing how sensitive your optimized system is to changes in your resource constraints."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-industry" data-q="20" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"20"}</div>
-          <div className="mcq-q-text">{"When optimizing production efficiency under a strict labor budget, what field equation format is universally handled via Lagrange operations?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The classical Navier-Stokes fluid velocity matrix model."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The Maxwell electromagnetic wave equation layout."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The Cobb-Douglas production function formula ($P = b L^\\alpha K^\\beta$)"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"The Cobb-Douglas equation models how industrial output scales based on labor and capital investments, making it a classic target for constrained Lagrange optimization formulas."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-industry" data-q="21" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"21"}</div>
-          <div className="mcq-q-text">{"If a system's calculated Lagrange Multiplier $\\lambda$ turns out to be a negative number, what does this tell you about the optimization landscape?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"An algebraic calculation mistake was made; multipliers must always be positive."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Increasing your constraint boundary constant $c$ will decrease your optimized objective function values."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The target function gradient vector has inverted its dimension space."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"A negative derivative means your output values drop as your input constraint grows. This tells you that relaxing your constraint boundary will actually lower your optimized results."}</div>
-        </div>
       </div>
     </section>
   );
@@ -739,57 +305,23 @@ function SectionObj18Enrichment() {
   );
 }
 
-function QuizChallengeLagrange() {
+function SectionRealWorld() {
   return (
-    <section className="mcq-section" id="quiz-lagrange-challenge">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Challenge"}</span>
-        <h2 className="mcq-section-title">{"Medium & Hard Practice"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scorelagrange-challenge">{"0 / 4"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-      <div className="mcq-card" data-section="lagrange-challenge" data-q="1" data-answer="B" data-difficulty="medium">
-        <div className="mcq-q-row"><div className="mcq-num">{"1"}</div><div className="mcq-q-text">{"(Medium) For $f=x^2+y^2$ on $x+2y=4$, $\\nabla f=\\lambda\\nabla g$ forces:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$(x,y)$ parallel to $(2,-1)$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$(2x,2y)=\\lambda(1,2)$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$\\lambda=0$ always"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: B"}</span><div className="mcq-explanation">{"$\\nabla f=(2x,2y)$ and $\\nabla g=(1,2)$ yield $(2x,2y)=\\lambda(1,2)$."}</div></div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-challenge" data-q="2" data-answer="A" data-difficulty="medium">
-        <div className="mcq-q-row"><div className="mcq-num">{"2"}</div><div className="mcq-q-text">{"(Medium) If $\\nabla g=\\mathbf{0}$ at a point on $g=c$, then:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Lagrange may miss that point — check it separately"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"It is automatically an optimum"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$\\lambda$ must be infinite"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: A"}</span><div className="mcq-explanation">{"The method needs $\\nabla g\\ne 0$. Singular constraint points require a manual check."}</div></div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-challenge" data-q="3" data-answer="C" data-difficulty="hard">
-        <div className="mcq-q-row"><div className="mcq-num">{"3"}</div><div className="mcq-q-text">{"(Hard) Two constraints $g=c$, $h=d$ require:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"One multiplier only"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$\\nabla f=\\mathbf{0}$ alone"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$\\nabla f=\\lambda\\nabla g+\\mu\\nabla h$ plus both constraints"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: C"}</span><div className="mcq-explanation">{"Each active equality constraint contributes its own multiplier."}</div></div>
-      </div>
-      <div className="mcq-card" data-section="lagrange-challenge" data-q="4" data-answer="B" data-difficulty="hard">
-        <div className="mcq-q-row"><div className="mcq-num">{"4"}</div><div className="mcq-q-text">{"(Hard) On a closed bounded constraint, comparing $f$ at candidates:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Is optional if $\\lambda>0$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Identifies which critical points are max vs min"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Replaces solving $\\nabla f=\\lambda\\nabla g$"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: B"}</span><div className="mcq-explanation">{"Lagrange finds candidates; evaluating $f$ ranks them as max/min on a compact set."}</div></div>
+    <section className="section" id="lagrange-real-world">
+      <div className="sec-badge">{"Applications"}</div>
+      <h2 className="sec-title">{"Where This Shows Up in Real Life"}</h2>
+      <div className="box def">
+        <div className="box-lbl">{"Real-World Use"}</div>
+        <p>
+          {"Lagrange multipliers are the mathematical engine behind almost every "}
+          <strong>{"constrained optimization"}</strong>
+          {" problem in engineering and economics. Airlines use them to maximize seating revenue subject to fuel-weight limits; portfolio managers maximize expected return subject to a fixed risk budget; and structural engineers minimize material cost subject to a required load-bearing strength."}
+        </p>
+        <p>
+          {"In machine learning, Support Vector Machines \u2014 a widely used classification algorithm \u2014 are trained by solving a Lagrange multiplier problem: maximizing the margin between classes subject to every data point being correctly classified. And the $\\lambda$ we computed throughout this guide is exactly what economists call a "}
+          <strong>{"shadow price"}</strong>
+          {" \u2014 the value of relaxing a constraint by one unit, which is precisely how a factory manager decides whether it's worth buying more raw material or a government decides whether to loosen a regulatory limit."}
+        </p>
       </div>
     </section>
   );
@@ -826,22 +358,26 @@ function LagrangeMultipliersGuide({ section }) {
           <TableOfContentsPart2 />
           <Divider />
           <SectionS154 />
-          <QuizMcq154 />
+          <GuideMcqSection id="quiz-154" badge="Practice" title="Workflow Calculation Drills" scoreId="scorelagrange-calc" section="lagrange-calc" questions={LAGRANGE_CALC_QUIZ} />
           <Divider />
           <SectionS155 />
-          <QuizMcq155 />
+          <GuideMcqSection id="quiz-155" badge="Practice" title="Multi-Constraint System Drills" scoreId="scorelagrange-multi" section="lagrange-multi" questions={LAGRANGE_MULTI_QUIZ} />
           <Divider />
           <SectionS156 />
-          <QuizMcq156 />
+          <GuideMcqSection id="quiz-156" badge="Practice" title="Verification Theory Assessments" scoreId="scorelagrange-verify" section="lagrange-verify" questions={LAGRANGE_VERIFY_QUIZ} />
           <Divider />
           <SectionS157 />
-          <QuizMcq157 />
+          <GuideMcqSection id="quiz-157" badge="Practice" title="Industrial Physics Applications" scoreId="scorelagrange-industry" section="lagrange-industry" questions={LAGRANGE_INDUSTRY_QUIZ} />
           <Divider />
           <SectionObj18Enrichment />
           <Divider />
           <LagrangeExtendedPart2 />
           <Divider />
-          <QuizChallengeLagrange />
+          <MvCertificateBoost topic="lagrange" part={2} />
+          <Divider />
+          <GuideMcqSection id="quiz-lagrange-challenge" badge="Challenge" title="Medium & Hard Practice" scoreId="scorelagrange-challenge" section="lagrange-challenge" questions={LAGRANGE_CHALLENGE_QUIZ} />
+          <Divider />
+          <SectionRealWorld />
           <Divider />
           <SectionSummary />
         </main>
@@ -862,19 +398,20 @@ function LagrangeMultipliersGuide({ section }) {
         <OpeningNote />
         <Divider />
         <SectionS151 />
-        <QuizMcq151 />
+        <GuideMcqSection id="quiz-151" badge="Practice" title="Geometric Intuition Assessments" scoreId="scorelagrange-geometry" section="lagrange-geometry" questions={LAGRANGE_GEOMETRY_QUIZ} />
         <Divider />
         <SectionS152 />
-        <QuizMcq152 />
+        <GuideMcqSection id="quiz-152" badge="Practice" title="Mathematical Structure Verifications" scoreId="scorelagrange-math" section="lagrange-math" questions={LAGRANGE_MATH_QUIZ} />
         <Divider />
         <SectionS153 />
-        <QuizMcq153 />
+        <GuideMcqSection id="quiz-153" badge="Practice" title="Field Deconstruction Drills" scoreId="scorelagrange-fields" section="lagrange-fields" questions={LAGRANGE_FIELDS_QUIZ} />
         <Divider />
         <SectionObj18Enrichment />
         <Divider />
         <LagrangeExtendedPart1 />
         <Divider />
-        <QuizChallengeLagrange />
+        <MvCertificateBoost topic="lagrange" part={1} />
+        <Divider />
         <Divider />
         <section id="summary1" className="section">
           <div className="sec-badge">{"Reference"}</div>

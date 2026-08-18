@@ -30,8 +30,8 @@ function LimitsPart2() {
       <LimitsGuide part={2} />
       <SectionCompleteBar
         sectionId="limits-2"
-        nextPath="/partial-derivatives/1"
-        nextLabel="Partial Derivatives Part 1"
+        nextPath="/differentiation/1"
+        nextLabel="Next: Differentiation"
       />
     </div>
   );

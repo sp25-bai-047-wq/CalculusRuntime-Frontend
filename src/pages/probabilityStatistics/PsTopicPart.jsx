@@ -13,6 +13,7 @@ export default function PsTopicPart({
   part,
   nextPath,
   nextLabel,
+  courseId,
 }) {
   const { recordVisit } = useProgress();
 
@@ -34,6 +35,7 @@ export default function PsTopicPart({
         sectionId={sectionId}
         nextPath={nextPath}
         nextLabel={nextLabel}
+        courseId={courseId}
       />
     </div>
   );

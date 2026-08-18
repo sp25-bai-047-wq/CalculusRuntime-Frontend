@@ -1,0 +1,126 @@
+.mycerts-page {
+  max-width: 780px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mycerts-state {
+  text-align: center;
+  background: var(--card, #fff);
+  border: 1.5px solid var(--line, #e0d6c8);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  max-width: 480px;
+  margin: 3rem auto;
+}
+
+.mycerts-state h2 {
+  margin: 0 0 0.6rem;
+}
+
+.mycerts-state p {
+  color: var(--muted, #7a7267);
+  margin: 0 0 1.2rem;
+}
+
+.mycerts-header {
+  text-align: center;
+}
+
+.mycerts-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--accent, #c8963e);
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.mycerts-header h1 {
+  margin: 0 0 0.4rem;
+}
+
+.mycerts-sub {
+  color: var(--muted, #7a7267);
+  margin: 0;
+  max-width: 46ch;
+  margin: 0 auto;
+}
+
+.mycerts-error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #fdf1e3;
+  border: 1.5px solid #e0b56b;
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.88rem;
+  color: #6b4a1a;
+}
+
+.mycerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.mycerts-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--card, #fff);
+  border: 1.5px solid var(--line, #e0d6c8);
+  border-radius: 12px;
+  padding: 1.1rem 1.3rem;
+}
+
+.mycerts-row-title {
+  font-weight: 700;
+  font-size: 1.02rem;
+  margin-bottom: 0.25rem;
+}
+
+.mycerts-row-meta {
+  font-size: 0.85rem;
+  color: var(--muted, #7a7267);
+}
+
+.mycerts-row-meta--earned {
+  color: #4a7c4a;
+  font-weight: 600;
+}
+
+.mycerts-row-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mycerts-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--line, #e0d6c8);
+  background: transparent;
+  color: var(--text, #1c1712);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.mycerts-btn--primary {
+  background: var(--accent, #c8963e);
+  border-color: var(--accent, #c8963e);
+  color: #fff !important;
+}

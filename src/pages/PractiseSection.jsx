@@ -1,1276 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import SubmitToLeaderboard from '../components/SubmitToLeaderboard';
-import { CALC_AG_PRACTICE_BANK } from '../data/calcAgPracticeBank';
 import './Leaderboard.css';
 import './PractiseSection.css';
 
-// --- MASTER PROBLEM DATABASE ---
-const PRACTICE_PROBLEMS = [
-  // ==========================================
-  // TOPIC 1: Lagrange Multipliers (12 Problems)
-  // ==========================================
-  {
-    id: 1, topic: 'Lagrange Multipliers', difficulty: 'Easy',
-    question: 'What do the geometric gradient configurations ∇f = λ∇g represent at an extreme point?',
-    options: ['The gradients point in perpendicular paths.', 'The level surfaces of f and constraint paths of g lie perfectly tangent.', 'The magnitudes of both vectors are identical.', 'The functions f and g map to the same intercept.'],
-    correctAnswer: 1, explanation: 'The condition ∇f = λ∇g implies collinear gradients, indicating that the level sets share a common tangent plane.'
-  },
-  {
-    id: 2, topic: 'Lagrange Multipliers', difficulty: 'Easy',
-    question: 'If minimizing a cost function f(x,y) subject to a budget constraint g(x,y) = k, the variable λ physically represents:',
-    options: ['The total spent capital.', 'The shadow price or marginal utility of changing k.', 'The geometric variance of f.', 'The global minimum value.'],
-    correctAnswer: 1, explanation: 'The multiplier λ denotes ∂f/∂k, tracking how the optimum shifts per unit change in the constraint bound.'
-  },
-  {
-    id: 3, topic: 'Lagrange Multipliers', difficulty: 'Easy',
-    question: 'True or False: The Lagrange multiplier method can locate boundary extrema even if the constraint gradient ∇g equals zero.',
-    options: ['True, because ∇f dominates the equation.', 'False, because the equation ∇f = λ∇g becomes undefined or invalid when ∇g = 0.', 'True, if the function f is linear.', 'False, because λ must also be zero.'],
-    correctAnswer: 1, explanation: 'The Lagrange method requires ∇g ≠ 0 at the extremum because if ∇g = 0, the constraint curve does not form a smooth surface or boundary boundary path.'
-  },
-  {
-    id: 4, topic: 'Lagrange Multipliers', difficulty: 'Easy',
-    question: 'When optimizing a function f(x,y,z) with a single constraint g(x,y,z) = 0, how many Lagrange multipliers are introduced?',
-    options: ['Zero', 'One', 'Two', 'Three'],
-    correctAnswer: 1, explanation: 'Exactly one multiplier (λ) is introduced for each independent constraint equation.'
-  },
-  {
-    id: 5, topic: 'Lagrange Multipliers', difficulty: 'Medium',
-    question: 'Find the absolute extremum equations for f(x,y) = xy under the circle restriction x^2 + y^2 = 8.',
-    options: ['x = ±2, y = ±2', 'x = 0, y = 0', 'x = ±4, y = ±4', 'x = ±1, y = ±7'],
-    correctAnswer: 0, explanation: '∇f = ⟨y, x⟩ and ∇g = ⟨2x, 2y⟩. System y = 2λx, x = 2λy yields x^2 = y^2. Plugging into x^2 + y^2 = 8 gives x = ±2, y = ±2.'
-  },
-  {
-    id: 6, topic: 'Lagrange Multipliers', difficulty: 'Medium',
-    question: 'When optimization yields a multiplier value λ = 0, what does this indicate about the system constraint g?',
-    options: ['The constraint equation is mathematically invalid.', 'The local optimum of f matches its unconstrained local optimum.', 'The function has no real extrema.', 'The surface gradients are infinite.'],
-    correctAnswer: 1, explanation: 'λ = 0 means ∇f = 0, meaning the constraint bounds the function exactly where an unconstrained stationary point already resides.'
-  },
-  {
-    id: 7, topic: 'Lagrange Multipliers', difficulty: 'Medium',
-    question: 'Find the maximum value of f(x,y) = x + 2y subject to the elliptic constraint x^2 + 2y^2 = 3.',
-    options: ['3', '√3', '6', '3/2'],
-    correctAnswer: 0, explanation: '∇f = ⟨1, 2⟩, ∇g = ⟨2x, 4y⟩. Setting 1 = 2λx and 2 = 4yλ gives x = y = 1/(2λ). Substituting into the constraint gives x=1, y=1, so max value is 1 + 2(1) = 3.'
-  },
-  {
-    id: 8, topic: 'Lagrange Multipliers', difficulty: 'Medium',
-    question: 'If you optimize f(x,y) over the boundary region x^2 + y^2 ≤ 4, where must you look for potential extreme values?',
-    options: ['Only inside the open disk interior.', 'Only along the perimeter boundary line.', 'Both critical points inside the interior and Lagrange candidates along the perimeter.', 'Nowhere, as inequality systems cannot be checked.'],
-    correctAnswer: 2, explanation: 'Optimization over a closed region requires checking interior critical points via standard derivatives and boundary points via Lagrange multipliers.'
-  },
-  {
-    id: 9, topic: 'Lagrange Multipliers', difficulty: 'Hard',
-    question: 'Maximize f(x,y,z) = xyz restricted across two simultaneous boundaries: x + y + z = 1 and x - y - z = 0.',
-    options: ['1 / 16', '1 / 32', '0', '-1 / 32'],
-    correctAnswer: 3, explanation: 'Adding constraints gives 2x = 1 → x = 1/2. Then y + z = 1/2 and y - z = 0 → y = 1/4, z = 1/4. Thus f(1/2, 1/4, 1/4) = -1/32.'
-  },
-  {
-    id: 10, topic: 'Lagrange Multipliers', difficulty: 'Hard',
-    question: 'Determine the point closest to the origin on the hyperbola plane x^2 + 4xy + y^2 = 9.',
-    options: ['(±1, ...)', '(±√3, ±√3)', '(0,0)', '(±3, 0)'],
-    correctAnswer: 1, explanation: 'Minimize f = x^2 + y^2. Lagrange setup yields parallel relations showing shortest vectors sit at symmetries x = ±y, identifying coordinates as (±√3, ±√3).'
-  },
-  {
-    id: 11, topic: 'Lagrange Multipliers', difficulty: 'Hard',
-    question: 'If optimizing f(x) over an inequality g(x) ≤ k, the Karush-Kuhn-Tucker (KKT) conditions enforce that λg(x) must equal:',
-    options: ['k', '1', '0', 'λ^2'],
-    correctAnswer: 2, explanation: 'Complementary slackness demands λ(g(x) - k) = 0. If the constraint is inactive, λ must fall to zero.'
-  },
-  {
-    id: 12, topic: 'Lagrange Multipliers', difficulty: 'Hard',
-    question: 'Find the minimum distance from the origin to the plane x + 2y + 2z = 9 using multipliers.',
-    options: ['3', '9', '√3', '1'],
-    correctAnswer: 0, explanation: 'Minimize f = x^2 + y^2 + z^2 subject to x+2y+2z=9. Gradients yield 2x=λ, 2y=2λ, 2z=2λ, giving x=1, y=2, z=2. Distance is √(1+4+4) = 3.'
-  },
-
-  // ==========================================
-  // TOPIC 2: Divergence & Curl (12 Problems)
-  // ==========================================
-  {
-    id: 13, topic: 'Divergence & Curl', difficulty: 'Easy',
-    question: 'If a vector field satisfies div(F) > 0 at a specific point, that spatial point acts as a:',
-    options: ['Sink', 'Source', 'Vortex', 'Saddle Point'],
-    correctAnswer: 1, explanation: 'Positive divergence means net fluid expansion outwards, designating the node as a source.'
-  },
-  {
-    id: 14, topic: 'Divergence & Curl', difficulty: 'Easy',
-    question: 'Identify the identity value for the operation: div(curl F) across any smooth field function.',
-    options: ['1', '0', 'Infinitely variable', '-1'],
-    correctAnswer: 1, explanation: 'The divergence of a curl is always zero (∇ · (∇ × F) = 0) due to equality of mixed partial derivatives.'
-  },
-  {
-    id: 15, topic: 'Divergence & Curl', difficulty: 'Easy',
-    question: 'If curl(F) = 0 everywhere within a simply connected open domain, the vector field F is classified as:',
-    options: ['Solenoidal', 'Irrotational (Conservative)', 'Incompressible', 'Rotational'],
-    correctAnswer: 1, explanation: 'A field with zero curl is irrotational. On simply connected domains, this implies it is a conservative gradient field.'
-  },
-  {
-    id: 16, topic: 'Divergence & Curl', difficulty: 'Easy',
-    question: 'What mathematical operator represents the geometric notation ∇ × F?',
-    options: ['Divergence scalar product', 'Curl vector product', 'Gradient field', 'Laplacian operator'],
-    correctAnswer: 1, explanation: 'The cross product of the del operator with a vector field defines the curl.'
-  },
-  {
-    id: 17, topic: 'Divergence & Curl', difficulty: 'Medium',
-    question: 'Compute the curl configuration of the steady vector field matrix F = ⟨-y, x, z⟩.',
-    options: ['⟨0, 0, 0⟩', '⟨0, 0, 2⟩', '⟨1, 1, 1⟩', '⟨-x, y, 0⟩'],
-    correctAnswer: 1, explanation: 'Evaluating the determinant variant gives (∂/∂x(x) - ∂/∂y(-y))k = (1 - (-1))k = 2k.'
-  },
-  {
-    id: 18, topic: 'Divergence & Curl', difficulty: 'Medium',
-    question: 'Compute the scalar divergence of the variable field system F = ⟨x^2, y^2, z^2⟩ at the coordinate (1, 2, 3).',
-    options: ['6', '12', '14', '0'],
-    correctAnswer: 1, explanation: 'div(F) = 2x + 2y + 2z. Evaluating at (1,2,3) yields 2(1) + 2(2) + 2(3) = 12.'
-  },
-  {
-    id: 19, topic: 'Divergence & Curl', difficulty: 'Medium',
-    question: 'Calculate the divergence of F = ⟨sin(x), cos(y), z^2⟩.',
-    options: ['cos(x) - sin(y) + 2z', 'cos(x) + sin(y) + z', '0', '-cos(x) + sin(y)'],
-    correctAnswer: 0, explanation: 'div(F) = ∂/∂x(sin x) + ∂/∂y(cos y) + ∂/∂z(z^2) = cos(x) - sin(y) + 2z.'
-  },
-  {
-    id: 20, topic: 'Divergence & Curl', difficulty: 'Medium',
-    question: 'What is the physical meaning of curl F at a specific location in a fluid flow field?',
-    options: ['The rate of fluid expansion.', 'The rotation vector of a tiny paddle wheel placed at that point.', 'The total mass flow rate through a surface.', 'The rate of fluid compression.'],
-    correctAnswer: 1, explanation: 'Curl measures the local rotation or angular velocity of the field vectors about that point.'
-  },
-  {
-    id: 21, topic: 'Divergence & Curl', difficulty: 'Hard',
-    question: 'An irrotational, incompressible vector field must satisfy which differential statement?',
-    options: ['∇ × F = 0 and ∇ · F = 0', '∇ × F = 1', 'It forms a zero Laplacian scalar field only', 'Its line integral path is always infinite'],
-    correctAnswer: 0, explanation: 'Irrotational implies curl is zero; incompressible implies divergence is zero.'
-  },
-  {
-    id: 22, topic: 'Divergence & Curl', difficulty: 'Hard',
-    question: 'Evaluate the curl of the gradient of any smooth multivariable scalar field ∇ × (∇f).',
-    options: ['∇^2 f', '0', '1', 'Vector field f status'],
-    correctAnswer: 1, explanation: 'The curl of any gradient field is identically zero vector due to mixed partials matching.'
-  },
-  {
-    id: 23, topic: 'Divergence & Curl', difficulty: 'Hard',
-    question: 'If F = ⟨x/r^3, y/r^3, z/r^3⟩ where r = √(x^2+y^2+z^2), evaluate div(F) everywhere except the origin.',
-    options: ['3/r^2', '0', '-3/r^4', '1/r'],
-    correctAnswer: 1, explanation: 'This is an inverse-square law field. Working out the partials shows div(F) = 0 for all points where r > 0.'
-  },
-  {
-    id: 24, topic: 'Divergence & Curl', difficulty: 'Hard',
-    question: 'Compute curl(F) for the complex field layout F = ⟨yz, xz, xy⟩.',
-    options: ['⟨x, y, z⟩', '⟨0, 0, 0⟩', '⟨z, x, y⟩', '⟨1, 1, 1⟩'],
-    correctAnswer: 1, explanation: 'Computing partial combinations yields: ⟨x-x, y-y, z-z⟩ = ⟨0,0,0⟩. (F is a conservative field derived from f = xyz).'
-  },
-
-  // ==========================================
-  // TOPIC 3: Stokes' Theorem (12 Problems)
-  // ==========================================
-  {
-    id: 25, topic: "Stokes' Theorem", difficulty: 'Easy',
-    question: "Stokes' Theorem creates a structural bridge relating which two types of integrals?",
-    options: ['Line integrals and surface integrals', 'Line integrals and volume integrals', 'Double integrals and triple integrals', 'Flux integrals and divergence vectors'],
-    correctAnswer: 0, explanation: 'Stokes\' Theorem equates a line integral around a closed boundary loop to a surface integral of the curl over that bounded surface.'
-  },
-  {
-    id: 26, topic: "Stokes' Theorem", difficulty: 'Easy',
-    question: 'If the bounding loop C changes its tracking direction from counter-clockwise to clockwise, the surface curl integral:',
-    options: ['Flips signs (multiplies by -1)', 'Drops immediately to zero', 'Remains entirely unaffected', 'Becomes imaginary'],
-    correctAnswer: 0, explanation: 'Reversing boundary orientation flips the tangent vector direction, changing the sign of the integral.'
-  },
-  {
-    id: 27, topic: "Stokes' Theorem", difficulty: 'Easy',
-    question: 'Stokes\' Theorem can be considered a higher-dimensional generalization of which theorem?',
-    options: ['Divergence Theorem', 'Green\'s Theorem in the plane', 'Mean Value Theorem', 'Fubini\'s Theorem'],
-    correctAnswer: 1, explanation: 'Green\'s Theorem is exactly Stokes\' Theorem restricted to a flat, 2D planar region.'
-  },
-  {
-    id: 28, topic: "Stokes' Theorem", difficulty: 'Easy',
-    question: 'For Stokes\' Theorem to apply, the boundary curve C must be:',
-    options: ['Open and linear', 'Closed and piecewise smooth', 'Infinite', 'Perfect square geometry'],
-    correctAnswer: 1, explanation: 'The boundary must form a closed loop path to encapsulate the integrated surface area.'
-  },
-  {
-    id: 29, topic: "Stokes' Theorem", difficulty: 'Medium',
-    question: "Evaluate ∮ F · dr around a closed path where curl(F) = ⟨0, 0, 5⟩ and the flat interior region surface area is 3.",
-    options: ['0', '15', '5/3', '45'],
-    correctAnswer: 1, explanation: '∫∫ (curl F) · n dS = ∫∫ 5 dA = 5 * Area = 5 * 3 = 15.'
-  },
-  {
-    id: 30, topic: "Stokes' Theorem", difficulty: 'Medium',
-    question: 'Why can multiple different open surfaces yield the identical output value under Stokes\' evaluation?',
-    options: ['Because the area of the surfaces is identical.', 'Because they share the exact same bounding closed boundary curve C.', 'Because the vector field is conservative.', 'Because all surfaces are inherently flat.'],
-    correctAnswer: 1, explanation: 'The surface integral depends only on the values along the boundary curve C.'
-  },
-  {
-    id: 31, topic: "Stokes' Theorem", difficulty: 'Medium',
-    question: 'If a vector field F is conservative throughout space, what is the value of ∮ F · dr along any closed loop using Stokes\' Theorem?',
-    options: ['Always zero', 'Dependent on loop area', 'Always positive', 'Undefined'],
-    correctAnswer: 0, explanation: 'Conservative fields have curl F = 0 everywhere, making the surface integral of the curl evaluate to zero.'
-  },
-  {
-    id: 32, topic: "Stokes' Theorem", difficulty: 'Medium',
-    question: 'Suppose a surface S is a hemisphere with a base circle boundary C. According to the right-hand rule, if C is oriented counterclockwise in the xy-plane, the normal vectors to S point:',
-    options: ['Inward/Downward', 'Outward/Upward', 'Tangential to the perimeter', 'Directly along the x-axis'],
-    correctAnswer: 1, explanation: 'Curling your fingers along the counterclockwise path assigns the normal vector upward/outward via right-hand coordination.'
-  },
-  {
-    id: 33, topic: "Stokes' Theorem", difficulty: 'Hard',
-    question: "Calculate ∮ F · dr for F = ⟨-y^3, x^3, z^3⟩ around the cylinder intersection path x^2 + y^2 = 1, z = 5.",
-    options: ['0', '3/2 π', '3π', '3/4 π'],
-    correctAnswer: 1, explanation: 'Curl F = ⟨0, 0, 3x^2 + 3y^2⟩. Normal vector is ⟨0,0,1⟩. Double integral of 3(x^2+y^2) over the unit disk in polar coordinates yields 3/2 * π.'
-  },
-  {
-    id: 34, topic: "Stokes' Theorem", difficulty: 'Hard',
-    question: 'If surface boundary curve C forms a single point (shrunk to zero limits), the value of the curl surface integral is:',
-    options: ['Undefined', '0', 'Infinity', 'Dependent on the field volume'],
-    correctAnswer: 1, explanation: 'A closed loop shrunk to a single point forms an empty integration path boundary, dropping the total integration value to 0.'
-  },
-  {
-    id: 35, topic: "Stokes' Theorem", difficulty: 'Hard',
-    question: "Evaluate ∮ F · dr where F = ⟨z, x, y⟩ around a triangle with vertices (1,0,0), (0,1,0), (0,0,1) oriented counter-clockwise.",
-    options: ['3', '3/2', '0', '-3/2'],
-    correctAnswer: 1, explanation: 'Curl F = ⟨1, 1, 1⟩. The normal vector to the plane x+y+z=1 is 1/... ⟨1,1,1⟩. Integrating yields a final calculated line loop value of 3/2.'
-  },
-  {
-    id: 36, topic: "Stokes' Theorem", difficulty: 'Hard',
-    question: 'Verify the value of ∬ (∇ × F) · dS over a closed sphere surface geometry matching any arbitrary smooth vector field.',
-    options: ['Always zero', 'Total interior volume', 'Flux value', '4π'],
-    correctAnswer: 0, explanation: 'A closed surface has no boundary curve (it boundary is empty). Therefore, by Stokes\' Theorem, the integral drops cleanly to zero.'
-  },
-
-  // ==========================================
-  // TOPIC 4: Taylor Series for Multivariable Functions (12 Problems)
-  // ==========================================
-  {
-    id: 37, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Easy',
-    question: 'What matrix maps all the first-order partial derivatives inside a multivariable Taylor expansion?',
-    options: ['Hessian Matrix', 'Jacobian / Gradient Vector', 'Vandermonde Array', 'Wronskian Determinant'],
-    correctAnswer: 1, explanation: 'The first-degree modifications are defined linearly by the gradient vector or Jacobian matrix.'
-  },
-  {
-    id: 38, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Easy',
-    question: 'A multivariable Taylor series expanded specifically around the origin point (0,0) is called a:',
-    options: ['Fourier Series', 'Maclaurin Series', 'Laurent Series', 'Power Transform'],
-    correctAnswer: 1, explanation: 'A Taylor series centered specifically at the origin is classified as a Maclaurin expansion.'
-  },
-  {
-    id: 39, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Easy',
-    question: 'In a 2D multivariable function Taylor series, what is the total number of linear operational terms (first-degree terms)?',
-    options: ['One', 'Two', 'Three', 'Four'],
-    correctAnswer: 1, explanation: 'There are two first-degree terms: one tracking x changes (f_x) and one tracking y changes (f_y).'
-  },
-  {
-    id: 40, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Easy',
-    question: 'The zero-order term in the Taylor series expansion of f(x,y) centered at (a,b) is simply:',
-    options: ['0', 'f(a,b)', 'f_x(a,b)', '1'],
-    correctAnswer: 1, explanation: 'The zero-order base approximation anchor is the raw functional evaluation at the chosen center coordinate point.'
-  },
-  {
-    id: 41, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Medium',
-    question: 'Identify the proper coefficient of the mixed term xy in the Taylor expansion of f(x,y) around a center point.',
-    options: ['f_xy(a,b)', '1/2 * f_xy(a,b)', '2 * f_xy(a,b)', '1/6 * f_xy(a,b)'],
-    correctAnswer: 0, explanation: 'The 2nd degree expansion contains 1/2! * (2 * f_xy * x * y), canceling the fractional half coefficient to leave exactly 1 * f_xy.'
-  },
-  {
-    id: 42, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Medium',
-    question: 'What is the second-order Taylor polynomial for f(x,y) = e^(x+y) evaluated around the origin point?',
-    options: ['1 + x + y', '1 + x + y + 1/2(x^2 + 2xy + y^2)', '1 + x + y + x^2 + y^2', 'x + y + xy'],
-    correctAnswer: 1, explanation: 'All partial derivatives of e^(x+y) evaluated at (0,0) equal 1. Plugging these into the formula yields option 1.'
-  },
-  {
-    id: 43, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Medium',
-    question: 'Compute the 1st-degree linear Taylor polynomial approximation of f(x,y) = x^2 + y^2 centered around (1,2).',
-    options: ['5 + 2(x-1) + 4(y-2)', '5 + x + 2y', '2(x-1) + 4(y-2)', '1 + 2x + 4y'],
-    correctAnswer: 0, explanation: 'f(1,2)=5, f_x=2x→2, f_y=2y→4. The linear formulation maps precisely to: 5 + 2(x-1) + 4(y-2).'
-  },
-  {
-    id: 44, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Medium',
-    question: 'If a function has symmetric properties such that f(x,y) = f(-x,-y), its multivariable Maclaurin expansion will contain:',
-    options: ['Only odd-degree terms', 'Only even-degree terms', 'Only mixed cross-product terms', 'No terms at all'],
-    correctAnswer: 1, explanation: 'Symmetric even parity eliminates odd power sequences within the tracking structural series.'
-  },
-  {
-    id: 45, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Hard',
-    question: 'The symmetric square matrix containing all second-order partial derivative combinations is named the:',
-    options: ['Jacobian', 'Hessian', 'Gramian', 'Laplacian'],
-    correctAnswer: 1, explanation: 'The Hessian matrix holds the second-order partial derivatives and dictates quadratic behavior near critical points.'
-  },
-  {
-    id: 46, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Hard',
-    question: 'Find the second-order Taylor approximation for f(x,y) = cos(x)cos(y) around the origin.',
-    options: ['1 - 1/2(x^2 + y^2)', '1 + x^2 + y^2', '1 - xy', 'x + y - 1/2(x^2y^2)'],
-    correctAnswer: 0, explanation: 'cos(x) ≈ 1 - x^2/2 and cos(y) ≈ 1 - y^2/2. Multiplying and dropping higher order terms yields 1 - 1/2(x^2 + y^2).'
-  },
-  {
-    id: 47, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Hard',
-    question: 'If all linear and quadratic terms of a Taylor series vanish at a point, that coordinate point constitutes a:',
-    options: ['Saddle point definitively', 'Stationary point where local shape depends on cubic or higher orders', 'Global absolute boundary edge', 'Point of discontinuity'],
-    correctAnswer: 1, explanation: 'When first and second derivatives vanish, the local structural curvature is governed by higher-order terms.'
-  },
-  {
-    id: 48, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Hard',
-    question: 'What is the coefficient of the x^2 y term in the cubic Taylor expansion of an arbitrary smooth function f(x,y)?',
-    options: ['1/2 * f_xxy', '1/6 * f_xxy', 'f_xxy', '3 * f_xxy'],
-    correctAnswer: 0, explanation: 'The generalized term formula component is (1/3!) * (3 * f_xxy * x^2 * y), which yields a net fraction multiplier balance of exactly 1/2.'
-  },
-
-  // ==========================================
-  // TOPIC 5: Partial Derivatives (12 Problems)
-  // ==========================================
-  {
-    id: 49, topic: 'Partial Derivatives', difficulty: 'Easy',
-    question: 'When computing the partial derivative ∂f/∂x of a function f(x,y), how is the variable y treated?',
-    options: ['As a variable dependent on x.', 'As a constant value.', 'It is completely removed from the expression.', 'It is differentiated normally alongside x.'],
-    correctAnswer: 1, explanation: 'Partial differentiation with respect to one variable requires holding all other independent variables completely constant.'
-  },
-  {
-    id: 50, topic: 'Partial Derivatives', difficulty: 'Easy',
-    question: 'Find ∂f/∂x for the equation f(x,y) = 3x^2 y + 5y^3.',
-    options: ['6xy', '6xy + 15y^2', '6x', '3xy'],
-    correctAnswer: 0, explanation: 'Differentiating with respect to x makes 3x^2 y become 6xy, and the 5y^3 constant term drops cleanly to 0.'
-  },
-  {
-    id: 51, topic: 'Partial Derivatives', difficulty: 'Easy',
-    question: 'Clairaut\'s Theorem states that if mixed partial derivatives are continuous, then:',
-    options: ['f_xx = f_yy', 'f_xy = f_yx', 'f_x = f_y', 'f_xy = 0'],
-    correctAnswer: 1, explanation: 'Clairaut\'s Theorem guarantees that the order of partial differentiation does not affect the result if the mixed partials are continuous.'
-  },
-  {
-    id: 52, topic: 'Partial Derivatives', difficulty: 'Easy',
-    question: 'The notation f_y evaluates to which directional calculation alternative?',
-    options: ['∂f/∂x', '∂f/∂y', '∂^2f/∂y^2', 'df/dy'],
-    correctAnswer: 1, explanation: 'The subscript variable shorthand notation directly denotes partial differentiation with respect to that variable.'
-  },
-  {
-    id: 53, topic: 'Partial Derivatives', difficulty: 'Medium',
-    question: 'Find the partial derivative with respect to y, ∂f/∂y, of f(x,y) = ln(x^2 + y^2).',
-    options: ['2y / (x^2 + y^2)', '1 / (x^2 + y^2)', '2x / (x^2 + y^2)', '2 / y'],
-    correctAnswer: 0, explanation: 'Applying the chain rule gives: (1 / (x^2 + y^2)) * ∂/∂y(x^2 + y^2) = 2y / (x^2 + y^2).'
-  },
-  {
-    id: 54, topic: 'Partial Derivatives', difficulty: 'Medium',
-    question: 'Compute f_xy for the function f(x,y) = x^3 y^2 + x y.',
-    options: ['6x^2 y + 1', '3x^2 * 2y', '6xy', '3x^2 y^2 + 1'],
-    correctAnswer: 0, explanation: 'First, f_x = 3x^2 y^2 + y. Differentiating that result with respect to y yields f_xy = 6x^2 y + 1.'
-  },
-  {
-    id: 55, topic: 'Partial Derivatives', difficulty: 'Medium',
-    question: 'If z = x^2 y and x = t^2, y = t^3, use the multivariable Chain Rule to compute dz/dt.',
-    options: ['7t^6', '7t^7', '6t^5', '5t^4'],
-    correctAnswer: 0, explanation: 'dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt) = (2xy)(2t) + (x^2)(3t^2) = (2t^7)(2t) + (t^4)(3t^2) = 4t^7 + 3t^6... wait, substituting x and y gives 2(t^2)(t^3)(2t) + (t^4)(3t^2) = 4t^6 + 3t^6 = 7t^6.'
-  },
-  {
-    id: 56, topic: 'Partial Derivatives', difficulty: 'Medium',
-    question: 'What vector direction yields the maximum rate of increase for a multivariable scalar function?',
-    options: ['The tangent vector to the level curve.', 'The gradient vector ∇f.', 'The negative gradient vector -∇f.', 'The unit vector parallel to the z-axis.'],
-    correctAnswer: 1, explanation: 'The gradient vector always points in the direction of steepest ascent for a function.'
-  },
-  {
-    id: 57, topic: 'Partial Derivatives', difficulty: 'Hard',
-    question: 'Find the directional derivative of f(x,y) = x^2 y at the point (1,2) in the direction of the vector v = ⟨3, 4⟩.',
-    options: ['16/5', '14/5', '16', '22/5'],
-    correctAnswer: 0, explanation: '∇f = ⟨2xy, x^2⟩ → at (1,2) is ⟨4, 1⟩. Normalize v to get u = ⟨3/5, 4/5⟩. The directional derivative is ⟨4, 1⟩ · ⟨3/5, 4/5⟩ = 12/5 + 4/5 = 16/5.'
-  },
-  {
-    id: 58, topic: 'Partial Derivatives', difficulty: 'Hard',
-    question: 'Calculate the total differential dz for the implicit surface equation x^2 + y^2 + z^2 = 1.',
-    options: ['dz = -(xdx + ydy)/z', 'dz = xdx + ydy', 'dz = -z(xdx + ydy)', 'dz = 0'],
-    correctAnswer: 0, explanation: 'Differentiating implicitly yields 2xdx + 2ydy + 2zdz = 0. Solving for dz gives: dz = -(xdx + ydy)/z.'
-  },
-  {
-    id: 59, topic: 'Partial Derivatives', difficulty: 'Hard',
-    question: 'Compute the second partial derivative f_xx for the function f(x,y) = arctan(y/x).',
-    options: ['2xy / (x^2 + y^2)^2', '-2xy / (x^2 + y^2)^2', '1 / (1 + y^2/x^2)', '-y / (x^2 + y^2)'],
-    correctAnswer: 0, explanation: 'f_x = (-y/x^2) / (1 + y^2/x^2) = -y / (x^2 + y^2). Differentiating again with respect to x gives f_xx = 2xy / (x^2 + y^2)^2.'
-  },
-  {
-    id: 60, topic: 'Partial Derivatives', difficulty: 'Hard',
-    question: 'If a function f(x,y) satisfies Laplace\'s Equation (f_xx + f_yy = 0), the function is classified as:',
-    options: ['Analytic', 'Harmonic', 'Conservative', 'Continuous'],
-    correctAnswer: 1, explanation: 'Functions that satisfy Laplace\'s equation are called harmonic functions, critical in physics and potential theory.'
-  },
-
-  // ==========================================
-  // TOPIC 6: Vector Calculus (12 Problems)
-  // ==========================================
-  {
-    id: 61, topic: 'Vector Calculus', difficulty: 'Easy',
-    question: 'A vector field F is conservative if it can be written as the gradient of a scalar function f. What is f called?',
-    options: ['Vector potential', 'Potential function', 'Conservative scalar', 'Work index'],
-    correctAnswer: 1, explanation: 'The scalar function f whose gradient equals F (∇f = F) is called the potential function.'
-  },
-  {
-    id: 62, topic: 'Vector Calculus', difficulty: 'Easy',
-    question: 'The fundamental theorem for line integrals states that if F = ∇f, then ∫_C F · dr equals:',
-    options: ['0', 'f(r(b)) - f(r(a))', 'f(b) + f(a)', 'The total arc length of path C'],
-    correctAnswer: 1, explanation: 'Like the fundamental theorem of calculus, the line integral of a gradient field depends only on the endpoints of the path.'
-  },
-  {
-    id: 63, topic: 'Vector Calculus', difficulty: 'Easy',
-    question: 'What represents the integral calculation form ∬_S F · n dS physically?',
-    options: ['The total volume bounded by S.', 'The total fluid flux passing through the surface S.', 'The work done along the surface perimeter.', 'The mass distribution scale.'],
-    correctAnswer: 1, explanation: 'The surface integral of a vector field measures the net volume of fluid crossing the surface per unit time, known as flux.'
-  },
-  {
-    id: 64, topic: 'Vector Calculus', difficulty: 'Easy',
-    question: 'True or False: A path integral with respect to arc length ∫_C f(x,y) ds changes sign if the path orientation is reversed.',
-    options: ['True', 'False, because ds is a scalar magnitude segment length that is always positive.', 'True only for vector line integrals.', 'False only if f(x,y) is constant.'],
-    correctAnswer: 1, explanation: 'Scalar arc length integration updates are path direction invariant because ds tracks absolute step distance lengths.'
-  },
-  {
-    id: 65, topic: 'Vector Calculus', difficulty: 'Medium',
-    question: 'Determine if the vector field F = ⟨2xy, x^2 + 3y^2⟩ is conservative, and find its potential function if it exists.',
-    options: ['Not conservative', 'Conservative, f(x,y) = x^2 y + y^3', 'Conservative, f(x,y) = 2x^2 y^2', 'Conservative, f(x,y) = x^3 y + y'],
-    correctAnswer: 1, explanation: '∂P/∂y = 2x, ∂Q/∂x = 2x. They match, so it is conservative. Integrating P with respect to x gives x^2 y + g(y). Matching derivatives identifies g(y) = y^3.'
-  },
-  {
-    id: 66, topic: 'Vector Calculus', difficulty: 'Medium',
-    question: 'Calculate the line integral ∫_C F · dr for F = ⟨y, -x⟩ along the line segment from (0,0) to (1,1).',
-    options: ['0', '1', '-1', '2'],
-    correctAnswer: 0, explanation: 'Parametrize: x = t, y = t, dx = dt, dy = dt for t from 0 to 1. Integral becomes ∫ (t*dt - t*dt) = 0.'
-  },
-  {
-    id: 67, topic: 'Vector Calculus', difficulty: 'Medium',
-    question: 'The Divergence Theorem changes a closed surface flux integral into what kind of calculation?',
-    options: ['A line integral along the boundary.', 'A triple volume integral of the field\'s divergence.', 'A double surface integral of the field\'s curl.', 'A scalar dot product.'],
-    correctAnswer: 1, explanation: 'The Divergence Theorem equates the net flux through a closed surface to the triple integral of the divergence over the interior volume.'
-  },
-  {
-    id: 68, topic: 'Vector Calculus', difficulty: 'Medium',
-    question: 'Parametrize a standard flat circular disk surface of radius R parallel to the xy-plane at height z = 3.',
-    options: ['r(u,v) = ⟨u cos v, u sin v, 3⟩', 'r(u,v) = ⟨u, v, 0⟩', 'r(u,v) = ⟨R cos u, R sin u, v⟩', 'r(u,v) = ⟨u, v, u+v⟩'],
-    correctAnswer: 0, explanation: 'Using polar variants, x = u cos(v) and y = u sin(v) with a locked z height index of 3 successfully models the disk area layout.'
-  },
-  {
-    id: 69, topic: 'Vector Calculus', difficulty: 'Hard',
-    question: 'Compute the total flux of F = ⟨x, y, z⟩ through the closed unit sphere x^2 + y^2 + z^2 = 1 using the Divergence Theorem.',
-    options: ['4π', '4/3 π', '0', '2π'],
-    correctAnswer: 0, explanation: 'div(F) = 1 + 1 + 1 = 3. The volume of the unit sphere is 4/3 * π. Flux = 3 * (4/3 * π) = 4π.'
-  },
-  {
-    id: 70, topic: 'Vector Calculus', difficulty: 'Hard',
-    question: 'Find the work done by the force field F = ⟨y^2, x^2⟩ moving an object along the top half of the unit circle from (1,0) to (-1,0).',
-    options: ['-4/3', '0', '4/3', 'π/2'],
-    correctAnswer: 0, explanation: 'Parametrize via polar angles or apply Green\'s Theorem by closing the loop along the x-axis to calculate the path displacement balance.'
-  },
-  {
-    id: 71, topic: 'Vector Calculus', difficulty: 'Hard',
-    question: 'Evaluate the surface integral ∬_S ∇ × F · dS over the open upper hemisphere of the unit sphere, where F = ⟨-y, x, 0⟩.',
-    options: ['2π', '0', 'π', '-2π'],
-    correctAnswer: 0, explanation: 'By Stokes\' Theorem, switch to a line integral over the base boundary circle C (x^2+y^2=1, z=0): ∮ (-y dx + x dy). Using standard unit circle parameters gives ∫_0^2π 1 dt = 2π.'
-  },
-  {
-    id: 72, topic: 'Vector Calculus', difficulty: 'Hard',
-    question: 'A vector field G can be written as the curl of another vector field A (G = ∇ × A) if and only if:',
-    options: ['curl G = 0', 'div G = 0', 'G is conservative', 'A is unique'],
-    correctAnswer: 1, explanation: 'A vector field is solenoidal (has a vector potential A) if and only if its divergence is identically zero.'
-  },
-
-  // ==========================================
-  // TOPIC 7: Limits and Continuity (12 Problems)
-  // ==========================================
-  {
-    id: 73, topic: 'Limits and Continuity', difficulty: 'Easy',
-    question: 'Evaluate the limit: lim (x→3) (x^2 - 4x + 5).',
-    options: ['2', '5', '1', '0'],
-    correctAnswer: 0, explanation: 'Direct substitution yields: 3^2 - 4(3) + 5 = 9 - 12 + 5 = 2.'
-  },
-  {
-    id: 74, topic: 'Limits and Continuity', difficulty: 'Easy',
-    question: 'Under what conditions is direct substitution valid for evaluating a limit lim (x→a) f(x)?',
-    options: ['Only when f(x) is a simple polynomial.', 'When f(x) is continuous at x = a.', 'Whenever the value of a is zero.', 'Only when the function is rational.'],
-    correctAnswer: 1, explanation: 'By definition, a function is continuous at a point if its limit equals its direct evaluation value.'
-  },
-  {
-    id: 75, topic: 'Limits and Continuity', difficulty: 'Easy',
-    question: 'Evaluate the standard indeterminate limit: lim (x→2) (x^2 - 4) / (x - 2).',
-    options: ['2', '4', '0', 'Undefined'],
-    correctAnswer: 1, explanation: 'Factor the numerator into (x-2)(x+2). Cancel (x-2) to get x+2. Substituting x=2 yields 4.'
-  },
-  {
-    id: 76, topic: 'Limits and Continuity', difficulty: 'Easy',
-    question: "Which two specific indeterminate forms allow the direct use of L'Hôpital's Rule?",
-    options: ['0/0 and ∞/∞', '0 * ∞ and 1^∞', '∞ - ∞ and 0^0', 'Any undefined form'],
-    correctAnswer: 0, explanation: 'L\'Hôpital\'s rule applies directly only to the structural quotients 0/0 and ±∞/±∞.'
-  },
-  {
-    id: 77, topic: 'Limits and Continuity', difficulty: 'Medium',
-    question: 'Evaluate the trigonometric limit: lim (x→π/4) (sin^2(x) + cos(x)).',
-    options: ['1/2 + √2/2', '1 + √2', '√2', '1'],
-    correctAnswer: 0, explanation: 'Substituting yields: (1/√2)^2 + 1/√2 = 1/2 + √2/2.'
-  },
-  {
-    id: 78, topic: 'Limits and Continuity', difficulty: 'Medium',
-    question: 'Evaluate the radical limit: lim (x→0) (√(x+1) - 1) / x.',
-    options: ['1', '1/2', '0', 'Undefined'],
-    correctAnswer: 1, explanation: 'Multiply the top and bottom by the conjugate √(x+1) + 1. The numerator simplifies to x, which cancels with the denominator, leaving 1 / (√(x+1) + 1). Evaluating at x=0 yields 1/2.'
-  },
-  {
-    id: 79, topic: 'Limits and Continuity', difficulty: 'Medium',
-    question: "Evaluate the limit: lim (x→0) (e^x - 1 - x) / x^2.",
-    options: ['1', '1/2', '0', 'Infinity'],
-    correctAnswer: 1, explanation: 'Applying the rule once gives (e^x-1)/(2x) [still 0/0]. Applying it a second time gives e^x/2. Substituting x=0 yields 1/2.'
-  },
-  {
-    id: 80, topic: 'Limits and Continuity', difficulty: 'Medium',
-    question: 'Evaluate the limit: lim (x→∞) (3x^2 + 5x) / (2x^2 - 7).',
-    options: ['0', '3/2', 'Infinity', '5/-7'],
-    correctAnswer: 1, explanation: 'Since the degrees match, the limit equals the ratio of their leading coefficients: 3/2.'
-  },
-  {
-    id: 81, topic: 'Limits and Continuity', difficulty: 'Hard',
-    question: 'Evaluate the multivariable limit: lim ((x,y)→(0,0)) (x^2 - y^2) / (x^2 + y^2).',
-    options: ['0', '1', 'Does Not Exist', '-1'],
-    correctAnswer: 2, explanation: 'Approaching along the x-axis (y=0) gives limit 1. Approaching along the y-axis (x=0) gives limit -1. Since the paths give different results, the limit does not exist.'
-  },
-  {
-    id: 82, topic: 'Limits and Continuity', difficulty: 'Hard',
-    question: 'Evaluate the exponential indeterminate form: lim (x→0+) x^x.',
-    options: ['0', '1', 'e', 'Undefined'],
-    correctAnswer: 1, explanation: 'Let y = x^x, so ln(y) = x ln(x). Using L\'Hôpital on the log transform yields 0, so the exponential evaluates to e^0 = 1.'
-  },
-  {
-    id: 83, topic: 'Limits and Continuity', difficulty: 'Hard',
-    question: 'Evaluate the radical infinity framework: lim (x→∞) (√(x^2 + 3x) - x).',
-    options: ['0', '3/2', '3', 'Infinity'],
-    correctAnswer: 1, explanation: 'Multiply by the conjugate: (x^2 + 3x - x^2) / (√(x^2 + 3x) + x). Dividing top and bottom by x yields 3 / (1 + 1) = 3/2.'
-  },
-  {
-    id: 84, topic: 'Limits and Continuity', difficulty: 'Hard',
-    question: 'For a multivariable function f(x,y) to be continuous at (a,b), which statement must hold true?',
-    options: ['The limit exists as (x,y)→(a,b).', 'f(a,b) must be defined.', 'The limit as (x,y)→(a,b) must exist and equal f(a,b).', 'The partial derivatives must be zero.'],
-    correctAnswer: 2, explanation: 'Continuity requires the function to be defined at that point, the limit to exist, and the limit value to equal the functional definition value.'
-  },
-
-  // ==========================================
-  // TOPIC 8: Multiple Integrals (12 Problems)
-  // ==========================================
-  {
-    id: 85, topic: 'Multiple Integrals', difficulty: 'Easy',
-    question: 'Fubini\'s Theorem states that for a continuous function f(x,y) over a rectangle, the iterated integrals are:',
-    options: ['Always zero.', 'Equal regardless of the order of integration.', 'Dependent on grid area sizing.', 'Different depending on whether dx or dy is integrated first.'],
-    correctAnswer: 1, explanation: 'Fubini\'s theorem guarantees that order of integration can be switched without changing the final value for continuous functions over bounded rectangles.'
-  },
-  {
-    id: 86, topic: 'Multiple Integrals', difficulty: 'Easy',
-    question: 'When switching from rectangular coordinates (x,y) to polar coordinates (r,θ), the differential area element dA transforms into:',
-    options: ['dr dθ', 'r dr dθ', 'r^2 dr dθ', '2π r dr'],
-    correctAnswer: 1, explanation: 'The conversion factor (Jacobian determinant) adds an extra factor of r, making dA = r dr dθ.'
-  },
-  {
-    id: 87, topic: 'Multiple Integrals', difficulty: 'Easy',
-    question: 'What geometric property is calculated by the double integral ∬_R 1 dA?',
-    options: ['The volume under a surface.', 'The surface area of region R.', 'The mass density factor.', 'The perimeter boundary length.'],
-    correctAnswer: 1, explanation: 'Integrating the constant function 1 over a region R yields the exact geometric surface area of that region.'
-  },
-  {
-    id: 88, topic: 'Multiple Integrals', difficulty: 'Easy',
-    question: 'What is the standard volume element dV when integrating in cylindrical coordinates?',
-    options: ['dz dr dθ', 'r dz dr dθ', 'ρ^2 sin(φ) dρ dθ dφ', 'dx dy dz'],
-    correctAnswer: 1, explanation: 'Cylindrical coordinates extend polar setups linearly along z, maintaining the extra r factor: r dz dr dθ.'
-  },
-  {
-    id: 89, topic: 'Multiple Integrals', difficulty: 'Medium',
-    question: 'Evaluate the iterated double integral: ∫_0^1 ∫_0^2 xy dy dx.',
-    options: ['1', '2', '1/2', '4'],
-    correctAnswer: 0, explanation: 'Interior: [1/2 x y^2] from 0 to 2 = 2x. Exterior: ∫_0^1 2x dx = [x^2] from 0 to 1 = 1.'
-  },
-  {
-    id: 90, topic: 'Multiple Integrals', difficulty: 'Medium',
-    question: 'Reverse the order of integration for the expression: ∫_0^1 ∫_x^1 f(x,y) dy dx.',
-    options: ['∫_0^1 ∫_0^y f(x,y) dx dy', '∫_0^1 ∫_y^1 f(x,y) dx dy', '∫_x^1 ∫_0^1 f(x,y) dx dy', '∫_0^1 ∫_0^x f(x,y) dx dy'],
-    correctAnswer: 0, explanation: 'The region is bounded by y=x, y=1, and x=0. Sweeping horizontally first makes x range from 0 to y, and y range from 0 to 1.'
-  },
-  {
-    id: 91, topic: 'Multiple Integrals', difficulty: 'Medium',
-    question: 'Use polar coordinates to evaluate ∬_D (x^2 + y^2) dA over the unit disk D.',
-    options: ['π/2', 'π/4', 'π', '2π'],
-    correctAnswer: 0, explanation: 'The integral transforms into ∫_0^2π ∫_0^1 (r^2) * r dr dθ = 2π * [1/4 r^4]_0^1 = 2π / 4 = π/2.'
-  },
-  {
-    id: 92, topic: 'Multiple Integrals', difficulty: 'Medium',
-    question: 'In spherical coordinates, what does the variable φ (phi) represent?',
-    options: ['The azimuthal angle in the xy-plane.', 'The polar angle measured down from the positive z-axis.', 'The radial distance from the origin.', 'The radius from the z-axis.'],
-    correctAnswer: 1, explanation: 'φ tracks the angle measured down from the positive vertical z-axis, ranging from 0 to π.'
-  },
-  {
-    id: 93, topic: 'Multiple Integrals', difficulty: 'Hard',
-    question: 'Evaluate the triple integral ∭_E z dV, where E is the solid region bounded by the plane z = 0, z = x, and the parabolic cylinder x = 1 - y^2.',
-    options: ['4/15', '8/15', '2/5', '0'],
-    correctAnswer: 0, explanation: 'Setting up bounds and integrating yields a final volume mass allocation value of 4/15.'
-  },
-  {
-    id: 94, topic: 'Multiple Integrals', difficulty: 'Hard',
-    question: 'What is the absolute value of the Jacobian determinant when converting from rectangular to spherical coordinates?',
-    options: ['ρ', 'ρ^2 sin(φ)', 'ρ sin(φ)', 'ρ^2 cos(φ)'],
-    correctAnswer: 1, explanation: 'The metric scaling factor for spherical volume elements is explicitly derived as ρ^2 sin(φ).'
-  },
-  {
-    id: 95, topic: 'Multiple Integrals', difficulty: 'Hard',
-    question: 'Evaluate the integral ∬_R e^( (x-y)/(x+y) ) dA over the triangle vertices (0,0), (1,0), (0,1) using a linear variable transform.',
-    options: ['1/4 (e - 1/e)', '1/2 (e - 1)', '1/4 (e - 1)', 'e - 1'],
-    correctAnswer: 0, explanation: 'Applying the substitution u = x-y and v = x+y with its corresponding Jacobian evaluation yields a final value of 1/4 (e - 1/e).'
-  },
-  {
-    id: 96, topic: 'Multiple Integrals', difficulty: 'Hard',
-    question: 'Find the volume of the solid enclosed by the cylinder x^2 + y^2 = 4, bounded below by the plane z = 0 and above by the paraboloid z = x^2 + y^2.',
-    options: ['8π', '4π', '16π', '2π'],
-    correctAnswer: 0, explanation: 'In cylindrical coordinates: ∫_0^2π ∫_0^2 (r^2) * r dr dθ = 2π * [1/4 r^4]_0^2 = 2π * 4 = 8π.'
-  },
-
-  // ==========================================
-  // EXTRA DRILL BANK (ids 97–120)
-  // ==========================================
-  {
-    id: 97, topic: 'Lagrange Multipliers', difficulty: 'Easy',
-    question: 'What does the multiplier λ represent geometrically when maximizing f subject to g = c?',
-    options: [
-      'The curvature of the constraint',
-      'How the objective changes relative to a change in the constraint value',
-      'The arc length of the level curve',
-      'The Hessian determinant at the point'
-    ],
-    correctAnswer: 1, explanation: 'λ measures the sensitivity of the optimal value to relaxing the constraint; gradients being parallel encodes that trade-off.'
-  },
-  {
-    id: 98, topic: 'Lagrange Multipliers', difficulty: 'Medium',
-    question: 'Maximize f(x,y) = xy subject to x + y = 6. What is the maximum value?',
-    options: ['6', '9', '12', '18'],
-    correctAnswer: 1, explanation: '∇f = ⟨y,x⟩, ∇g = ⟨1,1⟩ ⇒ y = x = λ and x+y=6 ⇒ x=y=3, so f=9.'
-  },
-  {
-    id: 99, topic: 'Lagrange Multipliers', difficulty: 'Hard',
-    question: 'Minimize f(x,y,z) = x² + y² + z² subject to x + 2y + 2z = 9. What is the minimum?',
-    options: ['1', '3', '9', '81/9'],
-    correctAnswer: 2, explanation: '∇f = 2⟨x,y,z⟩ = λ⟨1,2,2⟩ and the plane constraint give the closest point to the origin; distance squared equals 9.'
-  },
-  {
-    id: 100, topic: 'Divergence & Curl', difficulty: 'Easy',
-    question: 'If F = ⟨x, y, z⟩, then ∇·F equals:',
-    options: ['0', '1', '2', '3'],
-    correctAnswer: 3, explanation: '∂/∂x(x)+∂/∂y(y)+∂/∂z(z) = 1+1+1 = 3.'
-  },
-  {
-    id: 101, topic: 'Divergence & Curl', difficulty: 'Medium',
-    question: 'For F = ⟨-y, x, 0⟩, ∇×F equals:',
-    options: ['⟨0,0,0⟩', '⟨0,0,2⟩', '⟨0,0,1⟩', '⟨2,0,0⟩'],
-    correctAnswer: 1, explanation: 'k-component is ∂Q/∂x − ∂P/∂y = 1 − (−1) = 2.'
-  },
-  {
-    id: 102, topic: 'Divergence & Curl', difficulty: 'Hard',
-    question: 'Which identity is always true (when the fields are smooth)?',
-    options: ['∇×(∇·F) = 0', '∇·(∇×F) = 0', '∇×(∇×F) = 0', '∇·(∇f) = 0'],
-    correctAnswer: 1, explanation: 'The divergence of any curl is identically zero.'
-  },
-  {
-    id: 103, topic: "Stokes' Theorem", difficulty: 'Easy',
-    question: "Stokes' Theorem relates a surface integral of curl F to:",
-    options: ['A volume integral of div F', 'A line integral of F around ∂S', 'A scalar surface integral of |F|', 'The Hessian of F'],
-    correctAnswer: 1, explanation: '∬_S (∇×F)·dS = ∮_∂S F·dr.'
-  },
-  {
-    id: 104, topic: "Stokes' Theorem", difficulty: 'Medium',
-    question: 'If ∇×F = 0 everywhere in a simply connected region, then ∮_C F·dr for a closed curve C is:',
-    options: ['Always positive', 'Always zero', 'Equal to the area enclosed', 'Undefined'],
-    correctAnswer: 1, explanation: 'Irrotational fields are conservative in simply connected domains, so closed-loop circulation vanishes.'
-  },
-  {
-    id: 105, topic: "Stokes' Theorem", difficulty: 'Hard',
-    question: 'For F = ⟨-y, x, z⟩ and S the unit disk in z = 0 oriented upward, ∬_S (∇×F)·dS equals:',
-    options: ['0', 'π', '2π', '1'],
-    correctAnswer: 2, explanation: '∇×F = ⟨0,0,2⟩, so flux through the unit disk is 2·π = 2π (matches ∮ −y dx + x dy).'
-  },
-  {
-    id: 106, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Easy',
-    question: 'The first-order Taylor approximation of f about (a,b) is the:',
-    options: ['Hessian matrix', 'Tangent plane', 'Level curve', 'Gradient flow'],
-    correctAnswer: 1, explanation: 'Linear approximation uses the gradient and is the tangent-plane formula.'
-  },
-  {
-    id: 107, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Medium',
-    question: 'For f(x,y) = e^{x+y} at (0,0), the quadratic term involves which second derivatives?',
-    options: ['Only fₓₓ', 'fₓₓ, fₓy, and f_yy', 'Only mixed partials', 'None — e^{x+y} is already linear'],
-    correctAnswer: 1, explanation: 'All second partials equal e^{x+y}; at (0,0) they equal 1, so the quadratic form uses all three.'
-  },
-  {
-    id: 108, topic: 'Taylor Series for Multivariable Functions', difficulty: 'Hard',
-    question: 'The Maclaurin expansion of cos x through degree 4 is:',
-    options: ['1 + x²/2 + x⁴/24', '1 − x²/2 + x⁴/24', 'x − x³/6', '1 − x + x²/2'],
-    correctAnswer: 1, explanation: 'cos x = 1 − x²/2! + x⁴/4! − … = 1 − x²/2 + x⁴/24 − …'
-  },
-  {
-    id: 109, topic: 'Partial Derivatives', difficulty: 'Easy',
-    question: 'If f(x,y) = x²y, then fₓ equals:',
-    options: ['2xy', 'x²', '2x', 'y'],
-    correctAnswer: 0, explanation: 'Treat y as constant: ∂/∂x(x²y) = 2xy.'
-  },
-  {
-    id: 110, topic: 'Partial Derivatives', difficulty: 'Medium',
-    question: 'Clairaut’s theorem says that if the mixed partials are continuous, then:',
-    options: ['fₓₓ = f_yy', 'fₓy = f_yx', '∇f = 0', 'f is linear'],
-    correctAnswer: 1, explanation: 'Order of differentiation can be swapped for continuous mixed partials.'
-  },
-  {
-    id: 111, topic: 'Partial Derivatives', difficulty: 'Hard',
-    question: 'For f(x,y) = ln(x² + y²), ∇f at (1,1) is:',
-    options: ['⟨1,1⟩', '⟨1/2, 1/2⟩', '⟨2,2⟩', '⟨0,0⟩'],
-    correctAnswer: 1, explanation: 'fₓ = 2x/(x²+y²), f_y = 2y/(x²+y²); at (1,1) both equal 2/2 = 1/2.'
-  },
-  {
-    id: 112, topic: 'Vector Calculus', difficulty: 'Easy',
-    question: 'Green’s Theorem converts a line integral around a simple closed curve into:',
-    options: ['A triple integral', 'A double integral over the enclosed region', 'An arc-length integral only', 'A surface integral in 3D'],
-    correctAnswer: 1, explanation: '∮_C P dx + Q dy = ∬_D (∂Q/∂x − ∂P/∂y) dA.'
-  },
-  {
-    id: 113, topic: 'Vector Calculus', difficulty: 'Medium',
-    question: 'The work of a conservative field F = ∇f from A to B equals:',
-    options: ['f(A) + f(B)', 'f(B) − f(A)', '|f(B)|', '∬ curl f'],
-    correctAnswer: 1, explanation: 'Fundamental theorem for line integrals: ∫_C ∇f·dr = f(B) − f(A).'
-  },
-  {
-    id: 114, topic: 'Vector Calculus', difficulty: 'Hard',
-    question: 'Flux of F = ⟨x,y⟩ outward across the unit circle equals:',
-    options: ['0', '1', 'π', '2π'],
-    correctAnswer: 3, explanation: 'By divergence theorem in 2D (or direct computation), ∮ M dy − N dx = ∬ (1+1) dA = 2·π = 2π.'
-  },
-  {
-    id: 115, topic: 'Limits and Continuity', difficulty: 'Easy',
-    question: 'If lim_{(x,y)→(a,b)} f(x,y) exists and equals f(a,b), then f is:',
-    options: ['Differentiable', 'Continuous at (a,b)', 'Analytic', 'Bounded only'],
-    correctAnswer: 1, explanation: 'That is the definition of continuity at a point.'
-  },
-  {
-    id: 116, topic: 'Limits and Continuity', difficulty: 'Medium',
-    question: 'Along y = mx, lim_{(x,y)→(0,0)} xy/(x²+y²) equals:',
-    options: ['0 for all m', 'm/(1+m²)', '1', 'Does not depend on path'],
-    correctAnswer: 1, explanation: 'Substitute y=mx: m x² / (x²(1+m²)) = m/(1+m²), which depends on m — so the full limit DNE.'
-  },
-  {
-    id: 117, topic: 'Limits and Continuity', difficulty: 'Hard',
-    question: 'lim_{(x,y)→(0,0)} (x²y)/(x⁴+y²) along y = x² equals:',
-    options: ['0', '1/2', '1', 'Does not exist along that path'],
-    correctAnswer: 1, explanation: 'y=x² ⇒ x²(x²)/(x⁴+x⁴) = x⁴/(2x⁴) = 1/2.'
-  },
-  {
-    id: 118, topic: 'Multiple Integrals', difficulty: 'Easy',
-    question: '∬_R 1 dA over a region R computes:',
-    options: ['The perimeter of R', 'The area of R', 'The centroid only', 'Average of x'],
-    correctAnswer: 1, explanation: 'Integrating the constant 1 yields area.'
-  },
-  {
-    id: 119, topic: 'Multiple Integrals', difficulty: 'Medium',
-    question: 'In polar coordinates, dA becomes:',
-    options: ['dr dθ', 'r dr dθ', 'r² dr dθ', 'sinθ dr dθ'],
-    correctAnswer: 1, explanation: 'The Jacobian of x=r cosθ, y=r sinθ is r.'
-  },
-  {
-    id: 120, topic: 'Multiple Integrals', difficulty: 'Hard',
-    question: 'Evaluate ∫_0^1 ∫_0^{1-x} (x+y) dy dx.',
-    options: ['1/6', '1/3', '1/2', '1'],
-    correctAnswer: 0, explanation: 'Inner: [xy + y²/2]_0^{1-x} = x(1-x)+(1-x)²/2; integrate in x to get 1/6.'
-  },
-
-  // ==========================================
-  // Linear Algebra (36 problems, 4 topics × 3 difficulties × 3)
-  // ==========================================
-  {
-    id: 121, topic: 'Vectors & Vector Spaces', difficulty: 'Easy',
-    question: 'The vector (2, −1, 4) belongs to which space?',
-    options: ['R²', 'R³', 'R⁴'],
-    correctAnswer: 1, explanation: 'Three components means a vector in R³.'
-  },
-  {
-    id: 122, topic: 'Vectors & Vector Spaces', difficulty: 'Easy',
-    question: 'What is ||(3, 4)||?',
-    options: ['5', '7', '12'],
-    correctAnswer: 0, explanation: '√(9+16)=√25=5.'
-  },
-  {
-    id: 123, topic: 'Vectors & Vector Spaces', difficulty: 'Easy',
-    question: '(1, 0) · (0, 1) equals:',
-    options: ['1', '0', '√2'],
-    correctAnswer: 1, explanation: 'Standard basis vectors are orthogonal.'
-  },
-  {
-    id: 124, topic: 'Vectors & Vector Spaces', difficulty: 'Medium',
-    question: 'The span of a single nonzero vector v in R² is:',
-    options: ['All of R²', 'A line through the origin', 'Only {0}'],
-    correctAnswer: 1, explanation: 'Scalar multiples of v fill that line.'
-  },
-  {
-    id: 125, topic: 'Vectors & Vector Spaces', difficulty: 'Medium',
-    question: 'Any set containing the zero vector is:',
-    options: ['Linearly independent', 'Linearly dependent', 'A basis of Rⁿ'],
-    correctAnswer: 1, explanation: '1·0 + 0·v₂ + … = 0 is a nontrivial relation.'
-  },
-  {
-    id: 126, topic: 'Vectors & Vector Spaces', difficulty: 'Medium',
-    question: 'dim(R³) equals:',
-    options: ['2', '3', '∞'],
-    correctAnswer: 1, explanation: 'The standard basis has three vectors.'
-  },
-  {
-    id: 127, topic: 'Vectors & Vector Spaces', difficulty: 'Hard',
-    question: 'Four vectors in R³ must be:',
-    options: ['Independent', 'Dependent', 'Orthogonal'],
-    correctAnswer: 1, explanation: 'More than dim(V) vectors in V are dependent.'
-  },
-  {
-    id: 128, topic: 'Vectors & Vector Spaces', difficulty: 'Hard',
-    question: 'Columns of an invertible n×n matrix form:',
-    options: ['A dependent set', 'A basis of Rⁿ', 'Only the zero space'],
-    correctAnswer: 1, explanation: 'Invertibility ⇔ columns form a basis.'
-  },
-  {
-    id: 129, topic: 'Vectors & Vector Spaces', difficulty: 'Hard',
-    question: 'If {v₁, v₂, v₃} is a basis of R³ and w is in R³, then w:',
-    options: ['Cannot be written using the vᵢ', 'Has a unique expansion in the vᵢ', 'Must equal v₁'],
-    correctAnswer: 1, explanation: 'Basis ⇒ unique coordinates.'
-  },
-
-  {
-    id: 130, topic: 'Matrices & Determinants', difficulty: 'Easy',
-    question: 'A 3×2 matrix represents a map:',
-    options: ['R³ → R²', 'R² → R³', 'R³ → R³'],
-    correctAnswer: 1, explanation: 'm×n maps Rⁿ → Rᵐ.'
-  },
-  {
-    id: 131, topic: 'Matrices & Determinants', difficulty: 'Easy',
-    question: 'det([[1,2],[3,4]]) equals:',
-    options: ['−2', '2', '10'],
-    correctAnswer: 0, explanation: '1·4 − 2·3 = −2.'
-  },
-  {
-    id: 132, topic: 'Matrices & Determinants', difficulty: 'Easy',
-    question: 'The identity matrix I satisfies:',
-    options: ['AI = A for compatible A', 'AI = 0', 'det I = 0'],
-    correctAnswer: 0, explanation: 'I is the multiplicative identity.'
-  },
-  {
-    id: 133, topic: 'Matrices & Determinants', difficulty: 'Medium',
-    question: 'det(AB) equals:',
-    options: ['det A + det B', '(det A)(det B)', 'det(A + B)'],
-    correctAnswer: 1, explanation: 'Determinants multiply under products.'
-  },
-  {
-    id: 134, topic: 'Matrices & Determinants', difficulty: 'Medium',
-    question: 'If det A = 0 then A is:',
-    options: ['Invertible', 'Singular', 'Orthogonal'],
-    correctAnswer: 1, explanation: 'Zero determinant ⇔ not invertible.'
-  },
-  {
-    id: 135, topic: 'Matrices & Determinants', difficulty: 'Medium',
-    question: '(AB)ᵀ equals:',
-    options: ['AᵀBᵀ', 'BᵀAᵀ', 'AB'],
-    correctAnswer: 1, explanation: 'Transpose reverses order.'
-  },
-  {
-    id: 136, topic: 'Matrices & Determinants', difficulty: 'Hard',
-    question: '(AB)⁻¹ equals (when invertible):',
-    options: ['A⁻¹B⁻¹', 'B⁻¹A⁻¹', 'AB'],
-    correctAnswer: 1, explanation: 'Inverse reverses product order.'
-  },
-  {
-    id: 137, topic: 'Matrices & Determinants', difficulty: 'Hard',
-    question: 'Can you multiply a 2×3 matrix by a 2×2 matrix (in that order)?',
-    options: ['Yes', 'No', 'Only if symmetric'],
-    correctAnswer: 1, explanation: 'Inner dimensions 3 ≠ 2.'
-  },
-  {
-    id: 138, topic: 'Matrices & Determinants', difficulty: 'Hard',
-    question: 'If Ax = b has a unique solution for every b, then A is:',
-    options: ['Singular', 'Invertible', 'Nilpotent'],
-    correctAnswer: 1, explanation: 'Unique solution for all b ⇔ invertible.'
-  },
-
-  {
-    id: 139, topic: 'Systems of Linear Equations', difficulty: 'Easy',
-    question: 'A linear system over R can have how many solutions?',
-    options: ['Only one', 'Zero, one, or infinitely many', 'Always infinitely many'],
-    correctAnswer: 1, explanation: 'Those are the only three possibilities.'
-  },
-  {
-    id: 140, topic: 'Systems of Linear Equations', difficulty: 'Easy',
-    question: 'The homogeneous system Ax = 0 always:',
-    options: ['Has no solution', 'Has at least the zero solution', 'Has a unique nonzero solution'],
-    correctAnswer: 1, explanation: 'A0 = 0 always.'
-  },
-  {
-    id: 141, topic: 'Systems of Linear Equations', difficulty: 'Easy',
-    question: 'Elementary row operations:',
-    options: ['Change the solution set', 'Preserve the solution set', 'Always create inconsistency'],
-    correctAnswer: 1, explanation: 'They produce equivalent systems.'
-  },
-  {
-    id: 142, topic: 'Systems of Linear Equations', difficulty: 'Medium',
-    question: 'Rank equals the number of:',
-    options: ['Rows always', 'Pivots after reduction', 'Columns always'],
-    correctAnswer: 1, explanation: 'Rank = number of pivots.'
-  },
-  {
-    id: 143, topic: 'Systems of Linear Equations', difficulty: 'Medium',
-    question: 'A free variable corresponds to a:',
-    options: ['Pivot column', 'Non-pivot column', 'RHS only'],
-    correctAnswer: 1, explanation: 'Non-pivot columns mark free parameters.'
-  },
-  {
-    id: 144, topic: 'Systems of Linear Equations', difficulty: 'Medium',
-    question: 'If rank(A) < rank([A|b]), the system is:',
-    options: ['Consistent', 'Inconsistent', 'Homogeneous'],
-    correctAnswer: 1, explanation: 'Augmented rank higher means a contradiction like 0 = 1.'
-  },
-  {
-    id: 145, topic: 'Systems of Linear Equations', difficulty: 'Hard',
-    question: 'A consistent 3×3 system with rank 2 has:',
-    options: ['A unique solution', 'One free variable', 'No solution'],
-    correctAnswer: 1, explanation: 'Free vars = n − r = 1.'
-  },
-  {
-    id: 146, topic: 'Systems of Linear Equations', difficulty: 'Hard',
-    question: 'If x_p solves Ax = b and v ∈ Nul(A), then x_p + v:',
-    options: ['Fails to solve Ax = b', 'Also solves Ax = b', 'Solves Ax = 0 only'],
-    correctAnswer: 1, explanation: 'A(x_p + v) = b + 0 = b.'
-  },
-  {
-    id: 147, topic: 'Systems of Linear Equations', difficulty: 'Hard',
-    question: 'Two non-parallel planes in R³ typically intersect in a:',
-    options: ['Point', 'Line', 'Ball'],
-    correctAnswer: 1, explanation: 'Generic intersection of two planes is a line.'
-  },
-
-  {
-    id: 148, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Easy',
-    question: 'An eigenvector must be:',
-    options: ['The zero vector', 'Nonzero', 'A matrix'],
-    correctAnswer: 1, explanation: 'By definition eigenvectors are nonzero.'
-  },
-  {
-    id: 149, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Easy',
-    question: 'If Av = 3v for v ≠ 0, then 3 is:',
-    options: ['Only a singular value', 'An eigenvalue', 'det(A)'],
-    correctAnswer: 1, explanation: 'That is the definition of eigenvalue 3.'
-  },
-  {
-    id: 150, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Easy',
-    question: 'Av = λv rearranges to:',
-    options: ['(A − λI)v = 0', '(A + λI)v = I', 'A⁻¹v = λ'],
-    correctAnswer: 0, explanation: 'Bring terms together: Av − λv = 0.'
-  },
-  {
-    id: 151, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Medium',
-    question: 'Eigenvalues are roots of:',
-    options: ['det A', 'det(A − λI)', 'Trace only'],
-    correctAnswer: 1, explanation: 'Characteristic equation det(A − λI) = 0.'
-  },
-  {
-    id: 152, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Medium',
-    question: 'Geometric multiplicity is:',
-    options: ['Number of rows', 'Dimension of the eigenspace', 'Always n'],
-    correctAnswer: 1, explanation: 'Geo. mult. = dim{v : Av = λv}.'
-  },
-  {
-    id: 153, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Medium',
-    question: 'Trace of a square matrix equals:',
-    options: ['Product of eigenvalues', 'Sum of eigenvalues', 'Only det(A)'],
-    correctAnswer: 1, explanation: 'Trace = sum of eigenvalues (with multiplicity).'
-  },
-  {
-    id: 154, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Hard',
-    question: 'In A = PDP⁻¹, columns of P are:',
-    options: ['Rows of A', 'Eigenvectors of A', 'Only zeros'],
-    correctAnswer: 1, explanation: 'Independent eigenvectors form P.'
-  },
-  {
-    id: 155, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Hard',
-    question: 'If A has n distinct eigenvalues, then A is:',
-    options: ['Never diagonalizable', 'Diagonalizable', 'Singular'],
-    correctAnswer: 1, explanation: 'Distinct eigenvalues give independent eigenvectors.'
-  },
-  {
-    id: 156, topic: 'Eigenvalues & Eigenvectors', difficulty: 'Hard',
-    question: 'For diagonalizable A = PDP⁻¹, Aᵏ equals:',
-    options: ['P Dᵏ P⁻¹', 'Pᵏ D P⁻¹', 'Dᵏ only'],
-    correctAnswer: 0, explanation: 'Powers act on the diagonal factor.'
-  },
-
-  // ==========================================
-  // Probability & Statistics (45 problems, 5 topics × 3 difficulties × 3)
-  // ==========================================
-  {
-    id: 157, topic: 'Probability Basics', difficulty: 'Easy',
-    question: 'P(Ω) equals:',
-    options: ['1', '0', '1/2'],
-    correctAnswer: 0, explanation: 'The certain event has probability 1.'
-  },
-  {
-    id: 158, topic: 'Probability Basics', difficulty: 'Easy',
-    question: 'P(Aᶜ) equals:',
-    options: ['P(A)', '1 − P(A)', 'P(A)²'],
-    correctAnswer: 1, explanation: 'Complement rule.'
-  },
-  {
-    id: 159, topic: 'Probability Basics', difficulty: 'Easy',
-    question: 'For equally likely outcomes, P(A) is:',
-    options: ['|A| / |Ω|', '|Ω| / |A|', '|A| + |Ω|'],
-    correctAnswer: 0, explanation: 'Favorable over total.'
-  },
-  {
-    id: 160, topic: 'Probability Basics', difficulty: 'Medium',
-    question: 'P(A|B) equals:',
-    options: ['P(A)/P(B)', 'P(A∩B)/P(B)', 'P(A)P(B)'],
-    correctAnswer: 1, explanation: 'Definition of conditional probability.'
-  },
-  {
-    id: 161, topic: 'Probability Basics', difficulty: 'Medium',
-    question: 'If A and B are independent, P(A∩B) equals:',
-    options: ['P(A)+P(B)', 'P(A)P(B)', 'P(A|B)'],
-    correctAnswer: 1, explanation: 'Product rule under independence.'
-  },
-  {
-    id: 162, topic: 'Probability Basics', difficulty: 'Medium',
-    question: 'Bayes’ theorem updates:',
-    options: ['Priors into posteriors', 'Only means', 'Sample sizes'],
-    correctAnswer: 0, explanation: 'Evidence revises belief.'
-  },
-  {
-    id: 163, topic: 'Probability Basics', difficulty: 'Hard',
-    question: 'Disease rate 1%, sensitivity 99%, false positive 2%. After a positive test, P(disease) is closest to:',
-    options: ['99%', '33%', '1%'],
-    correctAnswer: 1, explanation: 'Bayes with total probability ≈ 0.33.'
-  },
-  {
-    id: 164, topic: 'Probability Basics', difficulty: 'Hard',
-    question: 'P(A∪B) always equals:',
-    options: ['P(A)+P(B)', 'P(A)+P(B)−P(A∩B)', 'P(A)P(B)'],
-    correctAnswer: 1, explanation: 'Inclusion–exclusion.'
-  },
-  {
-    id: 165, topic: 'Probability Basics', difficulty: 'Hard',
-    question: 'A partition for the law of total probability must:',
-    options: ['Overlap freely', 'Cover Ω with disjoint events', 'Be independent of A only'],
-    correctAnswer: 1, explanation: 'Disjoint exhaustive pieces.'
-  },
-
-  {
-    id: 166, topic: 'Random Variables & Distributions', difficulty: 'Easy',
-    question: 'A PMF must:',
-    options: ['Integrate to 1', 'Sum to 1', 'Be continuous'],
-    correctAnswer: 1, explanation: 'Discrete probabilities sum to 1.'
-  },
-  {
-    id: 167, topic: 'Random Variables & Distributions', difficulty: 'Easy',
-    question: 'Bernoulli RV takes values:',
-    options: ['Any real', '0 and 1', 'Only integers ≥ 2'],
-    correctAnswer: 1, explanation: 'Success/failure indicator.'
-  },
-  {
-    id: 168, topic: 'Random Variables & Distributions', difficulty: 'Easy',
-    question: 'For continuous X, P(X = c) is:',
-    options: ['f(c)', '0', '1'],
-    correctAnswer: 1, explanation: 'Points have zero area under a PDF.'
-  },
-  {
-    id: 169, topic: 'Random Variables & Distributions', difficulty: 'Medium',
-    question: 'E[aX + b] equals:',
-    options: ['aE[X] + b', 'aE[X]', 'E[X] + b'],
-    correctAnswer: 0, explanation: 'Affinity of expectation.'
-  },
-  {
-    id: 170, topic: 'Random Variables & Distributions', difficulty: 'Medium',
-    question: 'Var(X) equals:',
-    options: ['E[X]²', 'E[X²] − (E[X])²', '(E[X])² − E[X²]'],
-    correctAnswer: 1, explanation: 'Computational variance formula.'
-  },
-  {
-    id: 171, topic: 'Random Variables & Distributions', difficulty: 'Medium',
-    question: 'Binomial models:',
-    options: ['Waiting times only', 'Number of successes in n trials', 'Only continuous data'],
-    correctAnswer: 1, explanation: 'Fixed n Bernoulli trials.'
-  },
-  {
-    id: 172, topic: 'Random Variables & Distributions', difficulty: 'Hard',
-    question: 'Linearity of expectation requires independence:',
-    options: ['Always', 'Never (not required)', 'Only for normals'],
-    correctAnswer: 1, explanation: 'Linearity holds regardless of dependence.'
-  },
-  {
-    id: 173, topic: 'Random Variables & Distributions', difficulty: 'Hard',
-    question: 'Exponential distributions are famous for:',
-    options: ['Memorylessness', 'Being discrete', 'Negative density'],
-    correctAnswer: 0, explanation: 'Past wait does not change future odds.'
-  },
-  {
-    id: 174, topic: 'Random Variables & Distributions', difficulty: 'Hard',
-    question: 'N(μ, σ²) is determined by:',
-    options: ['Only μ', 'Mean and variance', 'Only the mode'],
-    correctAnswer: 1, explanation: 'Two-parameter family.'
-  },
-
-  {
-    id: 175, topic: 'Descriptive Statistics', difficulty: 'Easy',
-    question: 'Most outlier-resistant center:',
-    options: ['Mean', 'Median', 'Range'],
-    correctAnswer: 1, explanation: 'Median ignores extreme magnitude.'
-  },
-  {
-    id: 176, topic: 'Descriptive Statistics', difficulty: 'Easy',
-    question: 'Q₂ is the:',
-    options: ['Mean', 'Median', 'Mode'],
-    correctAnswer: 1, explanation: 'Second quartile = median.'
-  },
-  {
-    id: 177, topic: 'Descriptive Statistics', difficulty: 'Easy',
-    question: 'Sample mean divides the sum by:',
-    options: ['n − 1', 'n', '2n'],
-    correctAnswer: 1, explanation: 'x̄ = (Σ xᵢ)/n.'
-  },
-  {
-    id: 178, topic: 'Descriptive Statistics', difficulty: 'Medium',
-    question: 'Right-skewed data tend to have:',
-    options: ['Mean < median', 'Mean > median', 'Mean = mode always'],
-    correctAnswer: 1, explanation: 'Long right tail pulls the mean up.'
-  },
-  {
-    id: 179, topic: 'Descriptive Statistics', difficulty: 'Medium',
-    question: 'Sample variance usually divides by:',
-    options: ['n', 'n − 1', 'n + 1'],
-    correctAnswer: 1, explanation: 'Unbiased s² uses n − 1.'
-  },
-  {
-    id: 180, topic: 'Descriptive Statistics', difficulty: 'Medium',
-    question: 'IQR equals:',
-    options: ['Q₃ − Q₁', 'Q₁ + Q₃', 'Max − min'],
-    correctAnswer: 0, explanation: 'Middle 50% width.'
-  },
-  {
-    id: 181, topic: 'Descriptive Statistics', difficulty: 'Hard',
-    question: 'A z-score of 0 means the value equals:',
-    options: ['The maximum', 'The mean', 'The SD'],
-    correctAnswer: 1, explanation: 'z = (x − mean)/SD.'
-  },
-  {
-    id: 182, topic: 'Descriptive Statistics', difficulty: 'Hard',
-    question: 'Best plot for outliers in one variable:',
-    options: ['Pie chart', 'Boxplot', 'Venn diagram'],
-    correctAnswer: 1, explanation: 'Boxplots flag points beyond fences.'
-  },
-  {
-    id: 183, topic: 'Descriptive Statistics', difficulty: 'Hard',
-    question: 'Empirical rule: mean ± 2 SD covers about:',
-    options: ['68%', '95%', '50%'],
-    correctAnswer: 1, explanation: '68–95–99.7 rule.'
-  },
-
-  {
-    id: 184, topic: 'Hypothesis Testing', difficulty: 'Easy',
-    question: 'H₀ usually represents:',
-    options: ['The research hope', 'The status-quo / no-effect claim', 'Always μ > 0'],
-    correctAnswer: 1, explanation: 'Null is the claim we challenge.'
-  },
-  {
-    id: 185, topic: 'Hypothesis Testing', difficulty: 'Easy',
-    question: 'Significance level α is:',
-    options: ['Power', 'Allowed Type I error rate', 'Always 0.5'],
-    correctAnswer: 1, explanation: 'Long-run false positive rate under H₀.'
-  },
-  {
-    id: 186, topic: 'Hypothesis Testing', difficulty: 'Easy',
-    question: 'A p-value is computed assuming:',
-    options: ['H₁ is true', 'H₀ is true', 'Neither'],
-    correctAnswer: 1, explanation: 'Null sampling distribution.'
-  },
-  {
-    id: 187, topic: 'Hypothesis Testing', difficulty: 'Medium',
-    question: 'If p = 0.01 and α = 0.05, you:',
-    options: ['Fail to reject H₀', 'Reject H₀', 'Prove H₀'],
-    correctAnswer: 1, explanation: 'p ≤ α ⇒ reject.'
-  },
-  {
-    id: 188, topic: 'Hypothesis Testing', difficulty: 'Medium',
-    question: 'SE of x̄ with known σ is:',
-    options: ['σ', 'σ/√n', 'σ n'],
-    correctAnswer: 1, explanation: 'Averaging reduces SD by √n.'
-  },
-  {
-    id: 189, topic: 'Hypothesis Testing', difficulty: 'Medium',
-    question: 'df for one-sample t is:',
-    options: ['n', 'n − 1', 'n − 2'],
-    correctAnswer: 1, explanation: 'One mean parameter estimated.'
-  },
-  {
-    id: 190, topic: 'Hypothesis Testing', difficulty: 'Hard',
-    question: 'Type II error is:',
-    options: ['Reject true H₀', 'Fail to reject false H₀', 'Correct rejection'],
-    correctAnswer: 1, explanation: 'Missed detection.'
-  },
-  {
-    id: 191, topic: 'Hypothesis Testing', difficulty: 'Hard',
-    question: 'Power equals:',
-    options: ['α', '1 − β', 'β'],
-    correctAnswer: 1, explanation: 'Probability of correctly rejecting a false null.'
-  },
-  {
-    id: 192, topic: 'Hypothesis Testing', difficulty: 'Hard',
-    question: 'Increasing n typically:',
-    options: ['Lowers power', 'Raises power', 'Forces α = 0'],
-    correctAnswer: 1, explanation: 'More data sharpen the sampling distribution.'
-  },
-
-  {
-    id: 193, topic: 'Regression & Correlation', difficulty: 'Easy',
-    question: 'Range of Pearson r:',
-    options: ['[0, 1]', '[−1, 1]', '(−∞, ∞)'],
-    correctAnswer: 1, explanation: 'Bounded linear association measure.'
-  },
-  {
-    id: 194, topic: 'Regression & Correlation', difficulty: 'Easy',
-    question: 'r = 1 means:',
-    options: ['Random cloud', 'Perfect positive linear fit', 'Causation proven'],
-    correctAnswer: 1, explanation: 'All points on an upward line.'
-  },
-  {
-    id: 195, topic: 'Regression & Correlation', difficulty: 'Easy',
-    question: 'Residual equals:',
-    options: ['ŷ − y', 'y − ŷ', 'y − ȳ'],
-    correctAnswer: 1, explanation: 'Observed minus fitted.'
-  },
-  {
-    id: 196, topic: 'Regression & Correlation', difficulty: 'Medium',
-    question: 'Correlation proves causation:',
-    options: ['Always', 'Never by itself', 'When |r| > 0.5'],
-    correctAnswer: 1, explanation: 'Confounding remains possible.'
-  },
-  {
-    id: 197, topic: 'Regression & Correlation', difficulty: 'Medium',
-    question: 'Least squares minimizes:',
-    options: ['Sum of residuals', 'Sum of squared residuals', 'Only |eᵢ|'],
-    correctAnswer: 1, explanation: 'Squared vertical errors.'
-  },
-  {
-    id: 198, topic: 'Regression & Correlation', difficulty: 'Medium',
-    question: 'The fitted line always goes through:',
-    options: ['(0, 0)', '(x̄, ȳ)', '(1, 1)'],
-    correctAnswer: 1, explanation: 'Centroid property.'
-  },
-  {
-    id: 199, topic: 'Regression & Correlation', difficulty: 'Hard',
-    question: 'If r = 0 then the least-squares slope is:',
-    options: ['Infinite', '0', '1'],
-    correctAnswer: 1, explanation: 'b₁ = r s_y / s_x.'
-  },
-  {
-    id: 200, topic: 'Regression & Correlation', difficulty: 'Hard',
-    question: 'A curved residual plot suggests:',
-    options: ['Perfect fit', 'Nonlinear relationship', 'r must be 1'],
-    correctAnswer: 1, explanation: 'Linear model misses curvature.'
-  },
-  {
-    id: 201, topic: 'Regression & Correlation', difficulty: 'Hard',
-    question: 'Extrapolation is risky because:',
-    options: ['r becomes 2', 'The pattern may not continue outside the data range', 'Residuals become correlations'],
-    correctAnswer: 1, explanation: 'Model is local to observed x.'
-  },
-
-  // Calculus AG certificate track — 15 Easy + 15 Medium + 15 Hard per topic
-  ...CALC_AG_PRACTICE_BANK,
-];
+// Each bank holds 100 Easy + 100 Medium + 100 Hard questions per topic, so they
+// are fetched on demand instead of shipping ~2 MB of questions in the main bundle.
+const BANK_LOADERS = {
+  calcAg: () => import('../data/calcAgPracticeBank').then((m) => m.CALC_AG_PRACTICE_BANK),
+  mv: () => import('../data/mvPracticeBank').then((m) => m.MV_PRACTICE_BANK),
+  la: () => import('../data/laPracticeBank').then((m) => m.LA_PRACTICE_BANK),
+  ps: () => import('../data/psPracticeBank').then((m) => m.PS_PRACTICE_BANK),
+};
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 
@@ -1284,17 +24,55 @@ const TOPICS = [
   'Limits and Continuity',
   'Differentiation',
   'Integration',
+  'Sequences and Infinite Series',
+  'Conic Sections and Analytic Geometry',
   'Multiple Integrals',
   'Vectors & Vector Spaces',
   'Matrices & Determinants',
   'Systems of Linear Equations',
   'Eigenvalues & Eigenvectors',
+  'Linear Transformations',
+  'Orthogonality & Least Squares',
+  'Singular Value Decomposition',
   'Probability Basics',
   'Random Variables & Distributions',
   'Descriptive Statistics',
   'Hypothesis Testing',
   'Regression & Correlation',
 ];
+
+const TOPIC_BANK = {
+  'Limits and Continuity': 'calcAg',
+  Differentiation: 'calcAg',
+  Integration: 'calcAg',
+  'Sequences and Infinite Series': 'calcAg',
+  'Conic Sections and Analytic Geometry': 'calcAg',
+  'Taylor Series for Multivariable Functions': 'calcAg',
+  'Partial Derivatives': 'mv',
+  'Vector Calculus': 'mv',
+  'Multiple Integrals': 'mv',
+  'Lagrange Multipliers': 'mv',
+  'Divergence & Curl': 'mv',
+  "Stokes' Theorem": 'mv',
+  'Vectors & Vector Spaces': 'la',
+  'Matrices & Determinants': 'la',
+  'Systems of Linear Equations': 'la',
+  'Eigenvalues & Eigenvectors': 'la',
+  'Probability Basics': 'ps',
+  'Random Variables & Distributions': 'ps',
+  'Descriptive Statistics': 'ps',
+  'Hypothesis Testing': 'ps',
+  'Regression & Correlation': 'ps',
+};
+
+function shuffled(list) {
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
 
 export default function PractiseSection() {
   // --- LAYER 1: DIFFICULTY SELECTION ---
@@ -1305,9 +83,10 @@ export default function PractiseSection() {
 
   // --- CORE GAMEPLAY STATE ---
   const [poolProblems, setPoolProblems] = useState([]);
-  const [currentProblem, setCurrentProblem] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isQuizCompleted, setIsQuizCompleted] = useState(false);
 
   // --- RUNNING SCORE PERSISTENCE ---
   const [score, setScore] = useState(() => {
@@ -1319,20 +98,38 @@ export default function PractiseSection() {
     localStorage.setItem('arena_score_tracker', JSON.stringify(score));
   }, [score]);
 
+  const [isLoadingBank, setIsLoadingBank] = useState(false);
+
   // Handle building the problem pool based on selection matrices
   useEffect(() => {
-    if (chosenDifficulty && chosenTopic) {
-      const filtered = PRACTICE_PROBLEMS.filter(
+    if (!chosenDifficulty || !chosenTopic) return undefined;
+
+    let cancelled = false;
+    const loader = BANK_LOADERS[TOPIC_BANK[chosenTopic]];
+    setIsLoadingBank(true);
+    setPoolProblems([]);
+    setCurrentIndex(0);
+    setIsQuizCompleted(false);
+    resetQuizTurn();
+
+    Promise.resolve(loader ? loader() : [])
+      .then((bank) => {
+        if (cancelled) return;
+        const filtered = bank.filter(
         p => p.difficulty === chosenDifficulty && p.topic === chosenTopic
       );
-      setPoolProblems(filtered);
-      if (filtered.length > 0) {
-        setCurrentProblem(filtered[0]);
-      } else {
-        setCurrentProblem(null);
-      }
-      resetQuizTurn();
-    }
+        setPoolProblems(shuffled(filtered));
+      })
+      .catch(() => {
+        if (!cancelled) setPoolProblems([]);
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoadingBank(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [chosenDifficulty, chosenTopic]);
 
   const resetQuizTurn = () => {
@@ -1343,8 +140,9 @@ export default function PractiseSection() {
   const handleSelectionReset = () => {
     setChosenDifficulty(null);
     setChosenTopic(null);
-    setCurrentProblem(null);
     setPoolProblems([]);
+    setCurrentIndex(0);
+    setIsQuizCompleted(false);
     resetQuizTurn();
   };
 
@@ -1355,6 +153,7 @@ export default function PractiseSection() {
 
   const handleSubmit = () => {
     if (selectedAnswer === null || isSubmitted) return;
+    const currentProblem = poolProblems[currentIndex];
     const correct = selectedAnswer === currentProblem.correctAnswer;
     setScore(prev => ({
       correct: prev.correct + (correct ? 1 : 0),
@@ -1363,26 +162,17 @@ export default function PractiseSection() {
     setIsSubmitted(true);
   };
 
-  // RANDOM GENERATOR LOGIC
-  const handleTriggerRandom = () => {
-    if (poolProblems.length <= 1) return;
-    let nextIndex;
-    do {
-      nextIndex = Math.floor(Math.random() * poolProblems.length);
-    } while (poolProblems[nextIndex].id === currentProblem?.id);
-    setCurrentProblem(poolProblems[nextIndex]);
+  // PROGRESSIVE QUIZ FLOW: Move to the next question or complete quiz
+  const handleNextQuestion = () => {
+    if (currentIndex < poolProblems.length - 1) {
+      setCurrentIndex(prev => prev + 1);
     resetQuizTurn();
+    } else {
+      setIsQuizCompleted(true);
+    }
   };
 
-  const handleNextInSequence = () => {
-    const currentIndex = poolProblems.findIndex(p => p.id === currentProblem.id);
-    if (currentIndex !== -1 && currentIndex < poolProblems.length - 1) {
-      setCurrentProblem(poolProblems[currentIndex + 1]);
-    } else {
-      setCurrentProblem(poolProblems[0]); // Loop back to the start of the pool
-    }
-    resetQuizTurn();
-  };
+  const currentProblem = poolProblems[currentIndex] || null;
 
   return (
     <div className="practice-page">
@@ -1466,26 +256,26 @@ export default function PractiseSection() {
             <div className="practice-toolbar-actions">
               <button
                 type="button"
-                className="practice-tool-btn practice-tool-btn--accent"
-                onClick={handleTriggerRandom}
-                disabled={poolProblems.length <= 1}
-              >
-                Randomize Question
-              </button>
-              <button
-                type="button"
                 className="practice-tool-btn"
                 onClick={handleSelectionReset}
               >
-                Change Rules
+                Change Topic
               </button>
             </div>
           </div>
 
           <div className="practice-panel">
-            {currentProblem ? (
+            {!isQuizCompleted && currentProblem ? (
               <div>
-                <p className="practice-kicker">Question Workspace</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <p className="practice-kicker" style={{ margin: 0 }}>
+                    Question Workspace
+                  </p>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--accent)' }}>
+                    Question {currentIndex + 1} of {poolProblems.length}
+                  </span>
+                </div>
+
                 <h2 className="practice-question">{currentProblem.question}</h2>
 
                 <div className="practice-options" role="listbox" aria-label="Answer choices">
@@ -1524,22 +314,22 @@ export default function PractiseSection() {
                 </div>
 
                 <div className="practice-actions">
+                  {!isSubmitted ? (
                   <button
                     type="button"
                     className="practice-submit"
                     onClick={handleSubmit}
-                    disabled={selectedAnswer === null || isSubmitted}
+                      disabled={selectedAnswer === null}
                   >
                     Submit Verification
                   </button>
-
-                  {isSubmitted && (
+                  ) : (
                     <button
                       type="button"
                       className="practice-next"
-                      onClick={handleNextInSequence}
+                      onClick={handleNextQuestion}
                     >
-                      Next Problem →
+                      {currentIndex < poolProblems.length - 1 ? 'Next Question →' : 'Finish Quiz & View Score'}
                     </button>
                   )}
                 </div>
@@ -1550,15 +340,29 @@ export default function PractiseSection() {
                     <p>{currentProblem.explanation}</p>
                   </div>
                 )}
-
-                {isSubmitted && currentProblem && (
+              </div>
+            ) : isQuizCompleted ? (
+              <div style={{ textAlign: 'center', padding: '1rem 0' }}>
+                <h2>Quiz Complete!</h2>
+                <p>You have finished all questions for <strong>{chosenTopic}</strong> ({chosenDifficulty}).</p>
+                <div style={{ margin: '1.5rem 0' }}>
                   <SubmitToLeaderboard
                     quizId={`practice-${chosenTopic}-${chosenDifficulty}`}
                     score={score.correct}
                     total={Math.max(score.total, 1)}
                   />
-                )}
+                </div>
+                <button
+                  type="button"
+                  className="practice-tool-btn practice-tool-btn--accent"
+                  onClick={handleSelectionReset}
+                  style={{ marginTop: '1rem' }}
+                >
+                  Choose Another Topic
+                </button>
               </div>
+            ) : isLoadingBank ? (
+              <div className="practice-empty">Loading question bank…</div>
             ) : (
               <div className="practice-empty">
                 No questions populated matching this configuration choice.

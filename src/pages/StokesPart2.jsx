@@ -30,8 +30,9 @@ function StokesPart2() {
       <StokesTheoremGuide section={2} />
       <SectionCompleteBar
         sectionId="stokes-2"
-        nextPath="/practice"
-        nextLabel="Practice Section"
+        courseId="multivariable-calculus"
+        nextPath="/courses/multivariable-calculus"
+        nextLabel="Back to Multivariable Calculus hub"
       />
     </div>
   );

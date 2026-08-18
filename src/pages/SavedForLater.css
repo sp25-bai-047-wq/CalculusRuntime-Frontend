@@ -1,0 +1,143 @@
+.saved-for-later-page {
+  min-height: 100vh;
+  background: #0f0e0d;
+  padding-bottom: 4rem;
+}
+
+.sfl-header {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(200, 146, 42, 0.06) 40px, rgba(200, 146, 42, 0.06) 41px),
+    #0f0e0d;
+  color: #faf7f2;
+  padding: 3.4rem 2rem 3rem;
+  text-align: center;
+}
+
+.sfl-eye {
+  color: #e8b84b;
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.sfl-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0.25rem 0;
+}
+
+.sfl-sub {
+  color: rgba(250, 247, 242, 0.74);
+}
+
+.sfl-body {
+  max-width: 800px;
+  margin: 2.5rem auto 0;
+  padding: 0 2rem;
+}
+
+.sfl-empty {
+  color: rgba(250, 247, 242, 0.6);
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.sfl-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sfl-card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.sfl-card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.sfl-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border-radius: 6px;
+}
+
+.sfl-card-link:hover .sfl-card-title {
+  color: #8a6410;
+}
+
+.sfl-card-guide {
+  color: #c8922a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+
+.sfl-card-title {
+  color: #3d4f6b;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+}
+
+.sfl-card-meta {
+  color: #7a7268;
+  font-size: 0.8rem;
+}
+
+.sfl-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sfl-goto-btn {
+  background: #c8922a;
+  border: 1px solid #c8922a;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.sfl-goto-btn:hover {
+  background: #b17e1e;
+}
+
+.sfl-goto-btn:disabled {
+  background: #e5e1d8;
+  border-color: #e5e1d8;
+  color: #9a9384;
+  cursor: not-allowed;
+}
+
+.sfl-remove-btn {
+  background: #ffffff;
+  border: 1px solid rgba(200, 146, 42, 0.4);
+  color: #3d4f6b;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sfl-remove-btn:hover {
+  background: #f7f4ff;
+}

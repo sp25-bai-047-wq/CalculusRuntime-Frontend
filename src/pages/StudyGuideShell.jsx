@@ -1,10 +1,21 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { saveExample, unsaveExample, isExampleSaved, exampleAnchorId } from "../utils/saveForLaterStorage";
 import renderMathInElement from "katex/contrib/auto-render";
 import "katex/dist/katex.min.css";
 import { useProgress } from "../context/ProgressContext";
 import "../pages/Leaderboard.css";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const integrationStyles = `
+.sfl-highlight {
+  outline: 3px solid #c8922a;
+  outline-offset: 4px;
+  border-radius: 8px;
+  transition: outline-color 2s ease;
+}
+
 .study-guide-page {
   min-height: 100vh;
   overflow: visible;
@@ -354,6 +365,36 @@ const integrationStyles = `
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+`;
+
+const saveForLaterStyles = `
+.box.exm {
+  position: relative;
+}
+.save-example-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #ffffff;
+  border: 1px solid rgba(200, 146, 42, 0.4);
+  color: #3d4f6b;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  z-index: 5;
+}
+.save-example-btn.saved {
+  background: #e8b84b;
+  color: #0f0e0d;
+  border-color: #e8b84b;
+}
+.box.exm.exm-flash {
+  outline: 3px solid #c8922a;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 8px rgba(200, 146, 42, 0.2);
+  transition: outline 0.2s, box-shadow 0.2s;
 }
 `;
 
@@ -842,6 +883,97 @@ function setupSidebar(root) {
   return () => cleanups.forEach((cleanup) => cleanup());
 }
 
+function setupSaveForLater(root, { guideTitle, guidePath } = {}) {
+  const examples = Array.from(root.querySelectorAll(".box.exm"));
+  if (!examples.length) return () => {};
+
+  const cleanups = [];
+  const getMeta = (example) => {
+    const titleEl = example.querySelector(".exm-title");
+    let exampleTitle = "Untitled example";
+    if (titleEl) {
+      const clone = titleEl.cloneNode(true);
+      clone.querySelectorAll(".katex-mathml").forEach((el) => el.remove());
+      exampleTitle = clone.textContent.trim() || "Untitled example";
+    }
+    const sectionEl = example.closest("section[id]");
+    const sectionId = sectionEl ? sectionEl.id : "unknown-section";
+    return { exampleTitle, sectionId };
+  };
+
+  examples.forEach((example, index) => {
+    const { exampleTitle, sectionId } = getMeta(example);
+    const anchor = exampleAnchorId(sectionId, exampleTitle);
+    if (!example.id) example.id = anchor;
+    example.dataset.exampleId = anchor;
+
+    if (example.querySelector(".save-example-btn")) return;
+
+    example.style.position = example.style.position || "relative";
+
+    if (!example.id) {
+      const { sectionId } = getMeta(example);
+      example.id = `${sectionId}-example-${index}`;
+    }
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "save-example-btn";
+    btn.setAttribute("aria-label", "Save for later");
+    btn.dataset.exampleIndex = String(index);
+
+    const alreadySaved = isExampleSaved(sectionId, exampleTitle);
+    if (alreadySaved) btn.classList.add("saved");
+    btn.textContent = alreadySaved ? "★ Saved" : "☆ Save";
+
+    example.appendChild(btn);
+    cleanups.push(() => btn.remove());
+  });
+
+  const onClick = (event) => {
+    const btn = event.target.closest(".save-example-btn");
+    if (!btn || !root.contains(btn)) return;
+    const example = btn.closest(".box.exm");
+    if (!example) return;
+
+    const { exampleTitle, sectionId } = getMeta(example);
+    const exampleId = example.id || exampleAnchorId(sectionId, exampleTitle);
+    const isSaved = btn.classList.toggle("saved");
+    btn.textContent = isSaved ? "★ Saved" : "☆ Save";
+
+    if (isSaved) {
+      saveExample({
+        sectionId,
+        exampleTitle,
+        guideTitle,
+        guidePath: guidePath || window.location.pathname,
+        exampleId,
+      });
+    } else {
+      unsaveExample(sectionId, exampleTitle);
+    }
+  };
+
+  root.addEventListener("click", onClick);
+  cleanups.push(() => root.removeEventListener("click", onClick));
+
+  return () => cleanups.forEach((cleanup) => cleanup());
+}
+
+function scrollToExampleHash(root) {
+  const hash = window.location.hash.replace(/^#/, "");
+  if (!hash || !root) return;
+  const target =
+    root.querySelector(`#${CSS.escape(hash)}`) ||
+    document.getElementById(hash);
+  if (!target) return;
+  window.requestAnimationFrame(() => {
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    target.classList.add("exm-flash");
+    window.setTimeout(() => target.classList.remove("exm-flash"), 2200);
+  });
+}
+
 function StudyGuideShell({
   guideClass = "partial-derivatives-guide",
   title,
@@ -850,8 +982,47 @@ function StudyGuideShell({
   children,
 }) {
   const rootRef = useRef(null);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const { saveQuizScore, setLeaderboardOptIn, publishQuizToLeaderboard } = useProgress();
+  const location = useLocation();
   const resolvedClass = guideClass || "partial-derivatives-guide";
+  const guidePath = location.pathname;
+
+  const handleSaveAsPDF = async () => {
+    const element = rootRef.current;
+    if (!element) return;
+    setIsGeneratingPDF(true);
+    try {
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pageWidth = 210;
+    const pageHeight = 297;
+    const imgHeight = (canvas.height * pageWidth) / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, "PNG", 0, position, pageWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, position, pageWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    const fileName = title ? `${title}.pdf` : "study-guide.pdf";
+    pdf.save(fileName);
+  } finally {
+    setIsGeneratingPDF(false);
+  }
+  };
 
   useEffect(() => {
     if (title) {
@@ -883,6 +1054,7 @@ function StudyGuideShell({
     const wire = () => {
       if (cancelled || !rootRef.current) return;
       cleanups.forEach((cleanup) => cleanup());
+      renderLatex(rootRef.current);
       cleanups = [
         ...setupMcqs(rootRef.current, {
           publishQuizToLeaderboard,
@@ -891,12 +1063,16 @@ function StudyGuideShell({
         }),
         setupPinnedGuideNav(rootRef.current),
         setupSidebar(rootRef.current),
+        setupSaveForLater(rootRef.current, {
+          guideTitle: title,
+          guidePath,
+        }),
       ];
       const topButton = rootRef.current.querySelector("#top-btn");
       const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
       topButton?.addEventListener("click", scrollTop);
       cleanups.push(() => topButton?.removeEventListener("click", scrollTop));
-      renderLatex(rootRef.current);
+      scrollToExampleHash(rootRef.current);
     };
 
     // Defer one frame so React finishes committing Partials-style children.
@@ -907,7 +1083,11 @@ function StudyGuideShell({
       window.cancelAnimationFrame(raf);
       cleanups.forEach((cleanup) => cleanup());
     };
-  }, [markup, publishQuizToLeaderboard, saveQuizScore, setLeaderboardOptIn]);
+  }, [markup, publishQuizToLeaderboard, saveQuizScore, setLeaderboardOptIn, title, guidePath]);
+
+  useEffect(() => {
+    scrollToExampleHash(rootRef.current);
+  }, [location.hash, markup, guidePath]);
 
   // Children-mode guides: progress/visit re-renders restore raw `$...$` text nodes.
   // useLayoutEffect runs before paint so users never see broken raw LaTeX.
@@ -919,7 +1099,29 @@ function StudyGuideShell({
 
   return (
     <main className={`study-guide-page ${resolvedClass}`}>
-      <style>{styles + integrationStyles}</style>
+      <style>{styles + integrationStyles + saveForLaterStyles}</style>
+      <button
+        type="button"
+        onClick={handleSaveAsPDF}
+        disabled={isGeneratingPDF}
+        className="save-as-pdf-btn"
+        style={{
+          position: "fixed",
+          bottom: "5.5rem",
+          right: "2rem",
+          zIndex: 200,
+          background: "#0f0e0d",
+          color: "#e8b84b",
+          border: "1px solid rgba(200, 146, 42, 0.5)",
+          borderRadius: "6px",
+          padding: "0.6rem 1rem",
+          fontSize: "0.85rem",
+          cursor: isGeneratingPDF ? "wait" : "pointer",
+          opacity: isGeneratingPDF ? 0.7 : 1,
+        }}
+      >
+        {isGeneratingPDF ? "Generating..." : "Save as PDF"}
+      </button>
       {markup ? (
         <div ref={rootRef} suppressHydrationWarning />
       ) : (

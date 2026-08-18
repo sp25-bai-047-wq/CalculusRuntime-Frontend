@@ -57,8 +57,26 @@
 }
 
 .scb-mark-btn:disabled {
-  opacity: 0.6;
-  cursor: wait;
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.scb-wrap--locked .scb-mark-btn {
+  background: #8a8378;
+}
+
+.scb-mark-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: min(100%, 22rem);
+}
+
+.scb-lock-hint {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--muted, #7a7268);
+  max-width: 28rem;
 }
 
 .scb-error {

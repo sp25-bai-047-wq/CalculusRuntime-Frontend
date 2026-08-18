@@ -3,7 +3,9 @@ import { useProgress } from "../context/ProgressContext";
 import BookmarkButton from "../components/BookmarkButton";
 import SectionCompleteBar from "../components/SectionCompleteBar";
 import VectorCalculusGuide from "./VectorCalculusGuide";
+import MvCertificateBoost from "./MvCertificateBoost";
 import "./GuidePart.css";
+import "./PartialDerivativesGuide.css";
 
 function VectorPart2() {
   const { recordVisit } = useProgress();
@@ -26,10 +28,16 @@ function VectorPart2() {
         />
       </div>
       <VectorCalculusGuide part={2} />
+      <div
+        className="partial-derivatives-guide"
+        style={{ maxWidth: 1000, margin: "0 auto", padding: "0 2rem 2rem" }}
+      >
+        <MvCertificateBoost topic="vector" part={2} />
+      </div>
       <SectionCompleteBar
         sectionId="vector-2"
-        nextPath="/ai-solver"
-        nextLabel="Try the AI Solver"
+        nextPath="/multiple-integrals/1"
+        nextLabel="Next: Multiple Integrals"
       />
     </div>
   );

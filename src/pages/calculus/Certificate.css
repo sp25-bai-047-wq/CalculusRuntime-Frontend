@@ -35,6 +35,32 @@
   border-style: dashed;
 }
 
+.cert-name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.cert-name-input {
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--line, #e0d6c8);
+  font-size: 1rem;
+  background: #fff;
+  color: var(--text, #1c1712);
+}
+
+.cert-name-input:focus {
+  outline: none;
+  border-color: var(--teal);
+}
+
+.cert-score {
+  font-size: 0.85rem;
+  margin-top: -0.4rem !important;
+}
+
 .cert-spinner {
   width: 34px;
   height: 34px;

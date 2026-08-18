@@ -139,6 +139,7 @@ export function RegressionPart2() {
       path="/probability-statistics/regression-correlation/2"
       Guide={RegressionGuide}
       part={2}
+      courseId="probability-statistics"
       nextPath="/courses/probability-statistics"
       nextLabel="Back to Probability & Statistics course hub"
     />

@@ -917,6 +917,29 @@ select {
   box-shadow: var(--shadow-hard);
   transform: translateY(-2px);
 }
+
+.guide-card--locked {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+.guide-card--locked::before {
+  background: var(--muted);
+}
+
+.guide-card--locked::after {
+  content: "🔒 Locked";
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: var(--muted);
+}
+
+.guide-card--locked:hover {
+  border-color: var(--line);
+  box-shadow: none;
+  transform: none;
+}
 .guide-card-icon {
   font-family: Georgia, serif;
   font-size: 2rem;

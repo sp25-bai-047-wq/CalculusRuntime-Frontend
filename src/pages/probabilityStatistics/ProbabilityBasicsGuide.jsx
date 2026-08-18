@@ -1,7 +1,15 @@
 import StudyGuideShell from "../StudyGuideShell";
 import "../PartialDerivativesGuide.css";
 import { LaMcqSection } from "../linearAlgebra/LaMcq";
-import { TheoryBox, TheoremBox, ProcedureBox, WorkedExample } from "../linearAlgebra/LaBlocks";
+import {
+  PS_B_INTRO_QUIZ,
+  PS_B_COMBO_QUIZ,
+  PS_B_COND_QUIZ,
+  PS_B_BAYES_QUIZ,
+} from "../../data/psProbRvQuizzes";
+import { TheoryBox, TheoremBox, ProcedureBox, WorkedExample, RealLifeUse, PracticalTheory } from "../linearAlgebra/LaBlocks";
+
+import PsCertificateBoost from "./PsCertificateBoost";
 
 function Divider() {
   return <hr className="divider" />;
@@ -19,6 +27,7 @@ function ProbabilityBasicsGuide({ part = 1 }) {
           <a className="sb-link" href="#quiz-ps-b-cond">Quiz</a>
           <a className="sb-link" href="#ps-b-bayes">Bayes</a>
           <a className="sb-link" href="#quiz-ps-b-bayes">Quiz</a>
+          <a className="sb-link" href="#ps-cert-probability-p2">Eight examples</a>
         </nav>
         <main className="main">
           <header className="ch-hdr">
@@ -39,6 +48,13 @@ function ProbabilityBasicsGuide({ part = 1 }) {
                 {"Independence means $P(A\\cap B)=P(A)P(B)$, equivalently $P(A\\mid B)=P(A)$. Dependence is the default in real problems — always check rather than assume."}
               </p>
             </TheoryBox>
+            <PracticalTheory title="When to open Bayes">
+              <p>
+                {"Use Bayes when you are given P(evidence|cause) but asked for P(cause|evidence). Write priors, likelihoods, then the total-probability denominator. Sanity-check: posteriors over a partition must sum to 1. Try the interactive "}
+                <a href="/probability-statistics/bayes-lab">Bayes Lab</a>
+                {" to watch prevalence move P(D|+)."}
+              </p>
+            </PracticalTheory>
             <TheoremBox title="Law of total probability">
               <p>
                 {"If $B_1,\\ldots,B_k$ partition $\\Omega$, then $P(A)=\\sum_i P(A\\mid B_i)P(B_i)$. This is the bridge to Bayes’ theorem."}
@@ -52,11 +68,11 @@ function ProbabilityBasicsGuide({ part = 1 }) {
             <ProcedureBox
               title="Checklist"
               steps={[
-                "Identify the event you condition on (the new information).",
-                "Write $P(A\\cap B)$ carefully — often via a tree or table.",
-                "Divide by $P(B)$; never skip the denominator.",
-                "For Bayes: compute $P(B\\mid A)$ from $P(A\\mid B)P(B)/P(A)$, using total probability for $P(A)$.",
-                "Sanity-check: answers must lie in $[0,1]$.",
+                { text: "Identify the event you condition on (the new information)." },
+                { text: "Write $P(A\\cap B)$ carefully — often via a tree or table." },
+                { text: "Divide by $P(B)$; never skip the denominator." },
+                { text: "For Bayes: compute $P(B\\mid A)$ from $P(A\\mid B)P(B)/P(A)$, using total probability for $P(A)$.", why: "Build the marginal of the evidence with the law of total probability." },
+                { text: "Sanity-check: answers must lie in $[0,1]$." }
               ]}
             />
           </section>
@@ -69,48 +85,52 @@ function ProbabilityBasicsGuide({ part = 1 }) {
               title="Cards given a red card"
               setup={"Draw one card from a 52-card deck. Let $A=$ ace, $B=$ red. Find $P(A\\mid B)$."}
               steps={[
-                "$B$ has 26 red cards; among them 2 are aces (hearts, diamonds).",
-                "So $P(A\\mid B)=2/26=1/13$.",
-                "Note $P(A)=4/52=1/13$ as well — here $A$ and $B$ are independent.",
+                { text: "$B$ has 26 red cards; among them 2 are aces (hearts, diamonds).", why: "Count equally likely outcomes in the conditioning set carefully (order matters for dice)." },
+                { text: "So $P(A\\mid B)=2/26=1/13$.", why: "Apply Bayes: posterior ∝ likelihood × prior, then normalize." },
+                { text: "Note $P(A)=4/52=1/13$ as well — here $A$ and $B$ are independent.", why: "State the precise criterion (independence product, hypotheses, or decision rule) before computing." }
               ]}
               result={"$P(A\\mid B)=1/13$."}
               check={"$P(A\\cap B)=(2/52)$, $P(B)=26/52$, ratio $2/26$."}
+              mistake={"Dividing by 52 instead of 26 — once you condition on $B$, the denominator shrinks to $B$'s own count, not the full sample space."}
             />
             <WorkedExample
               number={2}
               title="Two dice, given sum ≥ 10"
               setup={"Fair dice. $A=$ sum is 11, $B=$ sum ≥ 10. Find $P(A\\mid B)$."}
               steps={[
-                "Sums ≥ 10: (4,6),(5,5),(5,6),(6,4),(6,5),(6,6) → 6 outcomes.",
-                "Sum 11: (5,6),(6,5) → 2 outcomes.",
-                "$P(A\\mid B)=2/6=1/3$.",
+                { text: "Sums ≥ 10: (4,6),(5,5),(5,6),(6,4),(6,5),(6,6) → 6 outcomes.", why: "Count equally likely outcomes in the conditioning set carefully (order matters for dice)." },
+                { text: "Sum 11: (5,6),(6,5) → 2 outcomes.", why: "Count equally likely outcomes in the conditioning set carefully (order matters for dice)." },
+                { text: "$P(A\\mid B)=2/6=1/3$.", why: "Apply Bayes: posterior ∝ likelihood × prior, then normalize." }
               ]}
               result={"$1/3$."}
               check={"Equally likely outcomes restricted to $B$."}
+              mistake={"Forgetting that (5,6) and (6,5) are two distinct outcomes, not one — treating dice as unordered undercounts the sample space."}
             />
             <WorkedExample
               number={3}
               title="Medical test (Bayes)"
               setup={"Disease rate 1%. Test: sensitivity 99%, false positive 2%. Given positive test, find $P(\\text{disease})$."}
               steps={[
-                "Let $D=$ disease, $+=$ positive. $P(D)=0.01$, $P(+\\mid D)=0.99$, $P(+\\mid D^c)=0.02$.",
-                "$P(+)=0.99(0.01)+0.02(0.99)=0.0099+0.0198=0.0297$.",
-                "$P(D\\mid +)=0.0099/0.0297\\approx 0.333$.",
+                { text: "Let $D=$ disease, $+=$ positive. $P(D)=0.01$, $P(+\\mid D)=0.99$, $P(+\\mid D^c)=0.02$.", why: "Name the events/parameters exactly as the problem states them." },
+                { text: "$P(+)=0.99(0.01)+0.02(0.99)=0.0099+0.0198=0.0297$.", why: "Build the marginal of the evidence with the law of total probability." },
+                { text: "$P(D\\mid +)=0.0099/0.0297\\approx 0.333$.", why: "Apply Bayes: posterior ∝ likelihood × prior, then normalize." }
               ]}
               result={"About $33\\%$ — still more likely healthy than sick after one positive."}
               check={"Most positives come from the large healthy population."}
+              mistake={"Assuming a positive result means 99% chance of disease (confusing $P(+\\mid D)$ with $P(D\\mid +)$) — these are not the same quantity."}
             />
             <WorkedExample
               number={4}
               title="Independence check"
               setup={"$P(A)=0.4$, $P(B)=0.5$, $P(A\\cap B)=0.2$. Are $A,B$ independent?"}
               steps={[
-                "Need $P(A\\cap B)=P(A)P(B)=0.20$.",
-                "Observed intersection is also $0.2$.",
-                "Yes — independent. Also $P(A\\mid B)=0.2/0.5=0.4=P(A)$.",
+                { text: "Need $P(A\\cap B)=P(A)P(B)=0.20$.", why: "State the precise criterion (independence product, hypotheses, or decision rule) before computing." },
+                { text: "Observed intersection is also $0.2$.", why: "Finish the arithmetic and state the conclusion in the problem's units." },
+                { text: "Yes — independent. Also $P(A\\mid B)=0.2/0.5=0.4=P(A)$.", why: "State the precise criterion (independence product, hypotheses, or decision rule) before computing." }
               ]}
               result={"Independent."}
               check={"Product rule holds exactly."}
+              mistake={"Assuming disjoint ($A\\cap B=\\varnothing$) means independent — the two ideas are unrelated; disjoint events with nonzero probability are actually always dependent."}
             />
           </section>
 
@@ -120,26 +140,7 @@ function ProbabilityBasicsGuide({ part = 1 }) {
             title="Conditionals"
             scoreId="score-ps-b-cond"
             section="ps-b-cond"
-            questions={[
-              {
-                prompt: "$P(A\\mid B)$ equals:",
-                options: ["$P(A)/P(B)$", "$P(A\\cap B)/P(B)$", "$P(A)P(B)$"],
-                answer: "B",
-                explanation: "Definition of conditional probability.",
-              },
-              {
-                prompt: "If $A$ and $B$ are independent, then $P(A\\mid B)$ equals:",
-                options: ["$P(B)$", "$P(A)$", "$0$"],
-                answer: "B",
-                explanation: "Independence means conditioning does not change $P(A)$.",
-              },
-              {
-                prompt: "The law of total probability requires the $B_i$ to:",
-                options: ["Overlap freely", "Partition the sample space", "Be independent of $A$"],
-                answer: "B",
-                explanation: "A partition covers $\\Omega$ with disjoint pieces.",
-              },
-            ]}
+            questions={PS_B_COND_QUIZ}
           />
 
           <Divider />
@@ -151,6 +152,47 @@ function ProbabilityBasicsGuide({ part = 1 }) {
                 {"$P(B\\mid A)=P(A\\mid B)P(B)/P(A)$. Prior $P(B)$ becomes posterior $P(B\\mid A)$ after observing $A$."}
               </p>
             </TheoryBox>
+            <TheoremBox title="Bayes with several hypotheses">
+              <p>
+                {"If $B_1,\\ldots,B_k$ partition $\\Omega$ (mutually exclusive causes), then $P(B_i\\mid A)=\\dfrac{P(A\\mid B_i)P(B_i)}{\\sum_j P(A\\mid B_j)P(B_j)}$. The denominator is the law of total probability applied to $A$."}
+              </p>
+            </TheoremBox>
+            <ProcedureBox
+              title="Multi-hypothesis Bayes checklist"
+              steps={[
+                { text: "List every mutually exclusive cause $B_1,\\ldots,B_k$ and their priors $P(B_i)$." },
+                { text: "Write the likelihood $P(A\\mid B_i)$ for each cause.", why: "Apply Bayes: posterior ∝ likelihood × prior, then normalize." },
+                { text: "Compute the total probability $P(A)=\\sum_j P(A\\mid B_j)P(B_j)$ — the shared denominator.", why: "Build the marginal of the evidence with the law of total probability." },
+                { text: "Divide the numerator for the cause you care about by this denominator.", why: "Finish the arithmetic and state the conclusion in the problem's units." },
+                { text: "Sanity-check: all resulting posteriors $P(B_i\\mid A)$ must sum to 1.", why: "Apply Bayes: posterior ∝ likelihood × prior, then normalize." }
+              ]}
+            />
+            <WorkedExample
+              number={1}
+              title="Three factories, one defective part"
+              setup={"Factories $F_1,F_2,F_3$ supply $50\\%,30\\%,20\\%$ of parts, with defect rates $2\\%,5\\%,1\\%$. A part is defective — find $P(F_2\\mid \\text{defective})$."}
+              steps={[
+                { text: "$P(D)=0.5(0.02)+0.3(0.05)+0.2(0.01)=0.010+0.015+0.002=0.027$.", why: "Build the marginal of the evidence with the law of total probability." },
+                { text: "$P(F_2\\mid D)=P(D\\mid F_2)P(F_2)/P(D)=0.015/0.027$.", why: "Build the marginal of the evidence with the law of total probability." },
+                { text: "$0.015/0.027\\approx 0.556$." }
+              ]}
+              result={"About $55.6\\%$ — despite supplying only 30% of parts, $F_2$'s higher defect rate makes it the most likely source."}
+              check={"Posteriors for all three factories sum to 1: check $0.010/0.027+0.015/0.027+0.002/0.027=1$."}
+              mistake={"Picking $F_2$ just because it has the highest defect rate, ignoring its market share — Bayes weighs both the likelihood and the prior together."}
+            />
+            <WorkedExample
+              number={2}
+              title="Spam filter"
+              setup={"20% of emails are spam. A filter flags 90% of spam and 5% of non-spam as 'flagged'. Given an email is flagged, find $P(\\text{spam})$."}
+              steps={[
+                { text: "$P(\\text{flagged})=0.2(0.9)+0.8(0.05)=0.18+0.04=0.22$." },
+                { text: "$P(\\text{spam}\\mid \\text{flagged})=0.18/0.22$." },
+                { text: "$\\approx 0.818$." }
+              ]}
+              result={"About $81.8\\%$ chance a flagged email is truly spam."}
+              check={"Even a 5% false-positive rate on the large 'non-spam' group contributes meaningfully to flagged emails — the same rare-disease-style effect as the medical test earlier."}
+              mistake={"Reading '90% of spam gets flagged' as 'if flagged, 90% chance it's spam' — that swaps $P(\\text{flagged}\\mid\\text{spam})$ for $P(\\text{spam}\\mid\\text{flagged})$."}
+            />
           </section>
 
           <LaMcqSection
@@ -159,32 +201,16 @@ function ProbabilityBasicsGuide({ part = 1 }) {
             title="Bayes"
             scoreId="score-ps-b-bayes"
             section="ps-b-bayes"
-            questions={[
-              {
-                prompt: "Bayes’ theorem updates:",
-                options: ["Only sample spaces", "Priors into posteriors", "Only means"],
-                answer: "B",
-                explanation: "Evidence revises belief about hypotheses.",
-              },
-              {
-                prompt: "In the medical test example, a rare disease implies:",
-                options: ["Positive tests are always disease", "False positives can dominate", "Sensitivity is irrelevant"],
-                answer: "B",
-                explanation: "Large healthy pool generates many false positives.",
-              },
-              {
-                prompt: "$P(A)$ in Bayes’ formula is often found by:",
-                options: ["Guessing", "Law of total probability", "Setting it to 1"],
-                answer: "B",
-                explanation: "Marginalize over partitions of the cause.",
-              },
-            ]}
+            questions={PS_B_BAYES_QUIZ}
           />
 
           <Divider />
+          <PsCertificateBoost topic="probability" part={2} />
+
           <section className="section" id="summary">
             <div className="sec-badge">Reference</div>
             <h2 className="sec-title">Part 2 complete</h2>
+            <RealLifeUse>{"Insurers price policies using axioms and conditional probability, doctors interpret diagnostic tests with Bayes' theorem, and fraud-detection systems flag transactions by updating probabilities as new evidence (location, amount, device) arrives — the same Bayes machinery from this guide."}</RealLifeUse>
             <p>{"Next: random variables turn events into numbers you can average and model with distributions."}</p>
           </section>
         </main>
@@ -202,6 +228,7 @@ function ProbabilityBasicsGuide({ part = 1 }) {
         <a className="sb-link" href="#quiz-ps-b-intro">Quiz</a>
         <a className="sb-link" href="#ps-b-combo">Counting</a>
         <a className="sb-link" href="#quiz-ps-b-combo">Quiz</a>
+        <a className="sb-link" href="#ps-cert-probability-p1">Eight examples</a>
       </nav>
       <main className="main">
         <header className="ch-hdr">
@@ -225,6 +252,11 @@ function ProbabilityBasicsGuide({ part = 1 }) {
               {"A sample space $\\Omega$ lists all possible outcomes of an experiment. An event $A\\subseteq\\Omega$ is a set of outcomes. Probability $P$ assigns each event a number in $[0,1]$."}
             </p>
           </TheoryBox>
+          <PracticalTheory title="Reading a probability word problem">
+            <p>
+              {"Underline the event you want and the information you condition on. Draw a tiny table or tree before writing symbols. If the story mentions 'given that' or a positive test, reach for conditional probability or Bayes — not a raw base rate."}
+            </p>
+          </PracticalTheory>
           <TheoremBox title="Kolmogorov axioms">
             <p>
               {"(1) $P(A)\\ge 0$. (2) $P(\\Omega)=1$. (3) For countable disjoint events, $P(\\bigcup A_i)=\\sum P(A_i)$. From these: $P(A^c)=1-P(A)$ and $P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$."}
@@ -238,12 +270,12 @@ function ProbabilityBasicsGuide({ part = 1 }) {
           <ProcedureBox
             title="Setup checklist"
             steps={[
-              "Define $\\Omega$ clearly (what counts as one outcome?).",
-              "Decide if outcomes are equally likely; if yes, $P(A)=|A|/|\\Omega|$.",
-              "Otherwise assign probabilities that sum to 1.",
-              "Translate the word problem into unions, intersections, complements.",
-              "Use axioms and identities — avoid inventing new rules mid-problem.",
-            ]}
+                { text: "Define $\\Omega$ clearly (what counts as one outcome?).", why: "Name the events/parameters exactly as the problem states them." },
+                { text: "Decide if outcomes are equally likely; if yes, $P(A)=|A|/|\\Omega|$.", why: "State the precise criterion (independence product, hypotheses, or decision rule) before computing." },
+                { text: "Otherwise assign probabilities that sum to 1.", why: "Count equally likely outcomes in the conditioning set carefully (order matters for dice)." },
+                { text: "Translate the word problem into unions, intersections, complements." },
+                { text: "Use axioms and identities — avoid inventing new rules mid-problem." }
+              ]}
           />
         </section>
 
@@ -255,46 +287,50 @@ function ProbabilityBasicsGuide({ part = 1 }) {
             title="Fair die"
             setup={"Roll a fair six-sided die. Find $P(\\text{even})$ and $P(\\text{at least }5)$."}
             steps={[
-              "$\\Omega=\\{1,2,3,4,5,6\\}$, each probability $1/6$.",
-              "Even: $\\{2,4,6\\}$ → $3/6=1/2$.",
-              "At least 5: $\\{5,6\\}$ → $2/6=1/3$.",
-            ]}
+                { text: "$\\Omega=\\{1,2,3,4,5,6\\}$, each probability $1/6$." },
+                { text: "Even: $\\{2,4,6\\}$ → $3/6=1/2$." },
+                { text: "At least 5: $\\{5,6\\}$ → $2/6=1/3$." }
+              ]}
             result={"$1/2$ and $1/3$."}
             check={"Counts over 6 equally likely faces."}
+            mistake={"Reading 'at least 5' as only $\\{5\\}$ — 'at least' includes the endpoint and everything above it, so 6 belongs too."}
           />
           <WorkedExample
             number={2}
             title="Complement"
             setup={"$P(A)=0.35$. Find $P(A^c)$."}
             steps={[
-              "Axiom: $P(A)+P(A^c)=1$.",
-              "$P(A^c)=1-0.35=0.65$.",
-            ]}
+                { text: "Axiom: $P(A)+P(A^c)=1$." },
+                { text: "$P(A^c)=1-0.35=0.65$." }
+              ]}
             result={"$0.65$."}
             check={"Sums with $P(A)$ to 1."}
+            mistake={"Multiplying instead of subtracting (e.g. writing $P(A^c)=1\\times 0.35$) — the complement rule is additive, not multiplicative."}
           />
           <WorkedExample
             number={3}
             title="Inclusion–exclusion"
             setup={"$P(A)=0.4$, $P(B)=0.5$, $P(A\\cap B)=0.15$. Find $P(A\\cup B)$."}
             steps={[
-              "$P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$.",
-              "$=0.4+0.5-0.15=0.75$.",
-            ]}
+                { text: "$P(A\\cup B)=P(A)+P(B)-P(A\\cap B)$." },
+                { text: "$=0.4+0.5-0.15=0.75$." }
+              ]}
             result={"$0.75$."}
             check={"Intersection was subtracted once to avoid double-counting."}
+            mistake={"Forgetting to subtract $P(A\\cap B)$ at all, giving $0.9$ — this double-counts the overlap region."}
           />
           <WorkedExample
             number={4}
             title="Two coins"
             setup={"Two fair coins. Find $P(\\text{exactly one head})$."}
             steps={[
-              "$\\Omega=\\{HH,HT,TH,TT\\}$, each $1/4$.",
-              "Exactly one head: $\\{HT,TH\\}$.",
-              "Probability $2/4=1/2$.",
-            ]}
+                { text: "$\\Omega=\\{HH,HT,TH,TT\\}$, each $1/4$." },
+                { text: "Exactly one head: $\\{HT,TH\\}$." },
+                { text: "Probability $2/4=1/2$." }
+              ]}
             result={"$1/2$."}
             check={"Not $1/3$ — outcomes are equally likely only if listed this way."}
+            mistake={"Treating outcomes as {0 heads, 1 head, 2 heads} and giving each 1/3 — those three outcomes are not equally likely; HT and TH must be counted separately."}
           />
         </section>
 
@@ -304,26 +340,7 @@ function ProbabilityBasicsGuide({ part = 1 }) {
           title="Axioms"
           scoreId="score-ps-b-intro"
           section="ps-b-intro"
-          questions={[
-            {
-              prompt: "$P(\\Omega)$ equals:",
-              options: ["0", "1", "Depends on the experiment"],
-              answer: "B",
-              explanation: "The certain event has probability 1.",
-            },
-            {
-              prompt: "$P(A^c)$ equals:",
-              options: ["$P(A)$", "$1-P(A)$", "$P(A)^2$"],
-              answer: "B",
-              explanation: "Complement rule from the axioms.",
-            },
-            {
-              prompt: "For disjoint $A,B$, $P(A\\cup B)$ equals:",
-              options: ["$P(A)P(B)$", "$P(A)+P(B)$", "$P(A)-P(B)$"],
-              answer: "B",
-              explanation: "Additivity for disjoint events.",
-            },
-          ]}
+          questions={PS_B_INTRO_QUIZ}
         />
 
         <Divider />
@@ -343,29 +360,12 @@ function ProbabilityBasicsGuide({ part = 1 }) {
           title="Counting"
           scoreId="score-ps-b-combo"
           section="ps-b-combo"
-          questions={[
-            {
-              prompt: "For equally likely outcomes, $P(A)$ is:",
-              options: ["$|A|+|\\Omega|$", "$|A|/|\\Omega|$", "$|\\Omega|/|A|$"],
-              answer: "B",
-              explanation: "Favorable over total.",
-            },
-            {
-              prompt: "$\\binom{5}{2}$ equals:",
-              options: ["10", "20", "25"],
-              answer: "A",
-              explanation: "$5!/(2!3!)=10$.",
-            },
-            {
-              prompt: "Order matters for:",
-              options: ["Combinations only", "Permutations", "Neither"],
-              answer: "B",
-              explanation: "Permutations count ordered selections.",
-            },
-          ]}
+          questions={PS_B_COMBO_QUIZ}
         />
 
         <Divider />
+        <PsCertificateBoost topic="probability" part={1} />
+
         <section className="section" id="summary">
           <div className="sec-badge">Reference</div>
           <h2 className="sec-title">Part 1 complete</h2>

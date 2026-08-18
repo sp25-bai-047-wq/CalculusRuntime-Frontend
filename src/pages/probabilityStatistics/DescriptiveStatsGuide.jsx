@@ -1,7 +1,15 @@
 import StudyGuideShell from "../StudyGuideShell";
 import "../PartialDerivativesGuide.css";
 import { LaMcqSection } from "../linearAlgebra/LaMcq";
-import { TheoryBox, TheoremBox, ProcedureBox, WorkedExample } from "../linearAlgebra/LaBlocks";
+import {
+  PS_D_CENTER_QUIZ,
+  PS_D_QUANT_QUIZ,
+  PS_D_SPREAD_QUIZ,
+  PS_D_PLOTS_QUIZ,
+} from "../../data/psStatsQuizzes";
+import { TheoryBox, TheoremBox, ProcedureBox, WorkedExample, RealLifeUse, PracticalTheory } from "../linearAlgebra/LaBlocks";
+
+import PsCertificateBoost from "./PsCertificateBoost";
 
 function Divider() {
   return <hr className="divider" />;
@@ -19,6 +27,7 @@ function DescriptiveStatsGuide({ part = 1 }) {
           <a className="sb-link" href="#quiz-ps-d-spread">Quiz</a>
           <a className="sb-link" href="#ps-d-plots">Plots</a>
           <a className="sb-link" href="#quiz-ps-d-plots">Quiz</a>
+          <a className="sb-link" href="#ps-cert-descriptive-p2">Eight examples</a>
         </nav>
         <main className="main">
           <header className="ch-hdr">
@@ -36,6 +45,11 @@ function DescriptiveStatsGuide({ part = 1 }) {
                 {"Sample variance $s^2=\\frac{1}{n-1}\\sum(x_i-\\bar x)^2$ (unbiased). SD $s=\\sqrt{s^2}$. A z-score $z=(x-\\bar x)/s$ says how many SDs above/below the mean."}
               </p>
             </TheoryBox>
+            <PracticalTheory title="Reading displays quickly">
+              <p>
+                {"Ask what the picture emphasizes: shape (histogram), five-number summary (boxplot), or ranking (percentiles). Flag outliers with the 1.5×IQR fence before trusting a mean."}
+              </p>
+            </PracticalTheory>
             <TheoremBox title="IQR robustness">
               <p>
                 {"IQR $=Q_3-Q_1$ resists outliers better than SD. Outlier fences often use $Q_1-1.5\\,\\mathrm{IQR}$ and $Q_3+1.5\\,\\mathrm{IQR}$."}
@@ -48,11 +62,11 @@ function DescriptiveStatsGuide({ part = 1 }) {
             <ProcedureBox
               title="Standardize a value"
               steps={[
-                "Compute mean and SD of the reference sample (or use population $\\mu,\\sigma$).",
-                "Subtract the center from $x$.",
-                "Divide by the SD to get $z$.",
-                "Interpret: $|z|>2$ is often unusual; $|z|>3$ is extreme.",
-                "For displays: choose histogram/boxplot to match the question (shape vs outliers).",
+                { text: "Compute mean and SD of the reference sample (or use population $\\mu,\\sigma$).", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Subtract the center from $x$." },
+                { text: "Divide by the SD to get $z$.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Interpret: $|z|>2$ is often unusual; $|z|>3$ is extreme." },
+                { text: "For displays: choose histogram/boxplot to match the question (shape vs outliers)." }
               ]}
             />
           </section>
@@ -64,46 +78,50 @@ function DescriptiveStatsGuide({ part = 1 }) {
               title="Sample SD"
               setup={"Data: 2, 4, 4, 6. Find $s$."}
               steps={[
-                "$\\bar x=4$.",
-                "Deviations: $-2,0,0,2$; squares: $4,0,0,4$; sum $8$.",
-                "$s^2=8/3$, $s=\\sqrt{8/3}\\approx 1.63$.",
+                { text: "$\\bar x=4$." },
+                { text: "Deviations: $-2,0,0,2$; squares: $4,0,0,4$; sum $8$.", why: "Count equally likely outcomes in the conditioning set carefully (order matters for dice)." },
+                { text: "$s^2=8/3$, $s=\\sqrt{8/3}\\approx 1.63$." }
               ]}
               result={"$s\\approx 1.63$."}
               check={"Divide by $n-1=3$, not $n$."}
+              mistake={"Dividing by $n=4$ instead of $n-1=3$ — this gives the (biased) population variance formula instead of the unbiased sample variance formula."}
             />
             <WorkedExample
               number={2}
               title="z-score compare"
               setup={"Exam A: score 85, mean 70, SD 10. Exam B: 80, mean 60, SD 15. Which is relatively better?"}
               steps={[
-                "$z_A=(85-70)/10=1.5$.",
-                "$z_B=(80-60)/15\\approx 1.33$.",
-                "A is farther above its mean in SD units.",
+                { text: "$z_A=(85-70)/10=1.5$." },
+                { text: "$z_B=(80-60)/15\\approx 1.33$." },
+                { text: "A is farther above its mean in SD units.", why: "Plug into the matching center/spread formula for this data type." }
               ]}
               result={"Exam A is relatively stronger."}
               check={"Compare standardized scores, not raw marks."}
+              mistake={"Comparing raw scores directly (85 > 80, so 'A is better') — this ignores that the two exams have different means and spreads, which z-scores correct for."}
             />
             <WorkedExample
               number={3}
               title="IQR fences"
               setup={"$Q_1=10$, $Q_3=22$. Find upper fence."}
               steps={[
-                "IQR $=12$.",
-                "Upper fence $=22+1.5\\times 12=40$.",
+                { text: "IQR $=12$.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Upper fence $=22+1.5\\times 12=40$.", why: "Plug into the matching center/spread formula for this data type." }
               ]}
               result={"$40$."}
               check={"Points above 40 flagged as potential outliers."}
+              mistake={"Multiplying $Q_3$ by 1.5 instead of the IQR — the fence formula scales the IQR, not the quartile itself."}
             />
             <WorkedExample
               number={4}
               title="Empirical rule"
               setup={"Approx. normal data, mean 50, SD 5. About what percent lie in $[40,60]$?"}
               steps={[
-                "$[40,60]$ is mean ± 2 SD.",
-                "Empirical rule ≈ 95%.",
+                { text: "$[40,60]$ is mean ± 2 SD.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Empirical rule ≈ 95%.", why: "Finish the arithmetic and state the conclusion in the problem's units." }
               ]}
               result={"About 95%."}
               check={"68 / 95 / 99.7 for 1 / 2 / 3 SD."}
+              mistake={"Misreading the interval width — $[40,60]$ is $\\pm 2$ SD (since SD=5), not $\\pm 1$ SD, so the answer is 95%, not 68%."}
             />
           </section>
 
@@ -113,26 +131,7 @@ function DescriptiveStatsGuide({ part = 1 }) {
             title="Spread"
             scoreId="score-ps-d-spread"
             section="ps-d-spread"
-            questions={[
-              {
-                prompt: "Sample variance usually divides by:",
-                options: ["$n$", "$n-1$", "$n+1$"],
-                answer: "B",
-                explanation: "Unbiased sample variance uses $n-1$.",
-              },
-              {
-                prompt: "A z-score of 0 means the value equals:",
-                options: ["The max", "The mean", "The SD"],
-                answer: "B",
-                explanation: "$z=(x-\\bar x)/s$.",
-              },
-              {
-                prompt: "IQR is:",
-                options: ["$Q_3-Q_1$", "$Q_1+Q_3$", "Max − min"],
-                answer: "A",
-                explanation: "Middle 50% width.",
-              },
-            ]}
+            questions={PS_D_SPREAD_QUIZ}
           />
 
           <Divider />
@@ -144,6 +143,47 @@ function DescriptiveStatsGuide({ part = 1 }) {
                 {"Histograms show shape (skew, modality). Boxplots highlight median, IQR, and outliers. Scatterplots preview association before regression."}
               </p>
             </TheoryBox>
+            <TheoremBox title="Outlier fence rule">
+              <p>
+                {"Using quartiles $Q_1,Q_3$ and $\\mathrm{IQR}=Q_3-Q_1$: lower fence $=Q_1-1.5\\,\\mathrm{IQR}$, upper fence $=Q_3+1.5\\,\\mathrm{IQR}$. Points outside the fences are flagged as outliers on a boxplot."}
+              </p>
+            </TheoremBox>
+            <ProcedureBox
+              title="Reading a boxplot / histogram"
+              steps={[
+                { text: "Locate the box: left edge $Q_1$, right edge $Q_3$, line inside is the median.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Whiskers extend to the most extreme points within the fences.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Any point beyond a fence is plotted separately as an outlier.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "For a histogram, compare the tail lengths on each side to judge skew direction." },
+                { text: "A long right tail with mean $>$ median signals right (positive) skew, and vice versa.", why: "Plug into the matching center/spread formula for this data type." }
+              ]}
+            />
+            <WorkedExample
+              number={1}
+              title="Fence calculation"
+              setup={"A dataset has $Q_1=20$, $Q_3=32$. Find the fences and check if a value of $55$ is an outlier."}
+              steps={[
+                { text: "$\\mathrm{IQR}=32-20=12$.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Upper fence $=32+1.5(12)=32+18=50$.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "$55>50$, so it lies beyond the upper fence.", why: "Plug into the matching center/spread formula for this data type." }
+              ]}
+              result={"$55$ is flagged as an outlier."}
+              check={"Lower fence $=20-18=2$; any value below 2 would also be flagged."}
+              mistake={"Comparing 55 to $Q_3=32$ directly and calling it an outlier — the correct comparison is against the fence (50), not the quartile itself."}
+            />
+            <WorkedExample
+              number={2}
+              title="Reading skew from mean vs. median"
+              setup={"A dataset has mean $=48$, median $=42$. Describe the likely skew and boxplot shape."}
+              steps={[
+                { text: "Mean $>$ median means a few unusually large values are pulling the mean up.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "This is characteristic of right (positive) skew." },
+                { text: "On a boxplot, expect a longer whisker (or more outliers) on the upper side." }
+              ]}
+              result={"Right-skewed distribution."}
+              check={"If mean $<$ median instead, the skew would be left (negative)."}
+              mistake={"Mixing up the direction — some students say 'mean > median means left-skewed'; it's the opposite: a larger mean than median signals a long tail pulling to the right."}
+            />
           </section>
 
           <LaMcqSection
@@ -152,32 +192,16 @@ function DescriptiveStatsGuide({ part = 1 }) {
             title="Plots"
             scoreId="score-ps-d-plots"
             section="ps-d-plots"
-            questions={[
-              {
-                prompt: "Best plot for outliers in one variable:",
-                options: ["Pie chart", "Boxplot", "Venn diagram"],
-                answer: "B",
-                explanation: "Boxplots mark points beyond fences.",
-              },
-              {
-                prompt: "A right-skewed histogram has a long tail to the:",
-                options: ["Left", "Right", "Neither"],
-                answer: "B",
-                explanation: "Skew direction follows the long tail.",
-              },
-              {
-                prompt: "Scatterplots show:",
-                options: ["Only means", "Relationship between two quantitative variables", "Only categories"],
-                answer: "B",
-                explanation: "Each point is a pair $(x,y)$.",
-              },
-            ]}
+            questions={PS_D_PLOTS_QUIZ}
           />
 
           <Divider />
+          <PsCertificateBoost topic="descriptive" part={2} />
+
           <section className="section" id="summary">
             <div className="sec-badge">Reference</div>
             <h2 className="sec-title">Part 2 complete</h2>
+            <RealLifeUse>{"Sports analysts use z-scores to compare players across different eras and scoring scales, quality-control teams flag defective batches using outlier fences on control charts, and schools report percentile ranks (not raw scores) so parents can compare a student against their whole cohort."}</RealLifeUse>
             <p>{"Next: hypothesis testing — deciding when sample evidence is strong enough to challenge a claim."}</p>
           </section>
         </main>
@@ -195,6 +219,7 @@ function DescriptiveStatsGuide({ part = 1 }) {
         <a className="sb-link" href="#quiz-ps-d-center">Quiz</a>
         <a className="sb-link" href="#ps-d-quant">Quantiles</a>
         <a className="sb-link" href="#quiz-ps-d-quant">Quiz</a>
+        <a className="sb-link" href="#ps-cert-descriptive-p1">Eight examples</a>
       </nav>
       <main className="main">
         <header className="ch-hdr">
@@ -212,6 +237,11 @@ function DescriptiveStatsGuide({ part = 1 }) {
               {"Sample mean $\\bar x=\\frac1n\\sum x_i$ uses all values (sensitive to outliers). Median is the middle order statistic (robust). Mode is the most frequent value (useful for categories)."}
             </p>
           </TheoryBox>
+          <PracticalTheory title="Picking a center and a spread">
+            <p>
+              {"Skewed or outlier-heavy data: prefer median and IQR. Symmetric mound: mean and sd are fine. Report units, and never compare raw scores across different exams without z-scores."}
+            </p>
+          </PracticalTheory>
           <TheoremBox title="Skew and center">
             <p>
               {"Right skew: mean $>$ median. Left skew: mean $<$ median. Symmetric unimodal: mean ≈ median ≈ mode."}
@@ -224,12 +254,12 @@ function DescriptiveStatsGuide({ part = 1 }) {
           <ProcedureBox
             title="Compute center"
             steps={[
-              "Sort the data for median / quartiles.",
-              "Mean: sum ÷ $n$.",
-              "Odd $n$: median is middle value; even $n$: average of two middle values.",
-              "Report units and sample size with every summary.",
-              "Note outliers before trusting the mean alone.",
-            ]}
+                { text: "Sort the data for median / quartiles.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Mean: sum ÷ $n$.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Odd $n$: median is middle value; even $n$: average of two middle values.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Report units and sample size with every summary." },
+                { text: "Note outliers before trusting the mean alone.", why: "Plug into the matching center/spread formula for this data type." }
+              ]}
           />
         </section>
 
@@ -240,44 +270,48 @@ function DescriptiveStatsGuide({ part = 1 }) {
             title="Mean vs median"
             setup={"Data: 3, 5, 5, 7, 100. Compare mean and median."}
             steps={[
-              "Mean $=(3+5+5+7+100)/5=24$.",
-              "Sorted already; median $=5$.",
-              "Outlier 100 pulled the mean far above the median.",
-            ]}
+                { text: "Mean $=(3+5+5+7+100)/5=24$.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Sorted already; median $=5$.", why: "Plug into the matching center/spread formula for this data type." },
+                { text: "Outlier 100 pulled the mean far above the median.", why: "Plug into the matching center/spread formula for this data type." }
+              ]}
             result={"Mean 24, median 5."}
             check={"Median resists the outlier."}
+            mistake={"Reporting the mean (24) as 'typical' when a single outlier dominates it — the median (5) better represents most of this data."}
           />
           <WorkedExample
             number={2}
             title="Even-count median"
             setup={"Data: 2, 4, 6, 10. Median?"}
             steps={[
-              "Two middle values: 4 and 6.",
-              "Median $=(4+6)/2=5$.",
-            ]}
+                { text: "Two middle values: 4 and 6." },
+                { text: "Median $=(4+6)/2=5$.", why: "Plug into the matching center/spread formula for this data type." }
+              ]}
             result={"$5$."}
             check={"Average the two central observations."}
+            mistake={"Picking just one of the two middle values (e.g. saying median = 4) — with an even count, both middle values must be averaged."}
           />
           <WorkedExample
             number={3}
             title="Weighted idea"
             setup={"Scores 80 and 90 with weights 0.4 and 0.6. Weighted mean?"}
             steps={[
-              "$0.4\\cdot 80+0.6\\cdot 90=32+54=86$.",
-            ]}
+                { text: "$0.4\\cdot 80+0.6\\cdot 90=32+54=86$." }
+              ]}
             result={"$86$."}
             check={"Weights sum to 1."}
+            mistake={"Computing the plain average $(80+90)/2=85$ instead — that ignores the weights entirely, giving a different (wrong) answer."}
           />
           <WorkedExample
             number={4}
             title="Mode"
             setup={"Categories: red, blue, red, green, red. Mode?"}
             steps={[
-              "Red appears three times; others once.",
-              "Mode = red.",
-            ]}
+                { text: "Red appears three times; others once." },
+                { text: "Mode = red." }
+              ]}
             result={"red"}
             check={"Most frequent category."}
+            mistake={"Trying to compute a 'mean' or 'median' of category labels — mode is the only measure of center that makes sense for non-numeric (categorical) data."}
           />
         </section>
 
@@ -287,26 +321,7 @@ function DescriptiveStatsGuide({ part = 1 }) {
           title="Center"
           scoreId="score-ps-d-center"
           section="ps-d-center"
-          questions={[
-            {
-              prompt: "Most outlier-resistant center:",
-              options: ["Mean", "Median", "Range"],
-              answer: "B",
-              explanation: "Median ignores extreme magnitude.",
-            },
-            {
-              prompt: "Right-skewed data tend to have:",
-              options: ["Mean < median", "Mean > median", "Mean = mode always"],
-              answer: "B",
-              explanation: "Long right tail pulls the mean up.",
-            },
-            {
-              prompt: "Sample mean formula divides the sum by:",
-              options: ["$n-1$", "$n$", "$2n$"],
-              answer: "B",
-              explanation: "$\\bar x=(\\sum x_i)/n$.",
-            },
-          ]}
+          questions={PS_D_CENTER_QUIZ}
         />
 
         <Divider />
@@ -326,29 +341,12 @@ function DescriptiveStatsGuide({ part = 1 }) {
           title="Quantiles"
           scoreId="score-ps-d-quant"
           section="ps-d-quant"
-          questions={[
-            {
-              prompt: "$Q_2$ is the:",
-              options: ["Mean", "Median", "Mode"],
-              answer: "B",
-              explanation: "Second quartile = median.",
-            },
-            {
-              prompt: "The 90th percentile is above roughly:",
-              options: ["10% of data", "90% of data", "50% of data"],
-              answer: "B",
-              explanation: "About 90% lie at or below it.",
-            },
-            {
-              prompt: "Five-number summary uses:",
-              options: ["Only mean/SD", "Min, Q1, median, Q3, max", "Only mode"],
-              answer: "B",
-              explanation: "Classic boxplot ingredients.",
-            },
-          ]}
+          questions={PS_D_QUANT_QUIZ}
         />
 
         <Divider />
+        <PsCertificateBoost topic="descriptive" part={1} />
+
         <section className="section" id="summary">
           <div className="sec-badge">Reference</div>
           <h2 className="sec-title">Part 1 complete</h2>

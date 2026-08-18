@@ -1,9 +1,16 @@
 import StudyGuideShell from "./StudyGuideShell";
+import { GuideMcqSection } from "../components/GuideMcq";
+import {
+  MV_INTEGRALS_P1_QUIZ,
+  MV_INTEGRALS_P2_QUIZ,
+} from "../data/mvIntegralsStokesQuizzes";
 import "./PartialDerivativesGuide.css";
+import { RealLifeUse } from "./calculus/CalcBlocks";
 import {
   IntegralsExtendedPart1,
   IntegralsExtendedPart2,
 } from "./GuideExtendedMaterials";
+import MvCertificateBoost from "./MvCertificateBoost";
 
 function Divider() {
   return <hr className="divider" />;
@@ -32,6 +39,7 @@ function GuideSidebarPart2() {
       <a className="sb-link" href="#mi-4">{"Triple Integrals"}</a>
       <a className="sb-link" href="#mi-5">{"Polar Coordinates"}</a>
       <a className="sb-link" href="#mi-6">{"Cylindrical Coordinates"}</a>
+      <a className="sb-link" href="#mi-7">{"Spherical Coordinates"}</a>
       <a className="sb-link" href="#mi-quiz2">{"Practice Quiz"}</a>
     </nav>
   );
@@ -81,6 +89,7 @@ function TableOfContentsPart2() {
         <a className="toc-a" href="#mi-4">{"Triple Integrals"}</a>
         <a className="toc-a" href="#mi-5">{"Polar Coordinates"}</a>
         <a className="toc-a" href="#mi-6">{"Cylindrical Coordinates"}</a>
+        <a className="toc-a" href="#mi-7">{"Spherical Coordinates"}</a>
         <a className="toc-a" href="#mi-quiz2">{"Practice Quiz"}</a>
       </div>
     </div>
@@ -107,10 +116,15 @@ function SectionMI1() {
           {"where $\\Delta A = \\Delta x\\,\\Delta y$ is the area of each small rectangle."}
         </p>
       </div>
+
+      <RealLifeUse>
+        Double integrals compute mass from density on a plate, average rainfall over a region, and totals in image processing — volume under $z=f(x,y)$ is the geometric picture.
+      </RealLifeUse>
       <h3 className="subsec">{"Geometric Interpretation"}</h3>
       <p>
         {"If $f(x,y) \\geq 0$, the double integral $\\iint_R f(x,y)\\,dA$ represents the volume of the solid that lies above the rectangle $R$ and below the surface $z = f(x,y)$."}
       </p>
+
       <div className="box exm">
         <div className="box-lbl">{"Example"}</div>
         <div className="exm-title">
@@ -203,6 +217,9 @@ function SectionMI4() {
           {"$$\\iiint_E f(x,y,z)\\,dV = \\int_a^b\\int_{g_1(x)}^{g_2(x)}\\int_{h_1(x,y)}^{h_2(x,y)} f(x,y,z)\\,dz\\,dy\\,dx$$"}
         </div>
       </div>
+      <RealLifeUse>
+        Triple integrals weigh a 3D ore body from density $\rho(x,y,z)$, compute center of mass of a machine part, and accumulate charge in a volume — density times volume, added up.
+      </RealLifeUse>
       <div className="box exm">
         <div className="box-lbl">{"Example"}</div>
         <div className="exm-title">
@@ -285,6 +302,48 @@ function SectionMI6() {
   );
 }
 
+function SectionMI7() {
+  return (
+    <section className="section" id="mi-7">
+      <div className="sec-badge">{"Section"}</div>
+      <h2 className="sec-title">{"Spherical Coordinates"}</h2>
+      <p>
+        {"Spherical coordinates $(\\rho, \\theta, \\phi)$ describe a point by its distance from the origin, an azimuthal angle in the $xy$-plane, and a polar angle from the positive $z$-axis. They are the natural choice when a region or integrand has symmetry about a single point (e.g. spheres, cones)."}
+      </p>
+      <div className="box def">
+        <div className="box-lbl">{"Spherical Substitution"}</div>
+        <p>{"Let $x = \\rho\\sin\\phi\\cos\\theta$, $y = \\rho\\sin\\phi\\sin\\theta$, $z = \\rho\\cos\\phi$, where $\\rho \\geq 0$, $0 \\leq \\phi \\leq \\pi$, $0 \\leq \\theta \\leq 2\\pi$. Then:"}</p>
+        <div className="fml">
+          {"$$\\iiint_E f\\,dV = \\int\\!\\!\\int\\!\\!\\int f(\\rho\\sin\\phi\\cos\\theta, \\rho\\sin\\phi\\sin\\theta, \\rho\\cos\\phi)\\,\\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta$$"}
+        </div>
+        <p>{"The factor $\\rho^2\\sin\\phi$ is the Jacobian of the spherical transformation — larger $\\rho$ or $\\phi$ near the equator sweeps out proportionally more volume per unit change in the angles."}</p>
+      </div>
+      <div className="box exm">
+        <div className="box-lbl">{"Example"}</div>
+        <div className="exm-title">
+          {"Find the volume of the solid sphere $x^2+y^2+z^2 \\leq 4$"}
+        </div>
+        <div className="sol">
+          <div className="sol-lbl">{"Solution"}</div>
+          <p>{"In spherical: $0 \\leq \\rho \\leq 2$, $0 \\leq \\phi \\leq \\pi$, $0 \\leq \\theta \\leq 2\\pi$."}</p>
+          <div className="fml">
+            {"$$\\int_0^{2\\pi}\\int_0^\\pi\\int_0^2 \\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta = 2\\pi\\cdot 2\\cdot\\frac{8}{3} = \\frac{32\\pi}{3}$$"}
+          </div>
+          <p>{"This matches the known sphere volume formula $\\frac{4}{3}\\pi r^3$ with $r=2$."}</p>
+        </div>
+      </div>
+      <div className="box thm">
+        <div className="box-lbl">{"Cylindrical vs. Spherical — When to Use Which"}</div>
+        <ul className="steps">
+          <li>{"Use cylindrical when the solid is symmetric about the $z$-axis (e.g. cylinders, paraboloids opening along $z$)."}</li>
+          <li>{"Use spherical when the solid is symmetric about the origin (e.g. spheres, cones with vertex at the origin)."}</li>
+          <li>{"A cone $z = \\sqrt{x^2+y^2}$ becomes the simple equation $\\phi = \\pi/4$ in spherical — often the deciding factor."}</li>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 function SectionMIEnrichment() {
   return (
     <section className="section" id="mi-enrich">
@@ -309,217 +368,21 @@ function SectionMIEnrichment() {
   );
 }
 
-function IntegralsQuiz({ part }) {
-  if (part === 1) {
-    return (
-      <section className="mcq-section" id="mi-quiz1">
-        <div className="mcq-section-head">
-          <span className="mcq-section-badge">{"Practice"}</span>
-          <h2 className="mcq-section-title">{"Part 1 Quiz"}</h2>
-        </div>
-        <div className="mcq-score-strip">
-          <span className="score-lbl">{"Score"}</span>
-          <span className="score-val" id="scoreintegrals-p1">{"0 / 5"}</span>
-          <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>
-            {"Click an option then reveal answer"}
-          </span>
-        </div>
-
-        <div className="mcq-card" data-section="integrals-p1" data-q="1" data-answer="B">
-          <div className="mcq-q-row">
-            <div className="mcq-num">{"1"}</div>
-            <div className="mcq-q-text">{"What does a double integral represent geometrically when $f(x,y)\\ge 0$?"}</div>
-          </div>
-          <div className="mcq-options">
-            <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The area of the region $R$."}</div>
-            <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The volume under the surface $z=f(x,y)$ above $R$."}</div>
-            <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The surface area of $z=f(x,y)$."}</div>
-            <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"The perimeter of the region $R$."}</div>
-          </div>
-          <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-          <div className="mcq-answer">
-            <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-            <div className="mcq-explanation">{"$\\iint_R f\\,dA$ measures signed volume under $z=f$ when $f\\ge 0$."}</div>
-          </div>
-        </div>
-
-        <div className="mcq-card" data-section="integrals-p1" data-q="2" data-answer="C">
-          <div className="mcq-q-row">
-            <div className="mcq-num">{"2"}</div>
-            <div className="mcq-q-text">{"Fubini's Theorem says we can evaluate a double integral as:"}</div>
-          </div>
-          <div className="mcq-options">
-            <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"A single integral only."}</div>
-            <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Two separate single integrals multiplied together."}</div>
-            <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"An iterated integral in either order."}</div>
-            <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"A limit of a sum only."}</div>
-          </div>
-          <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-          <div className="mcq-answer">
-            <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-            <div className="mcq-explanation">{"Under suitable conditions, $\\iint_R f = \\int\\!\\int f\\,dy\\,dx = \\int\\!\\int f\\,dx\\,dy$."}</div>
-          </div>
-        </div>
-
-        <div className="mcq-card" data-section="integrals-p1" data-q="3" data-answer="B">
-          <div className="mcq-q-row">
-            <div className="mcq-num">{"3"}</div>
-            <div className="mcq-q-text">{"To change the order of integration, you must:"}</div>
-          </div>
-          <div className="mcq-options">
-            <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Change the function $f(x,y)$."}</div>
-            <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Redraw and redescribe the region of integration."}</div>
-            <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Multiply by a Jacobian factor."}</div>
-            <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"Convert to polar coordinates."}</div>
-          </div>
-          <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-          <div className="mcq-answer">
-            <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-            <div className="mcq-explanation">{"New bounds must describe the same region with the reversed inner/outer variables."}</div>
-          </div>
-        </div>
-
-        <div className="mcq-card" data-section="integrals-p1" data-q="4" data-answer="A" data-difficulty="medium">
-          <div className="mcq-q-row">
-            <div className="mcq-num">{"4"}</div>
-            <div className="mcq-q-text">{"(Medium) $\\int_0^1\\int_0^{1-x} 1\\,dy\\,dx$ equals the area of:"}</div>
-          </div>
-          <div className="mcq-options">
-            <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The triangle with vertices $(0,0)$, $(1,0)$, $(0,1)$"}</div>
-            <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The unit square"}</div>
-            <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"A disk of radius 1"}</div>
-            <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"An infinite strip"}</div>
-          </div>
-          <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-          <div className="mcq-answer">
-            <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-            <div className="mcq-explanation">{"For each $x\\in[0,1]$, $y$ runs from 0 to $1-x$, the triangle under the line $x+y=1$."}</div>
-          </div>
-        </div>
-
-        <div className="mcq-card" data-section="integrals-p1" data-q="5" data-answer="C" data-difficulty="hard">
-          <div className="mcq-q-row">
-            <div className="mcq-num">{"5"}</div>
-            <div className="mcq-q-text">{"(Hard) If $R$ is Type I but not Type II, changing order:"}</div>
-          </div>
-          <div className="mcq-options">
-            <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Is always illegal"}</div>
-            <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Requires switching $f$ to $-f$"}</div>
-            <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"May require splitting $R$ into several Type II pieces"}</div>
-            <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"Always keeps a single pair of bounds"}</div>
-          </div>
-          <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-          <div className="mcq-answer">
-            <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-            <div className="mcq-explanation">{"Regions that are Type I but not Type II often need to be split so each piece has $x$ bounds as functions of $y$."}</div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
+function SectionRealWorld() {
   return (
-    <section className="mcq-section" id="mi-quiz2">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Practice"}</span>
-        <h2 className="mcq-section-title">{"Part 2 Quiz"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoreintegrals-p2">{"0 / 5"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>
-          {"Click an option then reveal answer"}
-        </span>
-      </div>
-
-      <div className="mcq-card" data-section="integrals-p2" data-q="1" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"1"}</div>
-          <div className="mcq-q-text">{"When converting to polar coordinates, $dA$ becomes:"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$dr\\,d\\theta$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$r\\,dr\\,d\\theta$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$r^2\\,dr\\,d\\theta$"}</div>
-          <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"$d\\theta\\,dr$"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"The Jacobian of polar coordinates contributes the extra factor $r$."}</div>
-        </div>
-      </div>
-
-      <div className="mcq-card" data-section="integrals-p2" data-q="2" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"2"}</div>
-          <div className="mcq-q-text">{"Cylindrical coordinates are best when the region has:"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Rectangular symmetry"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Symmetry about the $z$-axis"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Symmetry about the $x$-axis"}</div>
-          <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"No particular symmetry"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Cylindrical = polar in $xy$ plus $z$, ideal for rotational symmetry about $z$."}</div>
-        </div>
-      </div>
-
-      <div className="mcq-card" data-section="integrals-p2" data-q="3" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"3"}</div>
-          <div className="mcq-q-text">{"Volume of a solid $E$ by a triple integral is:"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$\\iiint_E (x+y+z)\\,dV$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$\\iiint_E 1\\,dV$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$\\iiint_E 0\\,dV$"}</div>
-          <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"$\\iint f(x,y)\\,dA$ always"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Volume is the triple integral of the constant density $1$ over $E$."}</div>
-        </div>
-      </div>
-
-      <div className="mcq-card" data-section="integrals-p2" data-q="4" data-answer="A" data-difficulty="medium">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"4"}</div>
-          <div className="mcq-q-text">{"(Medium) Disk $x^2+y^2\\le 4$ in polar is:"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$0\\le r\\le 2$, $0\\le\\theta\\le 2\\pi$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$0\\le r\\le 4$, $0\\le\\theta\\le\\pi$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$-2\\le r\\le 2$, $0\\le\\theta\\le\\pi$"}</div>
-          <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"$1\\le r\\le 2$, $0\\le\\theta\\le 2\\pi$"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"Radius 2 disk: $r$ from 0 to 2 and a full turn in $\\theta$."}</div>
-        </div>
-      </div>
-
-      <div className="mcq-card" data-section="integrals-p2" data-q="5" data-answer="D" data-difficulty="hard">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"5"}</div>
-          <div className="mcq-q-text">{"(Hard) In cylindrical coordinates, $dV$ includes:"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Only $dz\\,dr\\,d\\theta$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$\\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$dx\\,dy\\,dz$ unchanged"}</div>
-          <div className="mcq-opt" data-opt="D"><span className="mcq-opt-letter">{"D"}</span>{"The factor $r$: $r\\,dz\\,dr\\,d\\theta$"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: D"}</span>
-          <div className="mcq-explanation">{"Cylindrical volume element is $r\\,dz\\,dr\\,d\\theta$ (polar area times $dz$)."}</div>
-        </div>
+    <section className="section" id="mi-real-world">
+      <div className="sec-badge">{"Applications"}</div>
+      <h2 className="sec-title">{"Where This Shows Up in Real Life"}</h2>
+      <div className="box def">
+        <div className="box-lbl">{"Real-World Use"}</div>
+        <p>
+          {"Double and triple integrals are how engineers compute "}
+          <strong>{"mass, center of mass, and moments of inertia"}</strong>
+          {" for irregularly shaped objects \u2014 a car's crankshaft, an aircraft wing, a bridge girder \u2014 by integrating density over the exact 3D region, exactly the setup we used for volume."}
+        </p>
+        <p>
+          {"In probability and statistics, a joint probability density function over two or more variables is integrated over a region to find the probability of an event \u2014 the same double-integral machinery from this guide, just with a density function instead of $1$. CAD and 3D-printing software use triple integrals in cylindrical and spherical coordinates constantly, since so many manufactured parts (pipes, domes, gears) have exactly that kind of rotational symmetry."}
+        </p>
       </div>
     </section>
   );
@@ -552,7 +415,8 @@ function IntegralsContent({ part }) {
           <Divider />
           <IntegralsExtendedPart1 />
           <Divider />
-          <IntegralsQuiz part={1} />
+          <GuideMcqSection id="mi-quiz1" badge="Practice" title="Multiple Integrals Part 1 Quiz" scoreId="scoreintegrals-p1" section="integrals-p1" questions={MV_INTEGRALS_P1_QUIZ} />
+          <MvCertificateBoost topic="integrals" part={1} />
           <GuideFooter />
         </main>
       </>
@@ -572,11 +436,16 @@ function IntegralsContent({ part }) {
         <Divider />
         <SectionMI6 />
         <Divider />
+        <SectionMI7 />
+        <Divider />
         <SectionMIEnrichment />
         <Divider />
         <IntegralsExtendedPart2 />
         <Divider />
-        <IntegralsQuiz part={2} />
+        <GuideMcqSection id="mi-quiz2" badge="Practice" title="Multiple Integrals Part 2 Quiz" scoreId="scoreintegrals-p2" section="integrals-p2" questions={MV_INTEGRALS_P2_QUIZ} />
+        <MvCertificateBoost topic="integrals" part={2} />
+        <Divider />
+        <SectionRealWorld />
         <GuideFooter />
       </main>
     </>

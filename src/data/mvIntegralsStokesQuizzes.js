@@ -1,0 +1,373 @@
+/** Study-guide quiz banks for the Multiple Integrals and Stokes' Theorem guides — 15 MCQs per section. */
+
+export const MV_INTEGRALS_P1_QUIZ = [
+  {
+    prompt: "Evaluate $\\int_0^1\\int_0^2 xy\\,dx\\,dy$.",
+    options: ["$2$", "$1$", "$1/2$"],
+    answer: "B",
+    explanation: "Inner integral gives $2y$; $\\int_0^1 2y\\,dy=1$.",
+  },
+  {
+    prompt: "Evaluate $\\int_0^1\\int_0^x 2\\,dy\\,dx$.",
+    options: ["$1$", "$1/2$", "$2$"],
+    answer: "A",
+    explanation: "Inner integral gives $2x$; $\\int_0^1 2x\\,dx=1$.",
+  },
+  {
+    prompt: "Region $0\\le y\\le 1-x$, $0\\le x\\le 1$ is Type I. Its area equals:",
+    options: ["$2$", "$1$", "$1/2$"],
+    answer: "C",
+    explanation: "$\\int_0^1(1-x)\\,dx=1/2$.",
+  },
+  {
+    prompt: "Switching order for $\\int_0^1\\int_x^1 f(x,y)\\,dy\\,dx$ yields:",
+    options: ["$\\int_0^1\\int_0^x f\\,dx\\,dy$", "$\\int_0^1\\int_0^y f(x,y)\\,dx\\,dy$", "$\\int_0^1\\int_y^1 f\\,dx\\,dy$"],
+    answer: "B",
+    explanation: "Triangle under $y=1$ and above $y=x$.",
+  },
+  {
+    prompt: "Volume under $z=1-x$ over $0\\le x\\le 1$, $0\\le y\\le 1$ equals:",
+    options: ["$1$", "$0$", "$1/2$"],
+    answer: "C",
+    explanation: "$\\int_0^1\\int_0^1(1-x)\\,dy\\,dx=1/2$.",
+  },
+  {
+    prompt: "Evaluate $\\int_0^2\\int_0^1 (2x+3y)\\,dy\\,dx$.",
+    options: ["$7$", "$5$", "$4$"],
+    answer: "A",
+    explanation: "Inner: $2x+3/2$; then $[x^2+(3/2)x]_0^2=4+3=7$.",
+  },
+  {
+    prompt: "For the box $[0,1]\\times[0,2]\\times[0,3]$, $\\iiint 1\\,dV$ equals:",
+    options: ["$6$", "$5$", "$3$"],
+    answer: "A",
+    explanation: "Product of side lengths.",
+  },
+  {
+    prompt: "Evaluate $\\int_0^1\\int_0^{1-x} dy\\,dx$.",
+    options: ["$2$", "$1/2$", "$1$"],
+    answer: "B",
+    explanation: "Area of the right triangle with legs of length $1$.",
+  },
+  {
+    prompt: "Set up $\\iint_D y\\,dA$ for $D$: $x^2\\le y\\le 1$, $-1\\le x\\le 1$ as:",
+    options: ["$\\int_{-1}^1\\int_0^{x^2} y\\,dy\\,dx$", "$\\int_0^1\\int_{-1}^1 y\\,dx\\,dy$", "$\\int_{-1}^1\\int_{x^2}^1 y\\,dy\\,dx$"],
+    answer: "C",
+    explanation: "Vertical strips from the parabola up to $y=1$.",
+  },
+  {
+    prompt: "Evaluate $\\int_1^2\\int_0^3 4\\,dx\\,dy$.",
+    options: ["$6$", "$12$", "$24$"],
+    answer: "B",
+    explanation: "Inner width $3$; $\\int_1^2 12\\,dy=12$.",
+  },
+  {
+    prompt: "If $R=[0,1]\\times[0,1]$ and $f(x,y)=x$, then $\\iint_R f\\,dA$ equals:",
+    options: ["$1$", "$0$", "$1/2$"],
+    answer: "C",
+    explanation: "$\\int_0^1\\int_0^1 x\\,dy\\,dx=1/2$.",
+  },
+  {
+    prompt: "Evaluate $\\int_0^1\\int_0^1\\int_0^1 (x+y+z)\\,dz\\,dy\\,dx$.",
+    options: ["$3/2$", "$1$", "$2$"],
+    answer: "A",
+    explanation: "Inner in $z$ gives $x+y+1/2$; then double integral equals $3/2$.",
+  },
+  {
+    prompt: "By Fubini, if $f$ is continuous on a closed rectangle, the two iterated integrals:",
+    options: ["Must keep the written order", "Equal only if $f=0$", "May be swapped freely"],
+    answer: "C",
+    explanation: "Continuity on a closed rectangle allows order swap.",
+  },
+  {
+    prompt: "Type II region describes $x$ as:",
+    options: ["Functions of $y$ between horizontal lines", "Polar $r(\\theta)$ only", "Functions of $x$ between vertical lines"],
+    answer: "A",
+    explanation: "Type II: $g_1(y)\\le x\\le g_2(y)$.",
+  },
+  {
+    prompt: "Evaluate $\\int_0^2\\int_y^2 e^{x}\\,dx\\,dy$.",
+    options: ["$2e^2$", "$e^2+1$", "$e^2-1$"],
+    answer: "B",
+    explanation: "Inner: $e^2-e^y$; then $\\int_0^2(e^2-e^y)\\,dy=e^2+1$.",
+  },
+];
+
+export const MV_INTEGRALS_P2_QUIZ = [
+  {
+    prompt: "In polar coordinates, $dA$ becomes:",
+    options: ["$r\\,dr\\,d\\theta$", "$r^2\\,dr\\,d\\theta$", "$dr\\,d\\theta$"],
+    answer: "A",
+    explanation: "Jacobian factor $r$.",
+  },
+  {
+    prompt: "Evaluate $\\iint_D (x^2+y^2)\\,dA$ over the unit disk using polar.",
+    options: ["$\\pi$", "$1/2$", "$\\pi/2$"],
+    answer: "C",
+    explanation: "$\\int_0^{2\\pi}\\int_0^1 r^2\\cdot r\\,dr\\,d\\theta=2\\pi/4=\\pi/2$.",
+  },
+  {
+    prompt: "Cylindrical coordinates use the volume element:",
+    options: ["$\\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta$", "$r\\,dr\\,d\\theta\\,dz$", "$dx\\,dy\\,dz$ only"],
+    answer: "B",
+    explanation: "Cylindrical Jacobian.",
+  },
+  {
+    prompt: "Spherical volume element is:",
+    options: ["$r\\,dr\\,d\\theta\\,dz$", "$\\rho\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta$", "$\\rho^2\\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta$"],
+    answer: "C",
+    explanation: "Standard spherical Jacobian.",
+  },
+  {
+    prompt: "Convert $x^2+y^2=4$ to polar:",
+    options: ["$r=4$", "$r=2$", "$\\theta=2$"],
+    answer: "B",
+    explanation: "$r^2=4\\Rightarrow r=2$.",
+  },
+  {
+    prompt: "Jacobian of $x=u+v$, $y=u-v$ has absolute value:",
+    options: ["$2$", "$0$", "$1$"],
+    answer: "A",
+    explanation: "$\\det\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}=-2$.",
+  },
+  {
+    prompt: "For the unit ball in spherical coordinates, $\\iiint 1\\,dV$ equals:",
+    options: ["$\\pi$", "$2\\pi$", "$4\\pi/3$"],
+    answer: "C",
+    explanation: "Volume of the unit ball.",
+  },
+  {
+    prompt: "Polar limits for the quarter disk $x\\ge 0$, $y\\ge 0$, $x^2+y^2\\le 9$:",
+    options: ["$0\\le\\theta\\le 2\\pi$, $0\\le r\\le 3$", "$0\\le\\theta\\le\\pi/2$, $0\\le r\\le 3$", "$0\\le\\theta\\le\\pi$, $0\\le r\\le 9$"],
+    answer: "B",
+    explanation: "First quadrant, radius $3$.",
+  },
+  {
+    prompt: "Evaluate $\\int_0^{2\\pi}\\int_0^2 r\\,dr\\,d\\theta$.",
+    options: ["$4\\pi$", "$\\pi$", "$2\\pi$"],
+    answer: "A",
+    explanation: "Area of the disk of radius $2$.",
+  },
+  {
+    prompt: "Ice-cream cone region: $\\rho\\le 1$, $0\\le\\phi\\le\\pi/2$ has volume:",
+    options: ["$2\\pi/3$", "$4\\pi/3$", "$\\pi/3$"],
+    answer: "A",
+    explanation: "Upper hemisphere volume is half of $4\\pi/3$.",
+  },
+  {
+    prompt: "Centroid $\\bar x$ for a lamina of density $1$ is:",
+    options: ["$\\iint_D x\\,dA$", "$\\dfrac{1}{A}\\iint_D x\\,dA$", "$\\iint_D y\\,dA$"],
+    answer: "B",
+    explanation: "First moment divided by mass (here area).",
+  },
+  {
+    prompt: "Evaluate $\\int_0^{\\pi/2}\\int_0^{\\cos\\theta} r\\,dr\\,d\\theta$.",
+    options: ["$\\pi/4$", "$1/2$", "$\\pi/8$"],
+    answer: "C",
+    explanation: "Inner: $(\\cos^2\\theta)/2$; $\\int_0^{\\pi/2}\\cos^2\\theta\\,d\\theta=\\pi/4$, so total $\\pi/8$.",
+  },
+  {
+    prompt: "In spherical coordinates, $\\rho$ measures:",
+    options: ["The polar angle", "Distance from the origin", "Distance from the $z$-axis"],
+    answer: "B",
+    explanation: "Definition of $\\rho$.",
+  },
+  {
+    prompt: "Cylindrical $r$ equals:",
+    options: ["$|z|$", "$\\sqrt{x^2+y^2+z^2}$", "$\\sqrt{x^2+y^2}$"],
+    answer: "C",
+    explanation: "Distance to the $z$-axis.",
+  },
+  {
+    prompt: "Mass of the unit disk with density $\\delta(x,y)=x^2+y^2$ equals:",
+    options: ["$\\pi/2$", "$\\pi$", "$1/4$"],
+    answer: "A",
+    explanation: "Same polar integral as $\\iint_D r^2\\,dA$ over the unit disk.",
+  },
+];
+
+export const MV_STOKES_F_QUIZ = [
+  {
+    prompt: "For $\\mathbf F=\\langle -y,x,0\\rangle$, $\\nabla\\times\\mathbf F$ equals:",
+    options: ["$\\langle 0,0,0\\rangle$", "$\\langle 0,0,2\\rangle$", "$\\langle 0,0,1\\rangle$"],
+    answer: "B",
+    explanation: "$Q_x-P_y=1-(-1)=2$.",
+  },
+  {
+    prompt: "Compute $\\nabla\\times\\langle yz,xz,xy\\rangle$:",
+    options: ["$\\langle 0,0,0\\rangle$", "$\\langle 1,1,1\\rangle$", "$\\langle y,x,0\\rangle$"],
+    answer: "A",
+    explanation: "Each curl component cancels.",
+  },
+  {
+    prompt: "Evaluate $\\nabla\\times\\langle 0,-z,y\\rangle$:",
+    options: ["$\\langle 0,0,0\\rangle$", "$\\langle 0,1,-1\\rangle$", "$\\langle 2,0,0\\rangle$"],
+    answer: "C",
+    explanation: "$\\mathbf i(1-(-1))=2\\mathbf i$.",
+  },
+  {
+    prompt: "For $\\mathbf F=\\langle -y,x\\rangle$ in 2D, the Green integrand $Q_x-P_y$ equals:",
+    options: ["$0$", "$1$", "$2$"],
+    answer: "C",
+    explanation: "$1-(-1)=2$.",
+  },
+  {
+    prompt: "Stokes' theorem equates $\\oint_C\\mathbf F\\cdot d\\mathbf r$ with:",
+    options: ["$\\iint_S(\\nabla\\times\\mathbf F)\\cdot\\mathbf n\\,dS$", "$\\iint_S\\mathbf F\\cdot\\mathbf n\\,dS$", "$\\iiint_E\\nabla\\cdot\\mathbf F\\,dV$"],
+    answer: "A",
+    explanation: "Circulation equals curl flux.",
+  },
+  {
+    prompt: "If $\\nabla\\times\\mathbf F=\\mathbf 0$ on a simply connected domain, circulation around a closed curve is:",
+    options: ["Always $1$", "$0$", "Equal to flux"],
+    answer: "B",
+    explanation: "Stokes gives zero.",
+  },
+  {
+    prompt: "The boundary of the upper unit hemisphere (equator) is:",
+    options: ["The whole sphere", "A meridian arc", "The unit circle in $z=0$"],
+    answer: "C",
+    explanation: "Equatorial circle.",
+  },
+  {
+    prompt: "Green's theorem is Stokes in the plane with normal:",
+    options: ["$\\mathbf k$", "$\\mathbf i$", "$-\\mathbf j$"],
+    answer: "A",
+    explanation: "Flat surface in the $xy$-plane.",
+  },
+  {
+    prompt: "Compute $\\nabla\\times\\langle z,x,y\\rangle$:",
+    options: ["$\\langle 0,0,0\\rangle$", "$\\langle 1,1,1\\rangle$", "$\\langle 1,-1,1\\rangle$"],
+    answer: "B",
+    explanation: "$\\langle 1-0,\\,1-0,\\,1-0\\rangle$.",
+  },
+  {
+    prompt: "Unit normal upward on the graph $z=g(x,y)$ is proportional to:",
+    options: ["$\\langle -g_x,-g_y,1\\rangle$", "$\\langle g_x,g_y,1\\rangle$", "$\\langle 1,0,0\\rangle$"],
+    answer: "A",
+    explanation: "Graph orientation with positive $z$-component.",
+  },
+  {
+    prompt: "If $S_1$ and $S_2$ share the oriented boundary $C$, Stokes says their curl fluxes:",
+    options: ["Differ by volume", "Are equal", "Must both be zero"],
+    answer: "B",
+    explanation: "Both equal $\\oint_C\\mathbf F\\cdot d\\mathbf r$.",
+  },
+  {
+    prompt: "Evaluate $(\\nabla\\times\\langle y,-x,z\\rangle)\\cdot\\mathbf k$:",
+    options: ["$2$", "$0$", "$-2$"],
+    answer: "C",
+    explanation: "$Q_x-P_y=-1-1=-2$.",
+  },
+  {
+    prompt: "Circulation of a conservative field around a closed curve is:",
+    options: ["Path-dependent", "Equal to $|\\mathbf F|$", "$0$"],
+    answer: "C",
+    explanation: "Fundamental theorem for line integrals.",
+  },
+  {
+    prompt: "For oriented surface $S$, the vector $\\mathbf n$ in Stokes is:",
+    options: ["A continuous unit normal matching the orientation", "Always $\\langle 0,0,1\\rangle$", "The binormal of every curve"],
+    answer: "A",
+    explanation: "Orientation data for the surface.",
+  },
+  {
+    prompt: "Orientation: the right-hand rule links:",
+    options: ["Curl to divergence", "Boundary direction to the chosen normal", "Only path length to area"],
+    answer: "B",
+    explanation: "Consistent orientation of $C$ and $\\mathbf n$.",
+  },
+];
+
+export const MV_STOKES_A_QUIZ = [
+  {
+    prompt: "For $\\mathbf F=\\langle -y,x,0\\rangle$ around the unit circle, Stokes on the unit disk gives circulation:",
+    options: ["$2\\pi$", "$\\pi$", "$0$"],
+    answer: "A",
+    explanation: "Curl is $2\\mathbf k$; flux $2\\cdot\\mathrm{area}=2\\pi$.",
+  },
+  {
+    prompt: "For the same field, using the upper hemisphere instead of the disk yields:",
+    options: ["$0$", "The same $2\\pi$", "$4\\pi$"],
+    answer: "B",
+    explanation: "Shared boundary; Stokes matches.",
+  },
+  {
+    prompt: "Compute $\\iint_S(\\nabla\\times\\langle y,-x,0\\rangle)\\cdot\\mathbf k\\,dA$ over the unit disk:",
+    options: ["$0$", "$2\\pi$", "$-2\\pi$"],
+    answer: "C",
+    explanation: "Curl $=-2\\mathbf k$; integral $-2\\pi$.",
+  },
+  {
+    prompt: "For $\\mathbf F=\\langle z,x,y\\rangle$, $\\nabla\\times\\mathbf F=\\langle 1,1,1\\rangle$. Upward curl flux through the unit disk $z=0$ is:",
+    options: ["$0$", "$1$", "$\\pi$"],
+    answer: "C",
+    explanation: "Only the $z$-component $1$ contributes: area $\\pi$.",
+  },
+  {
+    prompt: "Evaluate circulation of $\\langle -y,x,z\\rangle$ around $x^2+y^2=4$, $z=0$ via the disk:",
+    options: ["$4\\pi$", "$8\\pi$", "$2\\pi$"],
+    answer: "B",
+    explanation: "Curl $=\\langle 0,0,2\\rangle$; $2\\cdot 4\\pi=8\\pi$.",
+  },
+  {
+    prompt: "Compute $\\oint_C\\langle 0,0,x\\rangle\\cdot d\\mathbf r$ for the unit circle $z=0$ via Stokes on the disk:",
+    options: ["$0$", "$1$", "$\\pi$"],
+    answer: "A",
+    explanation: "Curl $=\\langle 0,-1,0\\rangle$; flux through a horizontal disk is $0$.",
+  },
+  {
+    prompt: "If $\\mathbf F=\\nabla f$, then for any closed $C$ bounding $S$:",
+    options: ["$\\oint_C\\mathbf F\\cdot d\\mathbf r=0$", "Flux of curl is $1$", "Curl equals $\\mathbf F$"],
+    answer: "A",
+    explanation: "Curl of a gradient vanishes.",
+  },
+  {
+    prompt: "Paraboloid $z=1-x^2-y^2$, $z\\ge 0$, shares its rim with:",
+    options: ["The sphere of radius $2$", "The unit disk in $z=0$", "The plane $z=2$"],
+    answer: "B",
+    explanation: "Rim is $x^2+y^2=1$, $z=0$.",
+  },
+  {
+    prompt: "Orientation mismatch (opposite normal) multiplies the Stokes integrals by:",
+    options: ["$2$", "$0$", "$-1$"],
+    answer: "C",
+    explanation: "Reversing orientation flips sign.",
+  },
+  {
+    prompt: "If curl flux through every surface with boundary $C$ is $5$, then $\\oint_C\\mathbf F\\cdot d\\mathbf r$ equals:",
+    options: ["$0$", "$10$", "$5$"],
+    answer: "C",
+    explanation: "Stokes identification.",
+  },
+  {
+    prompt: "For a conservative $\\mathbf F$ in 3D, $\\nabla\\times\\mathbf F$ equals:",
+    options: ["$\\nabla\\cdot\\mathbf F$", "$\\mathbf 0$", "$\\mathbf F$"],
+    answer: "B",
+    explanation: "Irrotational.",
+  },
+  {
+    prompt: "Choose the flat disk rather than a wiggly surface with the same rim when:",
+    options: ["Curl is easy to integrate on the disk", "Stokes forbids flat surfaces", "The field is undefined on the disk"],
+    answer: "A",
+    explanation: "Convenience under Stokes.",
+  },
+  {
+    prompt: "Fluid circulation around a loop equals the flux of:",
+    options: ["$\\nabla\\cdot\\mathbf v$", "Pressure gradient only", "Vorticity $\\nabla\\times\\mathbf v$"],
+    answer: "C",
+    explanation: "Stokes for the velocity field.",
+  },
+  {
+    prompt: "For $\\mathbf F=\\langle -z,0,x\\rangle$, curl flux through the unit disk $z=0$ upward equals:",
+    options: ["$0$", "$-\\pi$", "$\\pi$"],
+    answer: "A",
+    explanation: "$\\nabla\\times\\mathbf F=\\langle 0,-2,0\\rangle$; horizontal $z$-component of curl is $0$.",
+  },
+  {
+    prompt: "When verifying orientation, thumb along $\\mathbf n$ means fingers curl with:",
+    options: ["The opposite of $C$", "The positive direction of $C$", "Any radial direction"],
+    answer: "B",
+    explanation: "Right-hand rule.",
+  },
+];

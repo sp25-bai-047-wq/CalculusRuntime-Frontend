@@ -3,7 +3,9 @@ import { useProgress } from "../context/ProgressContext";
 import BookmarkButton from "../components/BookmarkButton";
 import SectionCompleteBar from "../components/SectionCompleteBar";
 import VectorCalculusGuide from "./VectorCalculusGuide";
+import MvCertificateBoost from "./MvCertificateBoost";
 import "./GuidePart.css";
+import "./PartialDerivativesGuide.css";
 
 function VectorPart1() {
   const { recordVisit } = useProgress();
@@ -26,6 +28,12 @@ function VectorPart1() {
         />
       </div>
       <VectorCalculusGuide part={1} />
+      <div
+        className="partial-derivatives-guide"
+        style={{ maxWidth: 1000, margin: "0 auto", padding: "0 2rem 2rem" }}
+      >
+        <MvCertificateBoost topic="vector" part={1} />
+      </div>
       <SectionCompleteBar
         sectionId="vector-1"
         nextPath="/vector-calculus/2"

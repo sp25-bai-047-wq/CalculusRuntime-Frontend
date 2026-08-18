@@ -1,4 +1,15 @@
 import React from "react";
+import { GuideMcqSection } from "../components/GuideMcq";
+import {
+  TAYLOR_CONCEPT_QUIZ,
+  TAYLOR_FORMULA_QUIZ,
+  MACLAURIN_CORE_QUIZ,
+  TAYLOR_CATALOG_QUIZ,
+  TAYLOR_CONVERGENCE_QUIZ,
+  TAYLOR_ERROR_QUIZ,
+  TAYLOR_ENGINEERING_QUIZ,
+  TAYLOR_CHALLENGE_QUIZ,
+} from "../data/mvTaylorQuizzes";
 import { Link } from "react-router-dom";
 import StudyGuideShell from "./StudyGuideShell";
 import "./PartialDerivativesGuide.css";
@@ -83,71 +94,6 @@ function SectionS171() {
   );
 }
 
-function QuizMcq171() {
-  return (
-    <section className="mcq-section" id="quiz-171">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 17.1"}</span>
-        <h2 className="mcq-section-title">{"Approximation Space Assessments"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoretaylor-concept">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="taylor-concept" data-q="1" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"1"}</div>
-          <div className="mcq-q-text">{"What geometric physical element is locked in place when matching the first-degree term of a Taylor polynomial to a function line curve at point $a$?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The absolute spatial area bounding profile layout."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The exact tangent line slope angle value."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The inflection coordinate crossing points locus."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"The first derivative $f'(a)$ directly tracks the instantaneous line slope, creating a tangent line linear approximation profile locally."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-concept" data-q="2" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"2"}</div>
-          <div className="mcq-q-text">{"As you add higher-degree terms to a convergent Taylor polynomial, what behavior happens to the approximation region?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The tracking region expands outward further away from the center coordinate point."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The matching profile shrinks strictly to a single infinitesimal point coordinate."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The polynomial sequence begins to oscillate chaotically to infinity."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"Higher-order terms match higher-order behaviors, which lets the polynomial map the function's bends accurately across an expanding window around your center point."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-concept" data-q="3" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"3"}</div>
-          <div className="mcq-q-text">{"Which mathematical attribute determines how well a Taylor polynomial mimics a local function curve's concavity?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The zero-th degree constant coordinate value."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The linear scalar coefficient parameter."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The second-degree derivative coefficient term ($f''(a)$)."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"The second derivative dictates the function's structural concavity (bending up vs. bending down)."}</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SectionS172() {
   return (
     <section className="section" id="s172">
@@ -168,71 +114,6 @@ function SectionS172() {
   );
 }
 
-function QuizMcq172() {
-  return (
-    <section className="mcq-section" id="quiz-172">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 17.2"}</span>
-        <h2 className="mcq-section-title">{"Formula Structure Verifications"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoretaylor-formula">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="taylor-formula" data-q="4" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"4"}</div>
-          <div className="mcq-q-text">{"Why does a factorial expression ($n!$) always divide the derivative coefficient term inside the Taylor formulation?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"To adjust for base-10 logarithmic scaling indexes."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"To neutralize geometric area dimensions across parameter changes."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"To counteract the scaling numbers generated by repeatedly applying the Power Rule to $(x-a)^n$."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"Differentiating $x^n$ $n$ times pulls down factors of $n, (n-1), (n-2)...$ which creates an $n!$ multiplier. Dividing by $n!$ keeps your polynomial derivative isolated."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-formula" data-q="5" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"5"}</div>
-          <div className="mcq-q-text">{"Evaluate the explicit expression value for the $n=0$ structural term of a standard Taylor series layout."}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$f(a)$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"0"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$f'(a)(x-a)$"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"For $n=0$, the 0-th derivative is simply the un-differentiated function $f(a)$, $0! = 1$, and $(x-a)^0 = 1$. This leaves only $f(a)$."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-formula" data-q="6" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"6"}</div>
-          <div className="mcq-q-text">{"What does the notation $f^{(4)}(a)$ represent inside the general Taylor expansion framework?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The function value $f(a)$ scaled up to its 4th power exponent."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The 4th derivative of the function evaluated explicitly at coordinate point $a$."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The product of multiplying the first 4 terms together."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Parentheses around an exponent index indicate a high-order derivative operation, rather than an exponential power matrix value."}</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SectionS173() {
   return (
     <section className="section" id="s173">
@@ -245,71 +126,6 @@ function SectionS173() {
         <div className="box-lbl">{"The Maclaurin Equation Layout"}</div>
         <div className="fml">
           {"$$f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(0)}{n!} x^n$$"}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function QuizMcq173() {
-  return (
-    <section className="mcq-section" id="quiz-173">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 17.3"}</span>
-        <h2 className="mcq-section-title">{"Maclaurin Reduction Drills"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoremaclaurin-core">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="maclaurin-core" data-q="7" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"7"}</div>
-          <div className="mcq-q-text">{"What explicit value selection converts a general Taylor formulation into a standard Maclaurin series format?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$a = 1$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$a = 0$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$a = \\infty$"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"By definition, a Maclaurin series is identical to a Taylor series that is centered precisely at the coordinate origin position."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="maclaurin-core" data-q="8" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"8"}</div>
-          <div className="mcq-q-text">{"Why are Maclaurin models frequently preferred over Taylor configurations for early numerical analysis drills?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Evaluating expressions at zero eliminates complex binomial tracking layers like $(x-a)^n$."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Because Maclaurin series are guaranteed to converge faster across all variable domains."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Because they avoid dividing by factorial values entirely."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"Centering at zero reduces the polynomial base to simple powers of $x^n$, making the algebraic expressions much easier to evaluate manually."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="maclaurin-core" data-q="9" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"9"}</div>
-          <div className="mcq-q-text">{"If a function $f(x)$ contains an undefined coordinate state at point $x=0$ (such as $\\ln(x)$), what does this mean for its Maclaurin expansion?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The function can still be expanded using fractional negative power indicators."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The index terms switch to imaginary complex parameters."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"A Maclaurin expansion is impossible; you must use a general Taylor series centered at a point where the function is defined (like $a=1$)."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"Since you cannot evaluate the function or its derivatives at zero, a Maclaurin series cannot be constructed. You must center your expansion elsewhere using a Taylor model instead."}</div>
         </div>
       </div>
     </section>
@@ -386,71 +202,6 @@ function SectionS174() {
   );
 }
 
-function QuizMcq174() {
-  return (
-    <section className="mcq-section" id="quiz-174">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 17.4"}</span>
-        <h2 className="mcq-section-title">{"Catalog Manipulation Drills"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoretaylor-catalog">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="taylor-catalog" data-q="10" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"10"}</div>
-          <div className="mcq-q-text">{"Which standard function series catalog matches the expression layout containing exclusively odd factorial denominators?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$\\sin(x)$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$\\cos(x)$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$e^x$"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"Because sine is an odd function, its Maclaurin expansion retains exclusively odd power terms and odd factorial denominators: $(2n+1)!$."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-catalog" data-q="11" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"11"}</div>
-          <div className="mcq-q-text">{"Determine the correct Maclaurin expansion sequence for $e^{-2x}$ by leveraging direct expression substitution."}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$1 - x + x^2 - x^3 + \\dots$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$-2x - 4x^2 - 8x^3 - \\dots$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$1 - 2x + \\frac{4x^2}{2!} - \\frac{8x^3}{3!} + \\dots$"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"Substituting $(-2x)$ for $x$ in the standard $e^x$ series yields $1 + (-2x) + \\frac{(-2x)^2}{2!} + \\frac{(-2x)^3}{3!}$, which expands to choice C."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-catalog" data-q="12" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"12"}</div>
-          <div className="mcq-q-text">{"What operation converts the standard Maclaurin series for $\\cos(x)$ directly into the expansion for $\\sin(x)$?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Multiplying the full sequence by a factor of $x$."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Differentiating the $\\sin(x)$ expansion term-by-term yields the $\\cos(x)$ expansion."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Inverting the sign of every single term in the sequence uniformly."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Because $d/dx(\\sin x) = \\cos x$, differentiating sine's polynomial term-by-term reproduces cosine's expansion exactly."}</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SectionS175() {
   return (
     <section className="section" id="s175">
@@ -461,71 +212,6 @@ function SectionS175() {
         {"$$\\lim_{n \\to \\infty} \\left| \\frac{a_{n+1}}{a_n} \\right| < 1$$"}
         {"Solving this inequality reveals the Radius of Convergence $R$, defining the valid boundary domain where our polynomial cleanly matches our function."}
       </p>
-    </section>
-  );
-}
-
-function QuizMcq175() {
-  return (
-    <section className="mcq-section" id="quiz-175">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 17.5"}</span>
-        <h2 className="mcq-section-title">{"Convergence Limit Verifications"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoretaylor-convergence">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="taylor-convergence" data-q="13" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"13"}</div>
-          <div className="mcq-q-text">{"What is the absolute radius of convergence ($R$) value for the standard Maclaurin series of functions like $e^x$, $\\sin(x)$, and $\\cos(x)$?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$R = 1$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$R = 0$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$R = \\infty$ (Converges everywhere for all real numbers)"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"The factorials in their denominators grow so fast that the Ratio Test limit drops to 0 for any real value of $x$. This means they converge across all real numbers."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-convergence" data-q="14" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"14"}</div>
-          <div className="mcq-q-text">{"If a power series has a radius of convergence of $R=3$ centered at $a=0$, identify the coordinate value location where its convergence behavior is uncertain without further checking."}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$x = 3$ (The exact boundary edge)"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$x = 0$ (The center coordinate)"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$x = 5$ (An external point)"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"The Ratio Test is inconclusive when the limit equals exactly 1, which happens at the boundary endpoints ($x = \\pm R$). You have to check these points separately."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-convergence" data-q="15" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"15"}</div>
-          <div className="mcq-q-text">{"What happens to a polynomial approximation if you plug in an $x$-value that falls outside your interval of convergence?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The polynomial values continue to track the function perfectly."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The terms grow out of control and diverge toward infinity, making the approximation useless."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The polynomial values drop down and flatten out along the zero axis line."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Outside the interval of convergence, the infinite sum adds up to an infinite value, completely breaking the approximation."}</div>
-        </div>
-      </div>
     </section>
   );
 }
@@ -544,71 +230,6 @@ function SectionS176() {
   );
 }
 
-function QuizMcq176() {
-  return (
-    <section className="mcq-section" id="quiz-176">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 17.6"}</span>
-        <h2 className="mcq-section-title">{"Error Bounder Assessments"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoretaylor-error">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="taylor-error" data-q="16" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"16"}</div>
-          <div className="mcq-q-text">{"What does the remainder value $R_n(x)$ explicitly measure in practical computation drills?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The speed index required to compute your polynomial terms."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The exact error discrepancy difference between the true function value and your truncated polynomial approximation."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The coordinate value location where the function hits zero."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"The remainder captures the leftover portion of the infinite sum, which represents the numerical error introduced by truncating your polynomial early."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-error" data-q="17" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"17"}</div>
-          <div className="mcq-q-text">{"How does moving further away from your center point $a$ impact your remainder error bound value?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The error bound increases because the term $|x-a|^{n+1}$ grows larger."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The error bound shrinks down systematically toward zero values."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The error bound remains completely locked at a constant value profile."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"Taylor approximations are local. As you move away from the center point $a$, the distance term $|x-a|$ increases, which inflates the maximum potential error bound."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-error" data-q="18" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"18"}</div>
-          <div className="mcq-q-text">{"What role does the constant value $M$ play inside the Taylor inequality formula layout?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"It acts as the total number of polynomial terms you intend to keep."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"It tracks the location of the polynomial's root coordinates."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"It sets an upper limit on the absolute value of the next derivative, $(n+1)$, across your active tracking window."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"$M$ is a safety ceiling that bounds the worst-case size of the $(n+1)$-th derivative term inside your target interval."}</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SectionS177() {
   return (
     <section className="section" id="s177">
@@ -617,71 +238,6 @@ function SectionS177() {
       <p>
         {"In engineering contexts, Taylor series simplify complex physics equations. For instance, dropping everything after the linear term in a sine expansion gives us the small-angle approximation: $\\sin(x) \\approx x$. Additionally, they let us evaluate non-elementary integrals (like $\\int e^{-x^2} dx$) by converting the integrand into its polynomial series format and integrating term-by-term instead."}
       </p>
-    </section>
-  );
-}
-
-function QuizMcq177() {
-  return (
-    <section className="mcq-section" id="quiz-177">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Quiz Section 17.7"}</span>
-        <h2 className="mcq-section-title">{"Engineering Workflow Drills"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoretaylor-engineering">{"0 / 3"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-
-      <div className="mcq-card" data-section="taylor-engineering" data-q="19" data-answer="B">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"19"}</div>
-          <div className="mcq-q-text">{"What popular engineering approximation is derived by truncating the Maclaurin series for $\\sin(x)$ immediately after its first non-zero term?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$\\sin(x) \\approx 1$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$\\sin(x) \\approx x$ (The Small-Angle Approximation)"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$\\sin(x) \\approx x - \\frac{x^3}{6}$"}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: B"}</span>
-          <div className="mcq-explanation">{"Keeping only the first term of sine's Maclaurin series yields $\\sin(x) \\approx x$, which simplifies pendulum and orbital mechanics calculations when angles are close to zero."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-engineering" data-q="20" data-answer="A">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"20"}</div>
-          <div className="mcq-q-text">{"How do computational systems evaluate complex non-elementary integrals like $\\int_{0}^{1} \\sin(x^2) \\, dx$ using series?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"They substitute $x^2$ into sine's standard Maclaurin series, and then integrate that polynomial term-by-term."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"They solve the expression using integration-by-parts iterations."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"They swap the integration boundaries with radius of convergence limits."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: A"}</span>
-          <div className="mcq-explanation">{"Since $\\sin(x^2)$ has no analytical antiderivative, converting it to a polynomial series lets you integrate it term-by-term using the Power Rule."}</div>
-        </div>
-      </div>
-      <div className="mcq-card" data-section="taylor-engineering" data-q="21" data-answer="C">
-        <div className="mcq-q-row">
-          <div className="mcq-num">{"21"}</div>
-          <div className="mcq-q-text">{"When evaluating an alternating series approximation, what is the fastest way to bound the maximum error of your truncation step?"}</div>
-        </div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Sum up the remaining infinite terms using a geometric formula."}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Compute the value of the first term you kept in your sum."}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"The Alternating Series Estimation Theorem states the error is strictly bounded by the absolute value of the very first discarded term."}</div>
-        </div>
-        <button className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer">
-          <span className="mcq-correct-badge">{"Correct Option: C"}</span>
-          <div className="mcq-explanation">{"For convergent alternating series, your error margin is always smaller than the absolute value of the first term you left out."}</div>
-        </div>
-      </div>
     </section>
   );
 }
@@ -705,62 +261,6 @@ function SectionObj18Enrichment() {
           <div className="sol-lbl">{"Solution"}</div>
           <p>{"$T_2(0.1)=1.105$. True $e^{0.1}\\approx 1.10517$, so absolute error is about $1.7\\times 10^{-4}$."}</p>
         </div>
-      </div>
-    </section>
-  );
-}
-
-function QuizChallengeTaylor() {
-  return (
-    <section className="mcq-section" id="quiz-taylor-challenge">
-      <div className="mcq-section-head">
-        <span className="mcq-section-badge">{"Challenge"}</span>
-        <h2 className="mcq-section-title">{"Medium & Hard Practice"}</h2>
-      </div>
-      <div className="mcq-score-strip">
-        <span className="score-lbl">{"Score"}</span>
-        <span className="score-val" id="scoretaylor-challenge">{"0 / 4"}</span>
-        <span className="score-lbl" style={{ marginLeft: "auto", opacity: "0.4" }}>{"Click an option then reveal answer"}</span>
-      </div>
-      <div className="mcq-card" data-section="taylor-challenge" data-q="1" data-answer="B" data-difficulty="medium">
-        <div className="mcq-q-row"><div className="mcq-num">{"1"}</div><div className="mcq-q-text">{"(Medium) The degree-1 Taylor polynomial of $\\sin x$ at 0 is:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$1$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$x$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$x-x^3/6$"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: B"}</span><div className="mcq-explanation">{"$\\sin 0=0$, $\\cos 0=1$, so $T_1(x)=x$."}</div></div>
-      </div>
-      <div className="mcq-card" data-section="taylor-challenge" data-q="2" data-answer="A" data-difficulty="medium">
-        <div className="mcq-q-row"><div className="mcq-num">{"2"}</div><div className="mcq-q-text">{"(Medium) Substituting $x\\mapsto -x$ into the series for $e^x$ gives:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"The series for $e^{-x}$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"The series for $\\sin x$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"A divergent series"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: A"}</span><div className="mcq-explanation">{"Catalog substitution: replace $x$ by $-x$ in $e^x=\\sum x^n/n!$."}</div></div>
-      </div>
-      <div className="mcq-card" data-section="taylor-challenge" data-q="3" data-answer="C" data-difficulty="hard">
-        <div className="mcq-q-row"><div className="mcq-num">{"3"}</div><div className="mcq-q-text">{"(Hard) Radius of convergence of $\\sum x^n$ is:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"$0$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"$\\infty$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"$1$"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: C"}</span><div className="mcq-explanation">{"Geometric series $\\sum x^n$ converges for $|x|<1$."}</div></div>
-      </div>
-      <div className="mcq-card" data-section="taylor-challenge" data-q="4" data-answer="B" data-difficulty="hard">
-        <div className="mcq-q-row"><div className="mcq-num">{"4"}</div><div className="mcq-q-text">{"(Hard) To guarantee $|R_n(x)|<10^{-3}$, you typically:"}</div></div>
-        <div className="mcq-options">
-          <div className="mcq-opt" data-opt="A"><span className="mcq-opt-letter">{"A"}</span>{"Ignore $M$ and only look at $n$"}</div>
-          <div className="mcq-opt" data-opt="B"><span className="mcq-opt-letter">{"B"}</span>{"Bound $|f^{(n+1)}|$ by $M$ and choose $n$ large enough that $\\frac{M}{(n+1)!}|x-a|^{n+1}<10^{-3}$"}</div>
-          <div className="mcq-opt" data-opt="C"><span className="mcq-opt-letter">{"C"}</span>{"Always take $n=2$"}</div>
-        </div>
-        <button type="button" className="mcq-reveal-btn">{"Reveal Answer"}</button>
-        <div className="mcq-answer"><span className="mcq-correct-badge">{"Correct Option: B"}</span><div className="mcq-explanation">{"Lagrange remainder control is exactly this bound-and-choose-$n$ workflow."}</div></div>
       </div>
     </section>
   );
@@ -797,16 +297,16 @@ function TaylorSeriesGuide({ section }) {
           <TableOfContentsPart2 />
           <Divider />
           <SectionS174 />
-          <QuizMcq174 />
+          <GuideMcqSection id="quiz-174" badge="Practice" title="Series Catalog" scoreId="scoretaylor-catalog" section="taylor-catalog" questions={TAYLOR_CATALOG_QUIZ} />
           <Divider />
           <SectionS175 />
-          <QuizMcq175 />
+          <GuideMcqSection id="quiz-175" badge="Practice" title="Convergence" scoreId="scoretaylor-convergence" section="taylor-convergence" questions={TAYLOR_CONVERGENCE_QUIZ} />
           <Divider />
           <SectionS176 />
-          <QuizMcq176 />
+          <GuideMcqSection id="quiz-176" badge="Practice" title="Error Bounds" scoreId="scoretaylor-error" section="taylor-error" questions={TAYLOR_ERROR_QUIZ} />
           <Divider />
           <SectionS177 />
-          <QuizMcq177 />
+          <GuideMcqSection id="quiz-177" badge="Practice" title="Engineering Uses" scoreId="scoretaylor-engineering" section="taylor-engineering" questions={TAYLOR_ENGINEERING_QUIZ} />
           <Divider />
           <SectionObj18Enrichment />
           <Divider />
@@ -814,7 +314,7 @@ function TaylorSeriesGuide({ section }) {
           <Divider />
           <TaylorCertificateBoost part={2} />
           <Divider />
-          <QuizChallengeTaylor />
+          <GuideMcqSection id="quiz-taylor-challenge" badge="Challenge" title="Mixed Challenge" scoreId="scoretaylor-challenge" section="taylor-challenge" questions={TAYLOR_CHALLENGE_QUIZ} />
           <Divider />
           <SectionSummary />
         </main>
@@ -835,13 +335,13 @@ function TaylorSeriesGuide({ section }) {
         <OpeningNote />
         <Divider />
         <SectionS171 />
-        <QuizMcq171 />
+        <GuideMcqSection id="quiz-171" badge="Practice" title="Taylor Concept" scoreId="scoretaylor-concept" section="taylor-concept" questions={TAYLOR_CONCEPT_QUIZ} />
         <Divider />
         <SectionS172 />
-        <QuizMcq172 />
+        <GuideMcqSection id="quiz-172" badge="Practice" title="Taylor Formula" scoreId="scoretaylor-formula" section="taylor-formula" questions={TAYLOR_FORMULA_QUIZ} />
         <Divider />
         <SectionS173 />
-        <QuizMcq173 />
+        <GuideMcqSection id="quiz-173" badge="Practice" title="Maclaurin Core" scoreId="scoremaclaurin-core" section="maclaurin-core" questions={MACLAURIN_CORE_QUIZ} />
         <Divider />
         <SectionObj18Enrichment />
         <Divider />
@@ -849,7 +349,6 @@ function TaylorSeriesGuide({ section }) {
         <Divider />
         <TaylorCertificateBoost part={1} />
         <Divider />
-        <QuizChallengeTaylor />
         <Divider />
         <section id="summary1" className="section">
           <div className="sec-badge">{"Reference"}</div>

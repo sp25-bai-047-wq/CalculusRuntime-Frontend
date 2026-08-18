@@ -5,24 +5,61 @@ import { useProgress } from "../../context/ProgressContext";
 import {
   getCourseTitle,
   isCourseCertificateEligible,
-  getRemainingSections,
+  getRequiredSections,
+  getQuizId,
+  getMinQuizScore,
 } from "../../data/courseCompletion";
+import { runBackgroundVerification } from "../../services/verificationAPI";
+import { fetchWithTimeout } from "../../utils/fetchWithTimeout";
 import "./Certificate.css";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8002";
+
 /**
- * Builds a short, shareable certificate id from user + course + date.
- * This is a local, deterministic stand-in so the view works with no
- * backend. Swap this (and the setTimeout "issue" step below) for a real
- * `GET /api/certificates/:courseId` call once Developer 2's endpoint exists —
- * everything else on this page (states, layout, QR) stays the same.
+ * Checks whether the user already has an issued certificate for this
+ * course — so revisiting the page later (new session, days later) shows
+ * the download button immediately instead of re-verifying/re-asking for
+ * a name. Returns the certificate data, or null if none exists yet.
  */
-function buildCertificateId(username, courseId, completedAt) {
-  const raw = `${username}|${courseId}|${completedAt}`;
-  let hash = 0;
-  for (let i = 0; i < raw.length; i++) {
-    hash = (hash * 31 + raw.charCodeAt(i)) >>> 0;
+async function fetchExistingCertificate(accessToken, courseId) {
+  const response = await fetchWithTimeout(`${API_URL}/api/certificates/mine/${courseId}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (response.status === 404) return null;
+  if (!response.ok) return null;
+  return response.json();
+}
+
+/**
+ * Calls the backend to issue a signed certificate + QR code for a
+ * completed course. Backend: POST /api/certificates/generate
+ * (see routers/certificates.py — Dev 3).
+ */
+async function requestCertificate(accessToken, courseId, courseTitle, fullName, quizId, minQuizScore) {
+  const response = await fetchWithTimeout(`${API_URL}/api/certificates/generate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      course_id: courseId,
+      course_title: courseTitle,
+      full_name: fullName,
+      quiz_id: quizId || undefined,
+      min_quiz_score: minQuizScore,
+    }),
+  });
+
+  if (!response.ok) {
+    let detail = "";
+    try {
+      detail = (await response.json()).detail || "";
+    } catch {}
+    throw new Error(detail || `Certificate request failed (${response.status}).`);
   }
-  return `CR-${hash.toString(36).toUpperCase()}`;
+
+  return response.json();
 }
 
 function formatDate(ts) {
@@ -38,9 +75,13 @@ function Certificate() {
   const { user } = useAuth();
   const { progress, isHydrated } = useProgress();
 
-  // loading | guest | incomplete | failed | success
+  // loading | guest | incomplete | confirm_name | issuing | failed | success
   const [status, setStatus] = useState("loading");
   const [certificate, setCertificate] = useState(null);
+  const [fullName, setFullName] = useState("");
+  const [pendingCompletedAt, setPendingCompletedAt] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [retryCount, setRetryCount] = useState(0);
 
   const courseTitle = useMemo(() => getCourseTitle(courseId), [courseId]);
 
@@ -58,50 +99,128 @@ function Certificate() {
       return undefined;
     }
 
-    const remaining = getRemainingSections(courseId, progress.completedSections);
-    if (remaining.length > 0) {
-      setStatus("incomplete");
-      return undefined;
-    }
-
     setStatus("loading");
-    const timestamps = Object.values(progress.completedSectionTimestamps || {});
-    const completedAt = timestamps.length ? Math.max(...timestamps) : Date.now();
+    let cancelled = false;
 
-    // Small delay so the loading state is visible — this is also exactly
-    // where a real fetch() to the backend would go.
-    const timer = setTimeout(() => {
+    (async () => {
       try {
-        const certId = buildCertificateId(user.username, courseId, completedAt);
-        const verifyUrl = `${window.location.origin}/certificate/verify/${certId}`;
-        setCertificate({
-          id: certId,
-          courseTitle,
-          studentName: user.username,
-          completedAt,
-          verifyUrl,
-        });
-        setStatus("success");
-      } catch {
-        setStatus("failed");
-      }
-    }, 500);
+        // If a certificate was already issued for this user+course (e.g.
+        // they came back days later), show it immediately — no
+        // re-verification or re-asking for a name.
+        const existing = await fetchExistingCertificate(user.accessToken, courseId);
+        if (cancelled) return;
+        if (existing) {
+          setCertificate({
+            id: existing.cert_id,
+            courseTitle,
+            studentName: existing.full_name,
+            completedAt: existing.issued_at * 1000,
+            verifyUrl: existing.verify_url,
+            qrImage: existing.qr_png_base64,
+            pdfUrl: existing.pdf_url ? `${API_URL}${existing.pdf_url}` : null,
+            score: existing.score,
+            total: existing.total,
+          });
+          setStatus("success");
+          return;
+        }
 
-    return () => clearTimeout(timer);
+        // Ask Dev 2's verification service whether this course is actually
+        // complete before issuing anything — single source of truth
+        // instead of a local ad-hoc check.
+        const quizId = getQuizId(courseId);
+        const rawQuizAttempt = quizId ? progress.quizScores?.[quizId] : null;
+        const quizPct =
+          rawQuizAttempt && rawQuizAttempt.total
+            ? Math.round((rawQuizAttempt.score / rawQuizAttempt.total) * 100)
+            : undefined;
+
+        const userProgress = {
+          userId: user.id,
+          completedSections: Object.keys(progress.completedSections || {}).filter(
+            (id) => progress.completedSections[id]
+          ),
+          quizScores: quizId && quizPct !== undefined ? { [quizId]: quizPct } : {},
+        };
+        const courseData = {
+          id: courseId,
+          requiredSections: getRequiredSections(courseId),
+          requiredQuiz: quizId || undefined,
+          minQuizScore: getMinQuizScore(courseId),
+        };
+
+        const verification = await runBackgroundVerification(userProgress, courseData);
+        if (cancelled) return;
+
+        if (!verification.verified) {
+          setStatus("incomplete");
+          return;
+        }
+
+        const timestamps = Object.values(progress.completedSectionTimestamps || {});
+        const completedAt = timestamps.length ? Math.max(...timestamps) : Date.now();
+
+        setPendingCompletedAt(completedAt);
+        setFullName((prev) => prev || user.username);
+        setStatus("confirm_name");
+      } catch (e) {
+        // Anything above (a sleeping/unresponsive backend, a network drop,
+        // etc.) lands here instead of leaving the page stuck on "loading"
+        // forever.
+        if (!cancelled) {
+          setErrorMessage(e?.message || "Something went wrong.");
+          setStatus("failed");
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [
     courseId,
     user,
     isHydrated,
     progress.completedSections,
     progress.completedSectionTimestamps,
+    progress.quizScores,
     courseTitle,
+    retryCount,
   ]);
 
-  const qrSrc = certificate
-    ? `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(
-        certificate.verifyUrl
-      )}`
-    : null;
+  const qrSrc = certificate?.qrImage || null;
+
+  async function handleConfirmName(e) {
+    e.preventDefault();
+    if (!fullName.trim()) return;
+    setStatus("issuing");
+    try {
+      const quizId = getQuizId(courseId);
+      const data = await requestCertificate(
+        user.accessToken,
+        courseId,
+        courseTitle,
+        fullName.trim(),
+        quizId,
+        getMinQuizScore(courseId)
+      );
+      setCertificate({
+        id: data.cert_id,
+        courseTitle,
+        studentName: data.full_name || fullName.trim(),
+        completedAt: pendingCompletedAt || Date.now(),
+        verifyUrl: data.verify_url,
+        qrImage: data.qr_png_base64,
+        pdfUrl: data.pdf_url ? `${API_URL}${data.pdf_url}` : null,
+        score: data.score,
+        total: data.total,
+      });
+      setStatus("success");
+    } catch (e) {
+      setErrorMessage(e?.message || "Something went wrong.");
+      setStatus("failed");
+    }
+  }
 
   return (
     <div className="cert-page">
@@ -126,21 +245,71 @@ function Certificate() {
         <div className="cert-state">
           <h2>Not finished yet</h2>
           <p>
-            Complete every section of <strong>{courseTitle}</strong> to unlock your certificate.
+            Complete every section of <strong>{courseTitle}</strong> and score at
+            least {getMinQuizScore(courseId)}% on the certification quiz to unlock
+            your certificate.
           </p>
-          <Link to={`/courses/${courseId}`} className="cert-btn cert-btn--primary">
-            Back to course
-          </Link>
+          <div className="cert-actions">
+            <Link to={`/courses/${courseId}`} className="cert-btn cert-btn--primary">
+              Back to course
+            </Link>
+            <Link to={`/quiz/${courseId}`} className="cert-btn">
+              Take the quiz
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {status === "confirm_name" && (
+        <div className="cert-state">
+          <h2>Almost there</h2>
+          <p>How should your name appear on the certificate?</p>
+          <form onSubmit={handleConfirmName} className="cert-name-form">
+            <input
+              type="text"
+              className="cert-name-input"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Your full name"
+              autoFocus
+              required
+            />
+            <button type="submit" className="cert-btn cert-btn--primary">
+              Generate certificate
+            </button>
+          </form>
+        </div>
+      )}
+
+      {status === "issuing" && (
+        <div className="cert-state cert-state--loading">
+          <div className="cert-spinner" aria-hidden="true" />
+          <p>Issuing your certificate…</p>
         </div>
       )}
 
       {status === "failed" && (
         <div className="cert-state">
           <h2>We couldn't load this certificate</h2>
-          <p>Something went wrong, or this course doesn't offer a certificate yet.</p>
-          <Link to="/dashboard" className="cert-btn cert-btn--primary">
-            Back to dashboard
-          </Link>
+          <p>
+            {errorMessage ||
+              "Something went wrong, or this course doesn't offer a certificate yet."}
+          </p>
+          <div className="cert-actions">
+            <button
+              type="button"
+              className="cert-btn cert-btn--primary"
+              onClick={() => {
+                setErrorMessage("");
+                setRetryCount((n) => n + 1);
+              }}
+            >
+              Try again
+            </button>
+            <Link to="/dashboard" className="cert-btn cert-btn--ghost">
+              Back to dashboard
+            </Link>
+          </div>
         </div>
       )}
 
@@ -154,6 +323,12 @@ function Certificate() {
               <div className="cert-name">{certificate.studentName}</div>
               <div className="cert-sub">has successfully completed</div>
               <div className="cert-course">{certificate.courseTitle}</div>
+              {certificate.score != null && certificate.total ? (
+                <div className="cert-sub cert-score">
+                  Certification quiz score: {certificate.score}/{certificate.total} (
+                  {Math.round((certificate.score / certificate.total) * 100)}%)
+                </div>
+              ) : null}
 
               <div className="cert-footer">
                 <div className="cert-footer-block">
@@ -177,7 +352,16 @@ function Certificate() {
           </div>
 
           <div className="cert-actions">
-            <button type="button" className="cert-btn cert-btn--primary" onClick={() => window.print()}>
+            {certificate.pdfUrl && (
+              <a
+                href={certificate.pdfUrl}
+                className="cert-btn cert-btn--primary"
+                download
+              >
+                Download PDF Certificate
+              </a>
+            )}
+            <button type="button" className="cert-btn" onClick={() => window.print()}>
               Print / Save as PDF
             </button>
             <Link to="/dashboard" className="cert-btn cert-btn--ghost">

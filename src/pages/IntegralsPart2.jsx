@@ -30,8 +30,8 @@ function IntegralsPart2() {
       <MultipleIntegralsGuide part={2} />
       <SectionCompleteBar
         sectionId="integrals-2"
-        nextPath="/partial-derivatives/1"
-        nextLabel="Partial Derivatives Part 1"
+        nextPath="/lagrange-multipliers/1"
+        nextLabel="Next: Lagrange Multipliers"
       />
     </div>
   );

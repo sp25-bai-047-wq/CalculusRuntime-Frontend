@@ -23,7 +23,7 @@ export default function IntegrationGuide({ part = 1 }) {
           <a className="sb-link" href="#int-tech">Techniques</a>
           <a className="sb-link" href="#int-proc2">Method</a>
           <a className="sb-link" href="#int-ex-p2">Examples (8)</a>
-          <a className="sb-link" href="#quiz-int-tech">Quiz 1 - 10 Qs</a>
+          <a className="sb-link" href="#quiz-int-tech">Quiz 1 - 15 Qs</a>
           <a className="sb-link" href="#int-life2">Real-life use</a>
         </nav>
         <main className="main">
@@ -78,7 +78,7 @@ export default function IntegrationGuide({ part = 1 }) {
           <LaMcqSection
             id="quiz-int-tech"
             badge="Quiz 1"
-            title="Techniques (10 questions)"
+            title="Techniques (15 questions)"
             scoreId="score-int-tech"
             section="int-tech"
             questions={INT_TECH_QUIZ}
@@ -105,7 +105,7 @@ export default function IntegrationGuide({ part = 1 }) {
         <a className="sb-link" href="#int-theory">Theory</a>
         <a className="sb-link" href="#int-proc1">Method</a>
         <a className="sb-link" href="#int-ex-p1">Examples (8)</a>
-        <a className="sb-link" href="#quiz-int-fund">Quiz 1 - 10 Qs</a>
+        <a className="sb-link" href="#quiz-int-fund">Quiz 1 - 15 Qs</a>
         <a className="sb-link" href="#int-life1">Real-life use</a>
       </nav>
       <main className="main">
@@ -163,7 +163,7 @@ export default function IntegrationGuide({ part = 1 }) {
         <LaMcqSection
           id="quiz-int-fund"
           badge="Quiz 1"
-          title="Foundations (10 questions)"
+          title="Foundations (15 questions)"
           scoreId="score-int-fund"
           section="int-fund"
           questions={INT_FUND_QUIZ}

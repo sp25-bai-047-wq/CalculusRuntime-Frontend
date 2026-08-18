@@ -30,8 +30,8 @@ function TaylorPart2() {
       <TaylorSeriesGuide section={2} />
       <SectionCompleteBar
         sectionId="taylor-2"
-        nextPath="/lagrange-multipliers/1"
-        nextLabel="Next: Lagrange Multipliers"
+        nextPath="/courses/calculus-analytical-geometry"
+        nextLabel="Back to Calculus & Analytical Geometry hub"
         courseId="calculus-analytical-geometry"
       />
     </div>

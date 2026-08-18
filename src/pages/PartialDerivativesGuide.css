@@ -240,6 +240,16 @@
       border-color: var(--gold);
     }.partial-derivatives-guide .exm .box-lbl{
       color: var(--gold);
+    }.partial-derivatives-guide .warn{
+      background: rgba(124, 47, 10, 0.07);
+      border-color: var(--rust);
+    }.partial-derivatives-guide .warn .box-lbl{
+      color: var(--rust);
+    }.partial-derivatives-guide .tip{
+      background: var(--sage-bg);
+      border-color: var(--sage);
+    }.partial-derivatives-guide .tip .box-lbl{
+      color: var(--sage);
     }.partial-derivatives-guide .exm-title{
       font-family: 'Playfair Display', serif;
       font-size: 0.96rem;

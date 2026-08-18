@@ -16,6 +16,7 @@ export default function LaTopicPart({
   part,
   nextPath,
   nextLabel,
+  courseId,
 }) {
   const { recordVisit } = useProgress();
 
@@ -37,6 +38,7 @@ export default function LaTopicPart({
         sectionId={sectionId}
         nextPath={nextPath}
         nextLabel={nextLabel}
+        courseId={courseId}
       />
     </div>
   );

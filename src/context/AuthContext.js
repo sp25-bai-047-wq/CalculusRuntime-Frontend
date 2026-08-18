@@ -56,6 +56,13 @@ async function requestAuth(path, body) {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(loadUser);
+  // loadUser() reads localStorage synchronously, so hydration is already
+  // done by the time this first renders — this just needs to exist and be
+  // true. Previously it was never defined/exported at all, so every
+  // `!isHydrated` check elsewhere (MyCertificates, CourseQuiz, etc.) read
+  // `undefined` and was permanently truthy — those pages got stuck showing
+  // a loading state forever, regardless of backend status.
+  const [isHydrated] = useState(true);
 
   // Drop stale tokens whose user no longer exists in the backend DB.
   useEffect(() => {
@@ -106,7 +113,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signup, login, logout }}>
+    <AuthContext.Provider value={{ user, isHydrated, signup, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

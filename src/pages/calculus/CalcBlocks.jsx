@@ -105,12 +105,21 @@ export function CertificateExample({
   result,
   check,
   mistake,
+  sectionId = "cert-examples",
 }) {
   const normalized = (steps || []).map((step) =>
     typeof step === "string" ? { text: step } : step,
   );
+  const anchor = `ex-${String(sectionId)
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, "-")
+    .slice(0, 32)}-${String(title || `example-${number}`)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48)}`;
   return (
-    <div className="box exm">
+    <div className="box exm" id={anchor} data-example-id={anchor}>
       <div className="box-lbl">
         Worked example {number} - {tier}
       </div>
