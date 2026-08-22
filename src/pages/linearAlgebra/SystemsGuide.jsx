@@ -15,6 +15,17 @@ function Divider() {
   return <hr className="divider" />;
 }
 
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide formalizes the theory and computational methods for solving systems of linear equations ($A\\mathbf{x} = \\mathbf{b}$) in linear algebra. Linear systems model interconnected constraints across engineering, physics, and economics. We apply Gaussian elimination and Gauss-Jordan reduction to transform augmented matrices into row echelon (REF) and reduced row echelon form (RREF). System solutions are classified into three distinct categories: unique solution (full rank), infinitely many solutions (presence of free variables), or no solution (inconsistent row $[0 \\dots 0 \\mid c]$). Mastering pivot analysis, vector parametric representations, and Cramer's rule establishes indispensable foundations for network flow simulations, circuit analysis, and optimization algorithms."}
+      </p>
+    </div>
+  );
+}
+
 function SystemsGuide({ part = 1 }) {
   if (part === 2) {
     return (
@@ -36,6 +47,9 @@ function SystemsGuide({ part = 1 }) {
             <p className="ch-sub">Rank, free variables, nullspace, and solution geometry</p>
             <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
           </header>
+
+          <OpeningNote />
+          <Divider />
 
           <section className="section" id="la-s-rank">
             <div className="sec-badge">Section 3.3</div>

@@ -1,4 +1,5 @@
 import LaTopicPart from "./LaTopicPart";
+import LinearEquationsGuide from "./LinearEquationsGuide";
 import VectorsGuide from "./VectorsGuide";
 import MatricesGuide from "./MatricesGuide";
 import SystemsGuide from "./SystemsGuide";
@@ -6,6 +7,34 @@ import EigenGuide from "./EigenGuide";
 import TransformGuide from "./TransformGuide";
 import OrthoLeastSquaresGuide from "./OrthoLeastSquaresGuide";
 import SvdGuide from "./SvdGuide";
+
+export function LinearEquationsPart1() {
+  return (
+    <LaTopicPart
+      sectionId="la-lineq-1"
+      title="Linear Equations — Part 1"
+      path="/linear-algebra/linear-equations/1"
+      Guide={LinearEquationsGuide}
+      part={1}
+      nextPath="/linear-algebra/linear-equations/2"
+      nextLabel="Next: Part 2 — Systems and solving techniques"
+    />
+  );
+}
+
+export function LinearEquationsPart2() {
+  return (
+    <LaTopicPart
+      sectionId="la-lineq-2"
+      title="Linear Equations — Part 2"
+      path="/linear-algebra/linear-equations/2"
+      Guide={LinearEquationsGuide}
+      part={2}
+      nextPath="/linear-algebra/vectors/1"
+      nextLabel="Next: Vectors and Vector Spaces"
+    />
+  );
+}
 
 export function VectorsPart1() {
   return (

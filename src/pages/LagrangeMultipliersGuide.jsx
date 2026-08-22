@@ -28,7 +28,8 @@ function OpeningNote() {
   return (
     <div className="opening-note-box">
       <p className="opening-note">
-        <strong>Operational Blueprint:</strong> This study guide delivers an exhaustive treatment of constrained optimization via the method of Lagrange Multipliers. In multivariable calculus, optimizing an objective function over an unrestricted domain relies simply on locating critical points where the gradient vanishes. However, physical systems—such as thermodynamic equilibrium boundaries, structural load constraints, and machine learning loss surfaces—are universally bound by operational restrictions. This module formalizes the geometric alignment mechanics required to resolve these complex systems.
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide delivers an exhaustive treatment of constrained optimization using the method of Lagrange Multipliers in multivariable calculus. Unconstrained optimization locates extrema where gradients vanish; however, real physical systems—such as thermodynamic equilibrium boundaries, aerospace load limits, and machine learning loss surfaces—are governed by operational constraints. Lagrange's geometric insight recognizes that at constrained extrema, the level curves of the objective function become tangent to the constraint surface, requiring their gradient vectors to align in parallel ($\\nabla f = \\lambda \\nabla g$). This module formalizes scalar multipliers, multi-constraint systems, and rigorous analytical solving workflows for engineering applications."}
       </p>
     </div>
   );
@@ -356,6 +357,8 @@ function LagrangeMultipliersGuide({ section }) {
         <main className="main">
           <GuideHeaderPart2 />
           <TableOfContentsPart2 />
+          <Divider />
+          <OpeningNote />
           <Divider />
           <SectionS154 />
           <GuideMcqSection id="quiz-154" badge="Practice" title="Workflow Calculation Drills" scoreId="scorelagrange-calc" section="lagrange-calc" questions={LAGRANGE_CALC_QUIZ} />

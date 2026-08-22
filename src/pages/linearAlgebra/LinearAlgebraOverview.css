@@ -1,0 +1,107 @@
+.la-overview-lead {
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 68ch;
+}
+
+.la-overview-bullets {
+  color: var(--muted);
+  line-height: 1.8;
+  margin: 1rem 0 0;
+  max-width: 60ch;
+  padding-left: 1.25rem;
+}
+
+.la-overview-bullets li {
+  margin-bottom: 0.35rem;
+}
+
+.la-roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+
+.la-roadmap-row {
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 8px);
+  color: var(--ink);
+  display: flex;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  text-decoration: none;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+
+.la-roadmap-row:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-hard, 0 6px 20px rgba(0, 0, 0, 0.08));
+  transform: translateX(2px);
+}
+
+.la-roadmap-num {
+  align-items: center;
+  background: rgba(194, 138, 46, 0.12);
+  border: 1px solid rgba(194, 138, 46, 0.3);
+  border-radius: 50%;
+  color: var(--gold);
+  display: flex;
+  flex: 0 0 auto;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  height: 2.1rem;
+  justify-content: center;
+  width: 2.1rem;
+}
+
+.la-roadmap-copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.la-roadmap-title {
+  align-items: center;
+  color: var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  gap: 0.55rem;
+}
+
+.la-roadmap-copy small {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.la-roadmap-tag {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.18rem 0.55rem;
+  text-transform: uppercase;
+}
+
+.la-roadmap-tag--core {
+  background: rgba(47, 116, 107, 0.12);
+  color: var(--teal);
+}
+
+.la-roadmap-arrow {
+  color: var(--muted);
+  flex: 0 0 auto;
+  font-size: 1.1rem;
+}

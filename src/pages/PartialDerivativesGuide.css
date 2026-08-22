@@ -29,7 +29,7 @@
       line-height: 1.85;
     }.partial-derivatives-guide .sidebar{
       position: fixed;
-      top: var(--header-h, 72px);
+      top: var(--sidebar-top, var(--header-h, 72px));
       left: 0;
       bottom: 0;
       width: var(--sw);
@@ -500,6 +500,39 @@
     }.partial-derivatives-guide .mcq-score-strip .score-lbl{
       opacity: 0.55;
       text-transform: uppercase;
+    }.partial-derivatives-guide .mcq-dots{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }.partial-derivatives-guide .mcq-dot{
+      width: 1.9rem;
+      height: 1.9rem;
+      border-radius: 50%;
+      border: 1.5px solid var(--rule);
+      background: var(--cream);
+      color: var(--ink);
+      opacity: 0.4;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 600;
+      cursor: not-allowed;
+      transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.15s;
+    }.partial-derivatives-guide .mcq-dot.reached{
+      opacity: 1;
+      cursor: pointer;
+      border-color: var(--gold);
+      background: var(--gold-bg);
+      color: var(--ink);
+    }.partial-derivatives-guide .mcq-dot.reached:hover{
+      transform: translateY(-1px);
+      box-shadow: var(--sh-sm);
+    }.partial-derivatives-guide .mcq-dot.active{
+      background: var(--rust);
+      border-color: var(--rust);
+      color: #fff;
+    }.partial-derivatives-guide .mcq-viewport{
+      position: relative;
     }.partial-derivatives-guide .mcq-card{
       background: var(--parchment);
       border: 1px solid var(--rule);
@@ -508,8 +541,48 @@
       margin-bottom: 1.3rem;
       box-shadow: var(--sh-sm);
       transition: box-shadow 0.2s;
+      animation: mcqSlideIn 0.32s ease;
+    }.partial-derivatives-guide .mcq-card.mcq-slide-hide{
+      display: none !important;
+    }@keyframes mcqSlideIn{
+      from{ opacity: 0; transform: translateX(18px); }
+      to{ opacity: 1; transform: translateX(0); }
     }.partial-derivatives-guide .mcq-card:hover{
       box-shadow: var(--sh);
+    }.partial-derivatives-guide .mcq-slide-nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }.partial-derivatives-guide .mcq-slide-prev,
+    .partial-derivatives-guide .mcq-slide-next{
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--cream);
+      color: var(--ink);
+      border: 1.5px solid var(--rule);
+      border-radius: 6px;
+      padding: 0.45rem 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }.partial-derivatives-guide .mcq-slide-prev:hover:not(:disabled),
+    .partial-derivatives-guide .mcq-slide-next:hover:not(:disabled){
+      border-color: var(--gold);
+      background: var(--gold-bg);
+    }.partial-derivatives-guide .mcq-slide-prev:disabled,
+    .partial-derivatives-guide .mcq-slide-next:disabled{
+      opacity: 0.35;
+      cursor: not-allowed;
+    }.partial-derivatives-guide .mcq-slide-pos{
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.6;
     }.partial-derivatives-guide .mcq-q-row{
       display: flex;
       gap: 0.8rem;
@@ -654,6 +727,12 @@
         grid-template-columns: 1fr;
       }.partial-derivatives-guide .mcq-section-title{
         font-size: 1.15rem;
+      }.partial-derivatives-guide .mcq-dot{
+        width: 1.7rem;
+        height: 1.7rem;
+        font-size: 0.6rem;
+      }.partial-derivatives-guide .mcq-slide-pos{
+        display: none;
       }
     }
   

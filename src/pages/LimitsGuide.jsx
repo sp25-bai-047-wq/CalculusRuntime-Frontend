@@ -12,6 +12,17 @@ function Divider() {
   return <hr className="divider" />;
 }
 
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This comprehensive study guide establishes the rigorous theoretical foundation of limits and continuity for single and multivariable functions. A limit formalizes the behavior of a function near a point, mathematically defined via the $\\varepsilon$-$\\delta$ criterion. In multivariable space, the Two-Path Test proves non-existence by demonstrating conflicting directional limits, while the Squeeze Theorem and polar coordinate conversions confirm limit values. Continuity is established when the limit matches the exact functional value across the domain. Mastering these concepts provides the vital analytical bedrock for differential calculus, tangent plane construction, and stability analysis in dynamic physical and engineering systems."}
+      </p>
+    </div>
+  );
+}
+
 function GuideSidebarPart1() {
   return (
     <nav className="sidebar">
@@ -287,6 +298,8 @@ function LimitsContent({ part }) {
           <GuideHeaderPart1 />
           <TableOfContentsPart1 />
           <Divider />
+          <OpeningNote />
+          <Divider />
           <SectionLC1 />
           <Divider />
           <SectionLC2 />
@@ -312,6 +325,8 @@ function LimitsContent({ part }) {
       <main className="main">
         <GuideHeaderPart2 />
         <TableOfContentsPart2 />
+        <Divider />
+        <OpeningNote />
         <Divider />
         <SectionLC4 />
         <Divider />

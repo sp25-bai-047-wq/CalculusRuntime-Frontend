@@ -107,9 +107,7 @@ function OpeningNote() {
       <div className="sec-badge">Overview</div>
       <h2 className="sec-title">Why Stokes&apos; Theorem Matters</h2>
       <p>
-        {"Stokes' Theorem is the circulation counterpart of the Divergence Theorem. "}
-        {"It converts a surface integral of curl into a line integral around the boundary curve — "}
-        {"or the other way around — so engineers can trade awkward surface calculations for simpler loop integrals."}
+        {"This study guide formalizes Stokes' Theorem, the fundamental integral theorem relating surface circulation to boundary line integrals in vector calculus. Stokes' Theorem equates the flux of the curl of a vector field through an oriented surface $S$ directly to the work line integral of that vector field along its closed bounding curve $C$ ($\\oint_C \\mathbf{F} \\cdot d\\mathbf{r} = \\iint_S (\\nabla \\times \\mathbf{F}) \\cdot d\\mathbf{S}$). This powerful correspondence enables engineers and physicists to swap difficult surface integrals for elementary closed-loop integrals. Mastering surface parametrization, right-hand orientation conventions, and bounding curves provides indispensable tools for electromagnetic field analysis and aerodynamic circulation modeling."}
       </p>
       <div className="box note">
         <p>

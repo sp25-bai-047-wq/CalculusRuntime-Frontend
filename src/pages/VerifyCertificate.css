@@ -1,0 +1,94 @@
+.verify-card {
+  background: var(--card, #fff);
+  border: 1.5px solid var(--line, #e0d6c8);
+  border-radius: 14px;
+  padding: 3rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.verify-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #e4f5ee;
+  color: #1f8a5f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.verify-icon--invalid {
+  background: #fbe6e4;
+  color: #c0392b;
+}
+
+.verify-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #1f8a5f;
+  background: #e4f5ee;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.verify-badge--invalid {
+  color: #c0392b;
+  background: #fbe6e4;
+}
+
+.verify-title {
+  font-size: 1.6rem;
+  margin: 0.25rem 0;
+}
+
+.verify-sub {
+  color: var(--muted, #7a7267);
+  margin: 0 0 1.25rem;
+}
+
+.verify-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0 0 1.75rem;
+  text-align: left;
+}
+
+.verify-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line, #e0d6c8);
+  padding-bottom: 0.6rem;
+}
+
+.verify-field dt {
+  color: var(--muted, #7a7267);
+  font-size: 0.85rem;
+}
+
+.verify-field dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}
+
+.verify-field-mono {
+  font-family: monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+}

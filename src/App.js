@@ -44,11 +44,14 @@ import Leaderboard from "./pages/Leaderboard";
 import Certificate from "./pages/calculus/Certificate";
 import CourseQuiz from "./pages/CourseQuiz";
 import MyCertificates from "./pages/MyCertificates";
+import VerifyCertificate from "./pages/VerifyCertificate";
 import SavedForLater from "./pages/SavedForLater";
 import Chatbot from "./components/Chatbot/Chatbot";
 import BackToTop from "./components/BackToTop";
 
 import {
+  LinearEquationsPart1,
+  LinearEquationsPart2,
   VectorsPart1,
   VectorsPart2,
   MatricesPart1,
@@ -65,6 +68,7 @@ import {
   SvdPart2,
 } from "./pages/linearAlgebra/LaParts";
 import MatrixSandbox from "./pages/linearAlgebra/MatrixSandbox";
+import LinearAlgebraOverview from "./pages/linearAlgebra/LinearAlgebraOverview";
 
 import {
   ProbBasicsPart1,
@@ -165,6 +169,7 @@ function App() {
               <Route path="/taylor-series/2" element={<Layout body={<TaylorPart2 />} />} />
 
               <Route path="/certificates" element={<Layout body={<MyCertificates />} />} />
+              <Route path="/verify" element={<Layout body={<VerifyCertificate />} />} />
               <Route path="/certificate/:courseId" element={<Layout body={<Certificate />} />} />
               <Route path="/quiz/:courseId" element={<Layout body={<CourseQuiz />} />} />
 
@@ -184,6 +189,10 @@ function App() {
               <Route path="/divergence-curl/2" element={<Layout body={<DivergencePart2 />} />} />
 
               {/* Linear Algebra */}
+              <Route path="/linear-algebra/overview" element={<Layout body={<LinearAlgebraOverview />} />} />
+              <Route path="/linear-algebra/linear-equations" element={<Navigate to="/linear-algebra/linear-equations/1" replace />} />
+              <Route path="/linear-algebra/linear-equations/1" element={<Layout body={<LinearEquationsPart1 />} />} />
+              <Route path="/linear-algebra/linear-equations/2" element={<Layout body={<LinearEquationsPart2 />} />} />
               <Route path="/linear-algebra/vectors" element={<Navigate to="/linear-algebra/vectors/1" replace />} />
               <Route path="/linear-algebra/vectors/1" element={<Layout body={<VectorsPart1 />} />} />
               <Route path="/linear-algebra/vectors/2" element={<Layout body={<VectorsPart2 />} />} />

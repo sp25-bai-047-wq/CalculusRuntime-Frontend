@@ -28,9 +28,8 @@ function OpeningNote() {
   return (
     <div className="opening-note-box">
       <p className="opening-note">
-        {"This guide establishes the foundational mechanics of Divergence and Curl in Vector Calculus. "}
-        {"By leveraging partial derivatives via the Del operator, we can quantify the expansion, contraction, and rotational behavior of continuous vector fields. "}
-        {"These operations serve as the structural backbone for classical electrodynamics, fluid mechanics, and atmospheric simulation modeling."}
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide establishes the core mechanics of Divergence and Curl in multivariable vector calculus. In physical systems, vector fields model fluid flows, electromagnetic forces, and atmospheric circulation across multidimensional space. The divergence operator ($\\nabla \\cdot \\mathbf{F}$) measures local volumetric flux per unit volume, identifying points acting as expanding sources or contracting sinks. In contrast, the curl operator ($\\nabla \\times \\mathbf{F}$) quantifies microscopic rotational circulation and vortex generation around a spatial axis. Together, divergence and curl underpin Maxwell's equations and fluid dynamics, providing the essential differential foundation connecting local field derivatives to Gauss's and Stokes' integral theorems."}
       </p>
     </div>
   );
@@ -610,6 +609,8 @@ function DivergenceAndCurlGuide({ section }) {
         <main className="main">
           <GuideHeaderPart2 />
           <TableOfContentsPart2 />
+          <Divider />
+          <OpeningNote />
           <Divider />
           <SectionS164 />
           <GuideMcqSection id="quiz-164" badge="Practice" title="Vector Catalog" scoreId="scorevector-catalog" section="vector-catalog" questions={VECTOR_CATALOG_QUIZ} />

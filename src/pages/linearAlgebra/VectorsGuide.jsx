@@ -250,7 +250,8 @@ function VectorsGuide({ part = 1 }) {
 
         <div className="opening-note-box">
           <p className="opening-note">
-            {"This module is the standard first block of Linear Algebra: vectors in $\\mathbb{R}^n$, length, addition, scalars, and the dot product. Part 2 continues with span, basis, and independence — the language used in every later chapter (matrices, systems, eigenvalues)."}
+            <strong>Operational Blueprint:</strong>{" "}
+            {"This study guide formalizes the algebraic and geometric foundations of vectors and vector spaces in $\\mathbb{R}^n$. Vectors represent multi-component mathematical objects encoding directional displacement, physical velocity, and high-dimensional data points. We establish core linear operations including vector addition, scalar multiplication, Euclidean norms, and dot products for determining lengths and orthogonality angles. Moving from algebraic operations to structural linear algebra, this module develops linear combinations, vector span, linear independence, basis sets, and subspace dimensions. These concepts provide the indispensable mathematical architecture for matrix transformations, solving linear systems, performing eigenvalue decompositions, and implementing modern data science and machine learning algorithms."}
           </p>
         </div>
 

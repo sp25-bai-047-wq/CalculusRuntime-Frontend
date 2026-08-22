@@ -240,7 +240,8 @@ function ProbabilityBasicsGuide({ part = 1 }) {
 
         <div className="opening-note-box">
           <p className="opening-note">
-            {"Probability quantifies uncertainty. Start with a sample space of outcomes, assign weights that obey Kolmogorov’s axioms, then compute probabilities of events — subsets of that space."}
+            <strong>Operational Blueprint:</strong>{" "}
+            {"This foundational study guide introduces the mathematical theory of probability, formalizing methods to quantify uncertainty and analyze random phenomena. Starting from first principles, an experiment is characterized by a sample space $\\Omega$ comprising all possible outcomes, with events defined as outcome subsets. We introduce Kolmogorov's probability axioms—non-negativity, unit measure, and countable additivity—to establish rigorous mathematical consistency. The curriculum advances through combinatorial counting techniques, conditional probability definitions, joint distributions, statistical independence criteria, and Bayes' Theorem for updating belief states given empirical evidence. This framework provides the essential mathematical bedrock for inferential statistics, machine learning risk estimation, and data-driven decision theory."}
           </p>
         </div>
 

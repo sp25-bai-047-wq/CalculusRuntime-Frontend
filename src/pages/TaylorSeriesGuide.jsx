@@ -27,7 +27,8 @@ function OpeningNote() {
   return (
     <div className="opening-note-box">
       <p className="opening-note">
-        <strong>Operational Blueprint:</strong> This study guide delivers an exhaustive treatment of Taylor and Maclaurin Series expansions. By leveraging higher-order derivatives, we can reconstruct complex, non-linear transcendental functions as infinite polynomials centered around a specific spatial coordinate point. This serves as one of the most powerful tools in numerical analysis, engineering approximations, and physical simulation modeling.
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide delivers an exhaustive treatment of Taylor and Maclaurin Series expansions in calculus. By leveraging successive higher-order derivatives, we can approximate complex, non-linear functions as infinite polynomial series centered at an arbitrary coordinate point $a$. When the expansion center is specifically positioned at the origin ($a = 0$), the construction simplifies directly into a canonical Maclaurin series. This module formalizes general derivation formulas, standard transcendental catalog expansions ($e^x, \\sin x, \\cos x$), convergence intervals via ratio tests, and Taylor remainder error bounds, equipping you with essential analytic tools for numerical computing, scientific modeling, and precise problem-solving."}
       </p>
     </div>
   );
@@ -49,7 +50,7 @@ function GuideSidebarPart1() {
       <a className="sb-link" href="#quiz-171">Quiz 17.1</a>
       <a className="sb-link" href="#s172">The Taylor Formula</a>
       <a className="sb-link" href="#quiz-172">Quiz 17.2</a>
-      <a className="sb-link" href="#s173">Maclaurin Reductions</a>
+      <a className="sb-link" href="#s173">Maclaurin Series &amp; Reductions</a>
       <a className="sb-link" href="#quiz-173">Quiz 17.3</a>
       <a className="sb-link" href="#taylor-cert-p1">Certificate examples</a>
     </nav>
@@ -60,8 +61,8 @@ function GuideHeaderPart1() {
   return (
     <header className="ch-hdr">
       <div className="ch-eye">Multivariable Calculus Study Guide · Part 1 of 2</div>
-      <h1 className="ch-title">Taylor Series</h1>
-      <p className="ch-sub">Polynomial Approximations, The Taylor Formula &amp; Maclaurin Series</p>
+      <h1 className="ch-title">Taylor &amp; Maclaurin Series</h1>
+      <p className="ch-sub">Polynomial Approximations, The Taylor Formula &amp; Maclaurin Series Foundations</p>
       <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
     </header>
   );
@@ -74,7 +75,7 @@ function TableOfContentsPart1() {
       <div className="toc-grid">
         <a className="toc-a" href="#s171">Polynomial Approximation</a>
         <a className="toc-a" href="#s172">The Taylor Formula</a>
-        <a className="toc-a" href="#s173">Maclaurin Reductions</a>
+        <a className="toc-a" href="#s173">Maclaurin Series Foundations</a>
         <a className="toc-a" href="#quiz-171">Practice Quizzes</a>
       </div>
     </nav>
@@ -104,11 +105,11 @@ function SectionS172() {
       </p>
       <div className="box def">
         <div className="box-lbl">{"Definition Formula — Infinite Taylor Series"}</div>
-        {"The expansion of an infinitely differentiable function $f(x)$ centered at point $x = a$ is given by:"}
+        <p>{"The expansion of an infinitely differentiable function $f(x)$ centered at point $x = a$ is given by:"}</p>
         <div className="fml">
           {"$$f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!} (x-a)^n$$"}
         </div>
-        {"Expanded version: $$f(x) = f(a) + f'(a)(x-a) + \\frac{f''(a)}{2!}(x-a)^2 + \\frac{f'''(a)}{3!}(x-a)^3 + \\dots$$"}
+        <p>{"Expanded form: $$f(x) = f(a) + f'(a)(x-a) + \\frac{f''(a)}{2!}(x-a)^2 + \\frac{f'''(a)}{3!}(x-a)^3 + \\dots$$"}</p>
       </div>
     </section>
   );
@@ -118,14 +119,35 @@ function SectionS173() {
   return (
     <section className="section" id="s173">
       <div className="sec-badge">{"Section 17.3"}</div>
-      <h2 className="sec-title">{"Maclaurin Special Case Reductions"}</h2>
+      <h2 className="sec-title">{"Maclaurin Series: The Origin-Centered Foundation"}</h2>
       <p>
-        {"A Maclaurin series is simply a specific subset case of the Taylor Series where the approximation center point is placed exactly at the coordinate origin ($a = 0$). This simplifies the algebraic expressions because your variable differences $(x-a)^n$ reduce simply to $x^n$."}
+        {"A Maclaurin series is the special, universally applied case of the Taylor Series where the approximation center point is placed precisely at the origin ($a = 0$). Setting $a = 0$ simplifies the binomial powers $(x-a)^n$ directly to $x^n$, producing the cleanest and most practical power series representation for mathematical physics and numerical algorithms."}
       </p>
       <div className="box def">
-        <div className="box-lbl">{"The Maclaurin Equation Layout"}</div>
+        <div className="box-lbl">{"Definition — Maclaurin Series Formula"}</div>
+        <p>{"For any smooth function $f(x)$ whose derivatives exist at $x = 0$, its Maclaurin series is defined as:"}</p>
         <div className="fml">
-          {"$$f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(0)}{n!} x^n$$"}
+          {"$$f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(0)}{n!} x^n = f(0) + f'(0)x + \\frac{f''(0)}{2!}x^2 + \\frac{f'''(0)}{3!}x^3 + \\frac{f^{(4)}(0)}{4!}x^4 + \\dots$$"}
+        </div>
+      </div>
+
+      <div className="box exm">
+        <div className="box-lbl">{"Step-by-Step Derivation: Maclaurin Series for $e^x$"}</div>
+        <div className="exm-title">{"Find the Maclaurin series for $f(x) = e^x$ and state its general term."}</div>
+        <div className="sol">
+          <div className="sol-lbl">{"Solution Steps"}</div>
+          <ol className="steps">
+            <li>
+              {"Compute the derivatives: $f(x) = e^x$, $f'(x) = e^x$, $f''(x) = e^x$, and generally $f^{(n)}(x) = e^x$ for all integers $n \\geq 0$."}
+            </li>
+            <li>
+              {"Evaluate all derivatives at the origin $x = 0$: $f^{(n)}(0) = e^0 = 1$ for every $n$."}
+            </li>
+            <li>
+              {"Substitute into the Maclaurin formula: $c_n = \\frac{f^{(n)}(0)}{n!} = \\frac{1}{n!}$, giving:"}
+              <div className="fml">{"$$e^x = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\frac{x^4}{4!} + \\dots = \\sum_{n=0}^{\\infty} \\frac{x^n}{n!}$$"}</div>
+            </li>
+          </ol>
         </div>
       </div>
     </section>
@@ -186,17 +208,63 @@ function SectionS174() {
   return (
     <section className="section" id="s174">
       <div className="sec-badge">{"Section 17.4"}</div>
-      <h2 className="sec-title">{"Common Transcendental Maclaurin Expansions"}</h2>
+      <h2 className="sec-title">{"The Canonical Maclaurin Series Catalog"}</h2>
       <p>
-        {"Instead of deriving an expansion from scratch every time, we can reuse and adapt known standard series formulas for core transcendental functions via direct substitution."}
+        {"Rather than repeatedly calculating derivatives from scratch, mathematicians and engineers manipulate known canonical Maclaurin expansions via algebraic substitution, term-by-term differentiation, and integration."}
       </p>
       <div className="box ex">
-        <div className="box-lbl">{"Core Standard Reference Catalog"}</div>
-        <ul className="summary-list" style={{ gap: "10px", padding: "10px" }}>
-          <li>{"$e^x = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\dots = \\sum_{n=0}^{\\infty} \\frac{x^n}{n!}$"}</li>
-          <li>{"$\\sin(x) = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\dots = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$ (Odd symmetry terms)"}</li>
-          <li>{"$\\cos(x) = 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\dots = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n}}{(2n)!}$ (Even symmetry terms)"}</li>
+        <div className="box-lbl">{"Standard Maclaurin Series Master Catalog"}</div>
+        <ul className="summary-list" style={{ gap: "12px", padding: "12px" }}>
+          <li>
+            <strong>{"Exponential:"}</strong>{" "}
+            {"$e^x = \\sum_{n=0}^{\\infty} \\frac{x^n}{n!} = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\dots$"}
+            <span style={{ color: "var(--gold)", marginLeft: "8px" }}>{"(Valid for all $x \\in \\mathbb{R}, R = \\infty$)"}</span>
+          </li>
+          <li>
+            <strong>{"Sine (Odd):"}</strong>{" "}
+            {"$\\sin(x) = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\dots$"}
+            <span style={{ color: "var(--gold)", marginLeft: "8px" }}>{"(Valid for all $x \\in \\mathbb{R}, R = \\infty$)"}</span>
+          </li>
+          <li>
+            <strong>{"Cosine (Even):"}</strong>{" "}
+            {"$\\cos(x) = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\dots$"}
+            <span style={{ color: "var(--gold)", marginLeft: "8px" }}>{"(Valid for all $x \\in \\mathbb{R}, R = \\infty$)"}</span>
+          </li>
+          <li>
+            <strong>{"Geometric Series:"}</strong>{" "}
+            {"$\\frac{1}{1-x} = \\sum_{n=0}^{\\infty} x^n = 1 + x + x^2 + x^3 + \\dots$"}
+            <span style={{ color: "var(--gold)", marginLeft: "8px" }}>{"(Valid for $|x| < 1, R = 1$)"}</span>
+          </li>
+          <li>
+            <strong>{"Natural Logarithm:"}</strong>{" "}
+            {"$\\ln(1+x) = \\sum_{n=1}^{\\infty} \\frac{(-1)^{n-1} x^n}{n} = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\dots$"}
+            <span style={{ color: "var(--gold)", marginLeft: "8px" }}>{"(Valid for $-1 < x \\leq 1, R = 1$)"}</span>
+          </li>
+          <li>
+            <strong>{"Arctangent:"}</strong>{" "}
+            {"$\\arctan(x) = \\sum_{n=0}^{\\infty} \\frac{(-1)^n x^{2n+1}}{2n+1} = x - \\frac{x^3}{3} + \\frac{x^5}{5} - \\dots$"}
+            <span style={{ color: "var(--gold)", marginLeft: "8px" }}>{"(Valid for $|x| \\leq 1, R = 1$)"}</span>
+          </li>
         </ul>
+      </div>
+
+      <div className="box exm">
+        <div className="box-lbl">{"Catalog Substitution Example"}</div>
+        <div className="exm-title">{"Find the Maclaurin series for $g(x) = x^2 e^{-x^2}$ up to degree 6."}</div>
+        <div className="sol">
+          <div className="sol-lbl">{"Solution Steps"}</div>
+          <ol className="steps">
+            <li>
+              {"Start with the standard exponential series: $e^u = 1 + u + \\frac{u^2}{2!} + \\frac{u^3}{3!} + \\dots$"}
+            </li>
+            <li>
+              {"Substitute $u = -x^2$: $e^{-x^2} = 1 - x^2 + \\frac{(-x^2)^2}{2!} - \\frac{(-x^2)^3}{3!} + \\dots = 1 - x^2 + \\frac{x^4}{2} - \\frac{x^6}{6} + \\dots$"}
+            </li>
+            <li>
+              {"Multiply the entire expansion by $x^2$: $x^2 e^{-x^2} = x^2 - x^4 + \\frac{x^6}{2} - \\frac{x^8}{6} + \\dots$"}
+            </li>
+          </ol>
+        </div>
       </div>
     </section>
   );
@@ -295,6 +363,8 @@ function TaylorSeriesGuide({ section }) {
         <main className="main">
           <GuideHeaderPart2 />
           <TableOfContentsPart2 />
+          <Divider />
+          <OpeningNote />
           <Divider />
           <SectionS174 />
           <GuideMcqSection id="quiz-174" badge="Practice" title="Series Catalog" scoreId="scoretaylor-catalog" section="taylor-catalog" questions={TAYLOR_CATALOG_QUIZ} />

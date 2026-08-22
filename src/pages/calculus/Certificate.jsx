@@ -338,7 +338,18 @@ function Certificate() {
 
                 <div className="cert-qr-block">
                   {qrSrc && (
-                    <img src={qrSrc} alt="Certificate verification QR code" className="cert-qr" />
+                    <a
+                      href={certificate.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Click to verify this certificate"
+                    >
+                      <img
+                        src={qrSrc}
+                        alt="Certificate verification QR code"
+                        className="cert-qr"
+                      />
+                    </a>
                   )}
                   <div className="cert-footer-label">Scan to verify</div>
                 </div>

@@ -52,6 +52,8 @@ export const SECTION_GUIDE_QUIZ_KEYS = {
   "stokes-2": ["stokes-a"],
 
   // Linear Algebra
+  "la-lineq-1": ["la-le-forms", "la-le-graph"],
+  "la-lineq-2": ["la-le-sys", "la-le-solve"],
   "la-vectors-1": ["la-v-intro", "la-v-ops"],
   "la-vectors-2": ["la-v-span", "la-v-indep"],
   "la-matrices-1": ["la-m-intro", "la-m-ops"],

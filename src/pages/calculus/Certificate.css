@@ -177,6 +177,11 @@
   text-align: center;
 }
 
+.cert-qr-block a {
+  display: inline-block;
+  cursor: pointer;
+}
+
 .cert-qr {
   width: 88px;
   height: 88px;

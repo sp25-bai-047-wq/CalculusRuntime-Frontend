@@ -51,13 +51,13 @@
 
 html {
   scroll-behavior: smooth;
-  /* Prevent the study-guide horizontal sub-nav from creating a page scrollbar */
-  overflow-x: hidden;
+  /* Prevent the study-guide horizontal sub-nav from creating a page scrollbar without breaking position:sticky */
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
-  overflow-x: hidden; /* belt & suspenders */
+  overflow-x: clip; /* belt & suspenders */
   background: var(--paper);
   color: var(--ink);
   font-family:
@@ -940,6 +940,34 @@ select {
   box-shadow: none;
   transform: none;
 }
+
+.guide-card--start {
+  border-color: rgba(194, 138, 46, 0.55);
+  box-shadow: 0 0 0 1px rgba(194, 138, 46, 0.18);
+}
+
+.guide-card--start::before {
+  background: var(--gold);
+  width: 5px;
+}
+
+.guide-card--start::after {
+  content: "★ Start here →";
+  background: rgba(194, 138, 46, 0.14);
+  border-color: rgba(194, 138, 46, 0.4);
+  color: var(--gold);
+}
+
+.guide-card--start .guide-card-icon {
+  color: var(--gold);
+  opacity: 1;
+}
+
+.guide-card--start:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-hard);
+}
+
 .guide-card-icon {
   font-family: Georgia, serif;
   font-size: 2rem;

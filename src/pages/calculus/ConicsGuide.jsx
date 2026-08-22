@@ -13,6 +13,17 @@ function Divider() {
   return <hr className="divider" />;
 }
 
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide formalizes analytic geometry and the classification of conic sections—parabolas, ellipses, hyperbolas, and circles—arising from plane-cone intersections. We analyze standard geometric locus definitions involving foci, directrices, vertices, and eccentricities ($e = c/a$). The curriculum expands to the general quadratic equation $Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0$, utilizing the discriminant invariant $B^2 - 4AC$ for classification, coordinate translations, and axes rotations through angle $\\theta$. These geometric curves provide the governing equations for celestial orbital mechanics, satellite reflector optics, whispering gallery acoustics, and radar navigation systems in aerospace and telecommunications engineering."}
+      </p>
+    </div>
+  );
+}
+
 export default function ConicsGuide({ part = 1 }) {
   if (part === 2) {
     return (
@@ -32,6 +43,9 @@ export default function ConicsGuide({ part = 1 }) {
             <p className="ch-sub">Discriminant $B^2-4AC$, optics, orbits, navigation</p>
             <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
           </header>
+
+          <OpeningNote />
+          <Divider />
 
           <section className="section" id="con-class">
             <div className="sec-badge">Section 2.1</div>
@@ -113,6 +127,9 @@ export default function ConicsGuide({ part = 1 }) {
           <p className="ch-sub">Distance/midpoint, circle, parabola, ellipse, hyperbola, eccentricity</p>
           <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
         </header>
+
+        <OpeningNote />
+        <Divider />
 
         <section className="section" id="con-theory">
           <div className="sec-badge">Section 1.1</div>

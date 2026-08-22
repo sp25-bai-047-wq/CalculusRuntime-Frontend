@@ -22,6 +22,17 @@ function Divider() {
   return <hr className="divider" />;
 }
 
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide delivers an exhaustive treatment of differential calculus, from fundamental difference quotients to advanced optimization and related rates. Differentiation measures the instantaneous rate of change and the slope of a curve, defined as $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h)-f(x)}{h}$. We establish core operational rules—power, product, quotient, and chain rules—alongside implicit and parametric differentiation techniques. Applications include analyzing curve concavity, locating critical points, classifying extrema, utilizing the Mean Value Theorem, and resolving indeterminate limits via L'Hôpital's Rule. These mathematical techniques form the foundational computational machinery for classical physics, mechanical engineering, pharmacokinetics, and economic optimization models."}
+      </p>
+    </div>
+  );
+}
+
 export default function DifferentiationGuide({ part = 1 }) {
   if (part === 2) {
     return (
@@ -43,6 +54,9 @@ export default function DifferentiationGuide({ part = 1 }) {
             <p className="ch-sub">Related rates, extrema, MVT, L&apos;Hôpital, implicit &amp; parametric</p>
             <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
           </header>
+
+          <OpeningNote />
+          <Divider />
 
           <section className="section" id="diff-apps">
             <div className="sec-badge">Section 2.1 - Medium -> Advanced</div>
@@ -159,6 +173,9 @@ export default function DifferentiationGuide({ part = 1 }) {
           <p className="ch-sub">Definition, power/product/quotient/chain - Basic -> Advanced</p>
           <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
         </header>
+
+        <OpeningNote />
+        <Divider />
 
         <section className="section" id="diff-theory">
           <div className="sec-badge">Section 1.1</div>

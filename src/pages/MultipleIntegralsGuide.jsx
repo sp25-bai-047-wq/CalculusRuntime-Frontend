@@ -16,6 +16,17 @@ function Divider() {
   return <hr className="divider" />;
 }
 
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide formalizes multiple integration across two- and three-dimensional spatial domains in multivariable calculus. Double and triple integrals compute volumes under bivariate surfaces, total mass across variable density distributions, and centers of gravity via iterated integrals. Fubini's Theorem establishes conditions allowing the interchange of integration order across Type I and Type II planar regions. The curriculum expands into curvilinear coordinate transformations—polar ($r\\,dr\\,d\\theta$), cylindrical ($r\\,dr\\,d\\theta\\,dz$), and spherical ($\\rho^2 \\sin\\phi\\,d\\rho\\,d\\phi\\,d\\theta$) systems—employing Jacobian determinants to simplify complex geometric domains. These multidimensional integration methods form the mathematical bedrock for fluid mechanics, celestial gravitation, and structural engineering simulations."}
+      </p>
+    </div>
+  );
+}
+
 function GuideSidebarPart1() {
   return (
     <nav className="sidebar">
@@ -405,6 +416,8 @@ function IntegralsContent({ part }) {
           <GuideHeaderPart1 />
           <TableOfContentsPart1 />
           <Divider />
+          <OpeningNote />
+          <Divider />
           <SectionMI1 />
           <Divider />
           <SectionMI2 />
@@ -429,6 +442,8 @@ function IntegralsContent({ part }) {
       <main className="main">
         <GuideHeaderPart2 />
         <TableOfContentsPart2 />
+        <Divider />
+        <OpeningNote />
         <Divider />
         <SectionMI4 />
         <Divider />

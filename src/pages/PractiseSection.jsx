@@ -18,6 +18,8 @@ const TOPICS = [
   'Lagrange Multipliers',
   'Divergence & Curl',
   "Stokes' Theorem",
+  'Taylor & Maclaurin Series',
+  'Maclaurin Series',
   'Taylor Series for Multivariable Functions',
   'Partial Derivatives',
   'Vector Calculus',
@@ -48,6 +50,8 @@ const TOPIC_BANK = {
   'Sequences and Infinite Series': 'calcAg',
   'Conic Sections and Analytic Geometry': 'calcAg',
   'Taylor Series for Multivariable Functions': 'calcAg',
+  'Taylor & Maclaurin Series': 'calcAg',
+  'Maclaurin Series': 'calcAg',
   'Partial Derivatives': 'mv',
   'Vector Calculus': 'mv',
   'Multiple Integrals': 'mv',
@@ -58,6 +62,9 @@ const TOPIC_BANK = {
   'Matrices & Determinants': 'la',
   'Systems of Linear Equations': 'la',
   'Eigenvalues & Eigenvectors': 'la',
+  'Linear Transformations': 'la',
+  'Orthogonality & Least Squares': 'la',
+  'Singular Value Decomposition': 'la',
   'Probability Basics': 'ps',
   'Random Variables & Distributions': 'ps',
   'Descriptive Statistics': 'ps',
@@ -115,9 +122,21 @@ export default function PractiseSection() {
     Promise.resolve(loader ? loader() : [])
       .then((bank) => {
         if (cancelled) return;
-        const filtered = bank.filter(
-        p => p.difficulty === chosenDifficulty && p.topic === chosenTopic
-      );
+        const filtered = bank.filter((p) => {
+          if (p.difficulty !== chosenDifficulty) return false;
+          if (p.topic === chosenTopic) return true;
+          if (
+            (chosenTopic === 'Taylor Series for Multivariable Functions' ||
+              chosenTopic === 'Taylor & Maclaurin Series' ||
+              chosenTopic === 'Maclaurin Series') &&
+            (p.topic === 'Taylor Series for Multivariable Functions' ||
+              p.topic === 'Taylor & Maclaurin Series' ||
+              p.topic === 'Maclaurin Series')
+          ) {
+            return true;
+          }
+          return false;
+        });
         setPoolProblems(shuffled(filtered));
       })
       .catch(() => {
@@ -166,7 +185,7 @@ export default function PractiseSection() {
   const handleNextQuestion = () => {
     if (currentIndex < poolProblems.length - 1) {
       setCurrentIndex(prev => prev + 1);
-    resetQuizTurn();
+      resetQuizTurn();
     } else {
       setIsQuizCompleted(true);
     }
@@ -179,7 +198,7 @@ export default function PractiseSection() {
       <div className="practice-hud">
         <div>
           <h1>Focused Practice Arena</h1>
-          <p>Comprehensive testing workspace for Advanced Calculus modules.</p>
+          <p>Comprehensive testing workspace for Advanced Calculus and Mathematics modules.</p>
         </div>
         <div className="practice-score">
           <div>
@@ -315,14 +334,14 @@ export default function PractiseSection() {
 
                 <div className="practice-actions">
                   {!isSubmitted ? (
-                  <button
-                    type="button"
-                    className="practice-submit"
-                    onClick={handleSubmit}
+                    <button
+                      type="button"
+                      className="practice-submit"
+                      onClick={handleSubmit}
                       disabled={selectedAnswer === null}
-                  >
-                    Submit Verification
-                  </button>
+                    >
+                      Submit Verification
+                    </button>
                   ) : (
                     <button
                       type="button"

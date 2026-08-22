@@ -13,6 +13,17 @@ function Divider() {
   return <hr className="divider" />;
 }
 
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide establishes the theory of infinite sequences, infinite series, and power series representations in calculus. Sequences represent ordered lists of real numbers whose limits dictate asymptotic stability. An infinite series sums infinite discrete terms $\\sum a_n$, requiring rigorous convergence testing. We master essential diagnostic tests—the Divergence Test, Integral Test, Direct and Limit Comparison Tests, Alternating Series Test, Ratio Test, and Root Test—while distinguishing absolute from conditional convergence. Finally, power series $\\sum c_n(x-a)^n$ establish functional representations with explicit radii and intervals of convergence, underpinning Fourier analysis, financial annuities, and digital signal processing algorithms."}
+      </p>
+    </div>
+  );
+}
+
 export default function SequencesSeriesGuide({ part = 1 }) {
   if (part === 2) {
     return (
@@ -32,6 +43,9 @@ export default function SequencesSeriesGuide({ part = 1 }) {
             <p className="ch-sub">Ratio, root, AST, conditional vs absolute, radius of convergence</p>
             <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
           </header>
+
+          <OpeningNote />
+          <Divider />
 
           <section className="section" id="ser-tests">
             <div className="sec-badge">Section 2.1</div>
@@ -114,6 +128,9 @@ export default function SequencesSeriesGuide({ part = 1 }) {
           <p className="ch-sub">Limits of sequences, geometric &amp; $p$-series, telescoping, term test</p>
           <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
         </header>
+
+        <OpeningNote />
+        <Divider />
 
         <section className="section" id="ser-theory">
           <div className="sec-badge">Section 1.1</div>

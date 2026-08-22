@@ -15,6 +15,17 @@ function Divider() {
   return <hr className="divider" />;
 }
 
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide formalizes matrix algebra and determinant theory in linear algebra. Matrices structure rectangular arrays of numbers representing linear systems, geometric transformations, and multidimensional datasets. We define matrix addition, scalar multiplication, matrix-matrix multiplication as linear combination of columns ($AB$), and transpose properties ($(AB)^T = B^T A^T$). The determinant ($\\det A$) quantifies oriented volume scaling factors in $\\mathbb{R}^n$, where non-zero determinants characterize full rank and invertibility ($A^{-1}$). We develop cofactor expansions, Gauss-Jordan inversion algorithms, and elementary row operation determinants. These matrix computations provide the mathematical core for computer graphics shaders, digital signal filters, and structural network analyses."}
+      </p>
+    </div>
+  );
+}
+
 function MatricesGuide({ part = 1 }) {
   if (part === 2) {
     return (
@@ -36,6 +47,9 @@ function MatricesGuide({ part = 1 }) {
             <p className="ch-sub">Determinants, invertibility, and inverse algorithms</p>
             <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
           </header>
+
+          <OpeningNote />
+          <Divider />
 
           <section className="section" id="la-m-det">
             <div className="sec-badge">Section 2.3</div>
@@ -273,6 +287,9 @@ function MatricesGuide({ part = 1 }) {
           <p className="ch-sub">Matrix algebra as linear maps — theory and calculations</p>
           <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
         </header>
+
+        <OpeningNote />
+        <Divider />
 
         <section className="section" id="la-m-intro">
           <div className="sec-badge">Section 2.1</div>

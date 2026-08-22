@@ -9,6 +9,21 @@ export const COURSES = [
     meta: "6 guides · Tools + practice",
     icon: "ƒ",
     color: "gold",
+    overview: {
+      longDescription: [
+        "Calculus and Analytical Geometry forms the mathematical bedrock for modern science, engineering, and computational modeling. This rigorous curriculum establishes first principles of limits and continuity via epsilon-delta formulations, the Squeeze Theorem, and intermediate value properties. We develop differential calculus from difference quotients through product, quotient, and chain rules, analyzing curve optimization, related rates, and Mean Value Theorems. Integral calculus bridges accumulation via Riemann sums to the Fundamental Theorem of Calculus, improper integrals, and geometric volume applications. The course advances through infinite series convergence tests, Taylor and Maclaurin expansions, and concludes with Cartesian coordinate geometry and complete conic section classifications."
+      ],
+      highlights: [
+        "Limits, epsilon-delta proofs & squeeze theorem",
+        "Differentiation rules, extrema, MVT & L'Hôpital",
+        "FTC, area, integration techniques & improper integrals",
+        "Convergence tests, power series & Taylor expansions",
+        "Parabolas, ellipses, hyperbolas & analytic geometry",
+        "TaylorX interactive derivative visualizer",
+        "Certificate quiz — 30 MCQs, 80 % to pass",
+      ],
+      prerequisites: "Algebra, basic trigonometry, and function notation.",
+    },
     modules: [
       {
         title: "Limits & Continuity",
@@ -84,6 +99,21 @@ export const COURSES = [
     meta: "Full study path · Guides + tools",
     icon: "∂",
     color: "teal",
+    overview: {
+      longDescription: [
+        "Multivariable Calculus extends single-variable analysis to multidimensional coordinate spaces and physical vector field theory. The curriculum begins with functions of several variables, level surfaces, and partial derivatives, formalizing tangent planes, total differentials, gradient vectors, and directional derivatives. We analyze unconstrained multivariable optimization alongside Lagrange Multipliers for constrained systems. The course develops multiple integration across Cartesian, polar, cylindrical, and spherical coordinates using Fubini's Theorem and Jacobian transformations. Finally, vector calculus formalizes line and surface integrals, conservative work fields, and the cornerstone integral theorems—Green's, Gauss's Divergence, and Stokes' Theorems—connecting differential field divergence and curl to macro-scale boundary fluxes across science."
+      ],
+      highlights: [
+        "Partial derivatives, gradients & tangent planes",
+        "Double & triple integrals in multiple coordinate systems",
+        "Lagrange multipliers & constrained optimization",
+        "Line integrals, conservative fields & Green's theorem",
+        "Divergence, curl & the Divergence Theorem",
+        "Stokes' Theorem & surface integrals",
+        "Extreme-value finder, volume calculator & vector-field visualizer",
+      ],
+      prerequisites: "Single-variable calculus (limits, derivatives, integrals) and basic linear algebra.",
+    },
     modules: [
       {
         title: "Partial Derivatives",
@@ -166,7 +196,38 @@ export const COURSES = [
     meta: "4 modules · Guides + practice",
     icon: "A",
     color: "blue",
+    overview: {
+      longDescription: [
+        "Linear Algebra provides the universal mathematical framework for modern computation, machine learning, data science, and quantum physics. We establish vector space algebra in n-dimensional Euclidean space, investigating linear combinations, span, basis sets, dimensions, and fundamental subspaces. Matrix operations, Gaussian elimination, row reduction, rank-nullity invariants, and determinant volumes characterize linear system solvability and matrix invertibility. The curriculum explores linear transformations, spectral eigenvalue decompositions, and the Spectral Theorem for symmetric operators. Advanced modules formalize inner product orthogonality, Gram-Schmidt QR factorizations, and least-squares normal equations, culminating in the Singular Value Decomposition (SVD) and Principal Component Analysis for optimal high-dimensional data reduction and modeling."
+      ],
+      highlights: [
+        "Vectors, span, basis & linear independence",
+        "Matrix operations, inverses & determinants",
+        "Row reduction, rank & solution-set geometry",
+        "Eigenvalues, eigenvectors & diagonalization",
+        "Linear transformations, kernel & image",
+        "Gram–Schmidt, QR & least-squares fitting",
+        "SVD, low-rank approximation & the pseudoinverse",
+        "Interactive Matrix Sandbox",
+      ],
+      prerequisites: "Comfortable with algebra and systems of equations; no prior linear algebra needed.",
+    },
     modules: [
+      {
+        title: "Overview",
+        description: "What you'll learn, the order to learn it in, and how the course and certificate are structured.",
+        path: "/linear-algebra/overview",
+        meta: "Start here",
+        icon: "★",
+        start: true,
+      },
+      {
+        title: "Linear Equations",
+        description: "General form in 2, 3, and n variables, graphing with intercepts, systems, and solving techniques.",
+        path: "/linear-algebra/linear-equations/1",
+        meta: "2 parts · MCQ practice",
+        icon: "=",
+      },
       {
         title: "Vectors & Vector Spaces",
         description: "Vectors, span, basis, and linear independence.",
@@ -241,6 +302,21 @@ export const COURSES = [
     meta: "5 modules · Guides + practice",
     icon: "P",
     color: "purple",
+    overview: {
+      longDescription: [
+        "Probability and Statistics formalizes the mathematical science of quantifying uncertainty, analyzing random phenomena, and extracting empirical insights from data. Beginning from Kolmogorov's axioms, set operations, and combinatorics, we develop conditional probability and Bayesian updating. The curriculum models discrete and continuous random variables across named distributions including Binomial, Poisson, Exponential, and Gaussian Normal, evaluating expectations, variances, joint densities, and the Central Limit Theorem. Exploratory statistics analyzes central tendency, dispersion, and standardized z-score normalizations. Finally, inferential statistics formalizes point estimation, confidence intervals, classical hypothesis testing via p-values and statistical power, and Ordinary Least Squares linear regression models for predictive analysis."
+      ],
+      highlights: [
+        "Sample spaces, axioms & Bayes' theorem",
+        "Discrete & continuous distributions (Binomial, Poisson, Normal)",
+        "Mean, median, variance, z-scores & data displays",
+        "Hypothesis tests, p-values & statistical power",
+        "Least-squares regression & correlation",
+        "Interactive Bayes Lab",
+        "Certificate quiz — 30 MCQs, 80 % to pass",
+      ],
+      prerequisites: "Basic algebra and familiarity with functions; no prior statistics needed.",
+    },
     modules: [
       {
         title: "Probability Basics",

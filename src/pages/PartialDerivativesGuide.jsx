@@ -23,13 +23,12 @@ function Divider() {
 
 function OpeningNote() {
   return (
-    <p>
-      {"This guide extends the fundamental tools of single-variable calculus \u2014 limits, continuity, differentiation, and\n      optimization \u2014 to functions whose values depend on "}
-      <em>
-        {"two or more"}
-      </em>
-      {" independent variables. This generalization\n      is not merely theoretical: temperature in a room depends on position $(x,y,z)$; pressure in a gas depends on\n      volume and temperature; virtually every quantity in physics and engineering depends on multiple parameters at\n      once."}
-    </p>
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This comprehensive study guide extends single-variable calculus principles—limits, continuity, differentiation, and optimization—to multivariable scalar fields where outputs depend upon multiple interdependent inputs. In physical reality, thermal distributions, aerodynamic pressures, and financial loss landscapes vary across spatial dimensions and time. Partial derivatives quantify localized rates of change along individual coordinate axes by holding all other variables constant. Building upon partial derivatives, we construct gradient vectors for steepest ascent, compute directional derivatives along arbitrary trajectories, determine tangent planes for local linearizations, and apply multivariable chain rules. This foundation enables rigorous multivariable optimization and advanced physical system modeling."}
+      </p>
+    </div>
   );
 }
 

@@ -14,6 +14,21 @@ import {
 } from "../../data/calcAgLengthyExamples";
 import { INT_FUND_QUIZ, INT_TECH_QUIZ } from "../../data/calcAgStudyQuizzes";
 
+function Divider() {
+  return <hr className="divider" />;
+}
+
+function OpeningNote() {
+  return (
+    <div className="opening-note-box">
+      <p className="opening-note">
+        <strong>Operational Blueprint:</strong>{" "}
+        {"This study guide formalizes integral calculus, bridging accumulation concepts with the Fundamental Theorem of Calculus. Definite integrals quantify net signed area, accumulated physical quantities, and continuous volume sums via Riemann limits $\\int_a^b f(x)dx = \\lim_{n \\to \\infty} \\sum_{i=1}^n f(x_i^*)\\Delta x$. The curriculum develops systematic integration strategies including $u$-substitution, integration by parts ($\\int u\\,dv = uv - \\int v\\,du$), trigonometric substitutions, partial fraction decompositions, and improper integral convergence evaluations. These integral tools provide the essential mathematical machinery for computing physical work, fluid pressure, centers of mass, structural stress distributions, and probability density functions in engineering science."}
+      </p>
+    </div>
+  );
+}
+
 export default function IntegrationGuide({ part = 1 }) {
   if (part === 2) {
     return (
@@ -33,6 +48,9 @@ export default function IntegrationGuide({ part = 1 }) {
             <p className="ch-sub">Substitution, parts, partial fractions, improper integrals</p>
             <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
           </header>
+
+          <OpeningNote />
+          <Divider />
 
           <section className="section" id="int-tech">
             <div className="sec-badge">Section 2.1</div>
@@ -115,6 +133,9 @@ export default function IntegrationGuide({ part = 1 }) {
           <p className="ch-sub">Area, net change, and the Fundamental Theorem</p>
           <span className="ch-orn">✦ &nbsp; ✦ &nbsp; ✦</span>
         </header>
+
+        <OpeningNote />
+        <Divider />
 
         <section className="section" id="int-theory">
           <div className="sec-badge">Section 1.1</div>

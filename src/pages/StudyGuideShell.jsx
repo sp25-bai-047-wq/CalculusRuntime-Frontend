@@ -28,13 +28,14 @@ const integrationStyles = `
 
 .partial-derivatives-guide .sidebar {
   position: fixed !important;
-  top: calc(var(--header-h, 64px) + var(--guide-topbar-h, 0px)) !important;
+  top: var(--sidebar-top, calc(var(--header-h, 64px) + var(--guide-topbar-h, 0px))) !important;
   left: 0 !important;
   right: auto !important;
   bottom: 0 !important;
   width: 240px !important;
   max-width: 240px !important;
-  height: auto !important;
+  height: calc(100vh - var(--sidebar-top, calc(var(--header-h, 64px) + var(--guide-topbar-h, 0px)))) !important;
+  max-height: none !important;
   display: flex !important;
   flex-direction: column !important;
   flex-wrap: nowrap;
@@ -43,13 +44,14 @@ const integrationStyles = `
   background: #0f0e0d;
   border-right: 1px solid rgba(200, 146, 42, 0.35) !important;
   border-bottom: 0 !important;
+  border-radius: 0 !important;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 1rem 0.75rem 2rem !important;
+  padding: 1rem 0.75rem 1.35rem !important;
   z-index: 115 !important;
   scrollbar-width: thin;
   overscroll-behavior-y: contain;
-  box-shadow: 4px 0 18px rgba(0, 0, 0, 0.18);
+  box-shadow: 4px 4px 18px rgba(0, 0, 0, 0.18);
 }
 
 .partial-derivatives-guide .guide-nav-spacer {
@@ -276,6 +278,13 @@ const integrationStyles = `
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.partial-derivatives-guide .box:hover,
+.partial-derivatives-guide .sum-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 
 .partial-derivatives-guide .fml {
@@ -371,11 +380,12 @@ const integrationStyles = `
 const saveForLaterStyles = `
 .box.exm {
   position: relative;
+  padding-right: 5.75rem;
 }
 .save-example-btn {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  top: 0.9rem;
+  right: 0.9rem;
   background: #ffffff;
   border: 1px solid rgba(200, 146, 42, 0.4);
   color: #3d4f6b;
@@ -384,11 +394,20 @@ const saveForLaterStyles = `
   font-size: 0.75rem;
   cursor: pointer;
   z-index: 5;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.save-example-btn:hover {
+  background: #fbf1dd;
+  border-color: #c8922a;
+  transform: translateY(-1px);
 }
 .save-example-btn.saved {
   background: #e8b84b;
   color: #0f0e0d;
   border-color: #e8b84b;
+}
+.save-example-btn.saved:hover {
+  background: #dfa93b;
 }
 .box.exm.exm-flash {
   outline: 3px solid #c8922a;
@@ -440,6 +459,58 @@ function setupMcqs(root, { publishQuizToLeaderboard, saveQuizScore, setLeaderboa
     scores[section] = 0;
     answeredCount[section] = 0;
   });
+
+  // One-question-at-a-time slider: cardsBySection keeps DOM order per
+  // section, activeIndex tracks which card is currently showing.
+  const cardsBySection = {};
+  cards.forEach((card) => {
+    const section = card.dataset.section;
+    if (!section) return;
+    (cardsBySection[section] = cardsBySection[section] || []).push(card);
+  });
+  const activeIndex = {};
+
+  const renderSlide = (section) => {
+    const secCards = cardsBySection[section];
+    if (!secCards || !secCards.length) return;
+    const unlockedIdxs = secCards.reduce((acc, c, i) => {
+      if (!c.classList.contains("mcq-locked")) acc.push(i);
+      return acc;
+    }, []);
+    const maxIdx = unlockedIdxs.length ? unlockedIdxs[unlockedIdxs.length - 1] : 0;
+    if (activeIndex[section] == null) activeIndex[section] = 0;
+    if (activeIndex[section] > maxIdx) activeIndex[section] = maxIdx;
+
+    secCards.forEach((c, i) => {
+      c.classList.toggle("mcq-slide-hide", i !== activeIndex[section]);
+    });
+
+    root.querySelectorAll(`.mcq-dot[data-section="${section}"]`).forEach((dot, i) => {
+      const reached = i <= maxIdx;
+      dot.classList.toggle("active", i === activeIndex[section]);
+      dot.classList.toggle("reached", reached);
+      dot.disabled = !reached;
+    });
+
+    const nav = root.querySelector(`.mcq-slide-nav[data-section="${section}"]`);
+    if (nav) {
+      const pos = nav.querySelector(".mcq-slide-pos-cur");
+      if (pos) pos.textContent = String(activeIndex[section] + 1);
+      const prevBtn = nav.querySelector(".mcq-slide-prev");
+      const nextBtn = nav.querySelector(".mcq-slide-next");
+      if (prevBtn) prevBtn.disabled = activeIndex[section] <= 0;
+      if (nextBtn) nextBtn.disabled = activeIndex[section] >= maxIdx;
+    }
+  };
+
+  const goToSlide = (section, index) => {
+    const secCards = cardsBySection[section];
+    if (!secCards) return;
+    const clamped = Math.max(0, Math.min(index, secCards.length - 1));
+    if (secCards[clamped]?.classList.contains("mcq-locked")) return;
+    activeIndex[section] = clamped;
+    renderSlide(section);
+  };
 
   const updateScoreDisplay = (section) => {
     const el =
@@ -558,6 +629,7 @@ function setupMcqs(root, { publishQuizToLeaderboard, saveQuizScore, setLeaderboa
       const sectionCards = Array.from(sec.querySelectorAll(".mcq-card[data-answer]")).filter(
         isWiredCard,
       );
+      const sectionKey = sectionCards[0]?.dataset.section;
       const prevSection = secIndex > 0 ? quizSections[secIndex - 1] : null;
       const prevCards = prevSection
         ? Array.from(prevSection.querySelectorAll(".mcq-card[data-answer]")).filter(isWiredCard)
@@ -574,6 +646,7 @@ function setupMcqs(root, { publishQuizToLeaderboard, saveQuizScore, setLeaderboa
           `Locked — finish Quiz ${secIndex} (all questions) to unlock Quiz ${secIndex + 1}`,
         );
         sectionCards.forEach((card) => card.classList.add("mcq-locked"));
+        if (sectionKey) renderSlide(sectionKey);
         return;
       }
 
@@ -594,7 +667,7 @@ function setupMcqs(root, { publishQuizToLeaderboard, saveQuizScore, setLeaderboa
       if (!hint) {
         hint = document.createElement("p");
         hint.className = "mcq-unlock-hint";
-        const head = sec.querySelector(".mcq-score-strip");
+        const head = sec.querySelector(".mcq-dots") || sec.querySelector(".mcq-score-strip");
         if (head) head.insertAdjacentElement("afterend", hint);
         else sec.prepend(hint);
       }
@@ -604,7 +677,9 @@ function setupMcqs(root, { publishQuizToLeaderboard, saveQuizScore, setLeaderboa
       hint.textContent = `Quiz progress: question ${Math.min(
         visible,
         sectionCards.length,
-      )} of ${sectionCards.length} unlocked — solve each question to reveal the next.`;
+      )} of ${sectionCards.length} unlocked — slide through with the dots or Prev / Next below.`;
+
+      if (sectionKey) renderSlide(sectionKey);
     });
   };
 
@@ -612,6 +687,24 @@ function setupMcqs(root, { publishQuizToLeaderboard, saveQuizScore, setLeaderboa
 
   // Event delegation on the stable root — survives React child re-renders.
   const onRootClick = (event) => {
+    const dot = event.target.closest(".mcq-dot");
+    if (dot && root.contains(dot) && !dot.disabled) {
+      const section = dot.dataset.section;
+      const idx = Number(dot.dataset.dot) - 1;
+      if (section && Number.isInteger(idx)) goToSlide(section, idx);
+      return;
+    }
+
+    const slideNav = event.target.closest(".mcq-slide-prev, .mcq-slide-next");
+    if (slideNav && root.contains(slideNav) && !slideNav.disabled) {
+      const section = slideNav.closest(".mcq-slide-nav")?.dataset.section;
+      if (section) {
+        const delta = slideNav.classList.contains("mcq-slide-prev") ? -1 : 1;
+        goToSlide(section, (activeIndex[section] || 0) + delta);
+      }
+      return;
+    }
+
     const revealButton = event.target.closest(".mcq-reveal-btn");
     const option = event.target.closest(".mcq-opt");
     const card = (revealButton || option)?.closest(".mcq-card");
@@ -680,6 +773,9 @@ function setupMcqs(root, { publishQuizToLeaderboard, saveQuizScore, setLeaderboa
   // React progress re-renders can strip imperative .selected/.correct/.wrong classes.
   // Re-apply from in-memory quiz state whenever the DOM under root mutates.
   const rehydrate = () => {
+    // React re-renders can also wipe the imperative mcq-locked / mcq-slide-hide
+    // classes — reapply lock + slider state before the per-card styling below.
+    applySequentialUnlock();
     root.querySelectorAll(".mcq-card[data-answer]").forEach((card) => {
       if (!isWiredCard(card)) return;
       const key = cardKey(card);
@@ -728,17 +824,33 @@ function setupPinnedGuideNav(root) {
   }
 
   const sync = () => {
+    const mobile = window.matchMedia("(max-width: 920px)").matches;
+    const topbar = document.querySelector(".guide-part-topbar");
+    const header = document.querySelector(".site-header");
+
     const headerH =
       parseFloat(
         getComputedStyle(document.documentElement).getPropertyValue("--header-h"),
       ) || 64;
-    const topbar = document.querySelector(".guide-part-topbar");
     const topbarH = topbar ? Math.ceil(topbar.getBoundingClientRect().height) : 0;
     document.documentElement.style.setProperty("--guide-topbar-h", `${topbarH}px`);
-    const mobile = window.matchMedia("(max-width: 920px)").matches;
+
+    // Dynamically calculate visible bottom of topbar / header stack
+    let topOffset = 0;
+    if (topbar) {
+      const rect = topbar.getBoundingClientRect();
+      topOffset = Math.max(0, Math.ceil(rect.bottom));
+    } else if (header) {
+      const rect = header.getBoundingClientRect();
+      topOffset = Math.max(0, Math.ceil(rect.bottom));
+    } else {
+      topOffset = headerH + topbarH;
+    }
+
+    document.documentElement.style.setProperty("--sidebar-top", `${topOffset}px`);
 
     sidebar.style.position = "fixed";
-    sidebar.style.top = `${headerH + topbarH}px`;
+    sidebar.style.top = `${topOffset}px`;
     sidebar.style.left = "0";
     sidebar.style.zIndex = "115";
 
@@ -747,13 +859,17 @@ function setupPinnedGuideNav(root) {
       sidebar.style.bottom = "auto";
       sidebar.style.width = "100%";
       sidebar.style.height = "auto";
+      sidebar.style.maxHeight = "";
+      sidebar.style.borderRadius = "0";
       spacer.style.display = "block";
       spacer.style.height = `${Math.ceil(sidebar.getBoundingClientRect().height || 52)}px`;
     } else {
       sidebar.style.right = "auto";
       sidebar.style.bottom = "0";
       sidebar.style.width = "240px";
-      sidebar.style.height = "auto";
+      sidebar.style.height = `calc(100vh - ${topOffset}px)`;
+      sidebar.style.maxHeight = "none";
+      sidebar.style.borderRadius = "0";
       spacer.style.display = "none";
       spacer.style.height = "0";
     }
@@ -778,6 +894,7 @@ function setupPinnedGuideNav(root) {
     ro?.disconnect();
     spacer.remove();
     document.documentElement.style.removeProperty("--guide-topbar-h");
+    document.documentElement.style.removeProperty("--sidebar-top");
   };
 }
 
