@@ -1,0 +1,72 @@
+DESC: Probability and RV quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\psProbRvQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Probability & Statistics)
+Each export holds **exactly 15 questions with exactly 3 options each**.
+- `PS_B_INTRO_QUIZ` — Sample spaces and the axioms: describing sample spaces, computing probabilities of concrete events (dice, coins, cards, spinners), the complement rule, inclusion-exclusion $P(A\cup B)=P(A)+P(B)-P(A\cap B)$, disjoint vs non-disjoint events, odds versus probability.
+- `PS_B_COMBO_QUIZ` — Equally likely outcomes and counting: the multiplication principle, permutations $P(n,k)$, combinations $\binom{n}{k}$ evaluated numerically, committee/card/password counting problems, arrangements with repeated letters, probability as favorable over total.
+- `PS_B_COND_QUIZ` — Conditional probability: $P(A\mid B)=P(A\cap B)/P(B)$ computed on concrete setups, two-way tables, sampling without replacement, the multiplication rule, independence tests, the law of total probability with a partition.
+- `PS_B_BAYES_QUIZ` — Bayes' theorem: medical-test / spam-filter / factory-defect posterior computations with real numbers, why a rare condition yields many false positives, prior vs posterior vs likelihood, multi-hypothesis Bayes with posteriors summing to 1, updating twice.
+- `PS_RV_INTRO_QUIZ` — Discrete random variables: pmf properties, checking that probabilities sum to 1, computing $P(X\le k)$ from a table, cdf values, support of a random variable, indicator variables, simple pmf construction from a dice/coin experiment.
+- `PS_RV_MOMENTS_QUIZ` — Expectation and variance: $E[X]=\sum xp(x)$ on concrete pmfs, $\text{Var}(X)=E[X^2]-(E[X])^2$, standard deviation, linearity $E[aX+b]$ and $\text{Var}(aX+b)=a^2\text{Var}(X)$, expected value of a game (write money as "3 dollars", never with a dollar sign), variance of a sum of independent variables.
+- `PS_RV_CONT_QUIZ` — Continuous random variables: pdfs integrating to 1, finding a normalizing constant, computing $P(a<X<b)$ by integration, the cdf $F(x)$ and its derivative, $P(X=c)=0$ for continuous variables, expectation $\int x f(x)\,dx$, uniform and exponential density computations, median from a cdf.
+- `PS_RV_NAMED_QUIZ` — Named distributions: binomial pmf and its mean $np$ and variance $np(1-p)$ with numbers, Poisson probabilities and mean $\lambda$, geometric distribution, normal distribution z-scores and the empirical rule, exponential memorylessness with a numeric example, choosing the right family for a described experiment.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Probability Basics and Random Variables guides — 15 MCQs per section. */
+
+export const PS_B_INTRO_QUIZ = [
+  {
+    prompt: "A fair six-sided die is rolled once. What is $P(\\text{the result is at least }5)$?",
+    options: ["$1/3$", "$1/6$", "$1/2$"],
+    answer: "A",
+    explanation: "The favorable outcomes are 5 and 6, so the probability is $2/6=1/3$.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (count outcomes, compute a posterior, evaluate an expectation, integrate a pdf). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to" or "Which statement is always safe exam advice?" (the current guides are full of those — none may survive).
+6. Prompts must be unique across the whole app, so make them concrete: put the actual numbers, distribution and question into the prompt. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. confusing $P(+\mid D)$ with $P(D\mid +)$, forgetting to subtract the intersection, using $n p$ for the variance), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$P(A\\mid B)=\\dfrac{P(A\\cap B)}{P(B)}$"`.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \sum \int \infty \pi \mu \sigma \lambda \binom \mid \cap \cup \Omega \le \ge \ne \approx \to \cdot \times \left \right \text{...} \operatorname{...} \bar{x} \hat{p}`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"an expected payout of 3 dollars"`, never `"$\\$3$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/psProbRvQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/psProbRvQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

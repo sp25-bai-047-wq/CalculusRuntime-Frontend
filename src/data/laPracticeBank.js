@@ -1,5 +1,5 @@
 /** Linear Algebra Practice Arena — 15 Easy / 15 Medium / 15 Hard per topic (Obj 8 / Dev 3). */
-import { LA_NEW_TOPICS_PRACTICE_BANK } from './laNewTopicsPracticeBank';
+import { LA_NEW_TOPICS_PRACTICE_BANK } from "./laNewTopicsPracticeBank";
 function pack(startId, topic, difficulty, rows) {
   return rows.map(([question, options, correctAnswer, explanation], i) => ({
     id: startId + i,

@@ -1,0 +1,265 @@
+==========================================================================================
+src/pages/linearAlgebra/VectorsGuide.jsx
+   11| if (part === 2) {
+   23| <main className="main">
+   27| <p className="ch-sub">Span, basis, independence — full methods and large examples</p>
+   31| <section className="section" id="la-v-span">
+   33| <h2 className="sec-title">Span and basis — deep theory</h2>
+   58| <section className="section" id="la-v-proc2">
+   60| <h2 className="sec-title">How to work with span and bases</h2>
+   75| <section className="section" id="la-v-ex-p2">
+   77| <h2 className="sec-title">Six detailed worked examples</h2>
+  208| <section className="section" id="la-v-indep">
+  210| <h2 className="sec-title">Linear independence — deep theory</h2>
+  270| <section className="section" id="summary">
+  272| <h2 className="sec-title">Part 2 complete</h2>
+  277| </main>
+  278| </StudyGuideShell>
+  293| <main className="main">
+  297| <p className="ch-sub">Correct topic · Deep theory · Large step-by-step examples</p>
+  307| <section className="section" id="la-v-intro">
+  309| <h2 className="sec-title">Vectors in Rⁿ — deep theory</h2>
+  325| <section className="section" id="la-v-proc1">
+  327| <h2 className="sec-title">How to compute with vectors</h2>
+  343| <section className="section" id="la-v-ex-p1">
+  345| <h2 className="sec-title">Six detailed worked examples</h2>
+  477| <section className="section" id="la-v-ops">
+  479| <h2 className="sec-title">Dot product — more detail</h2>
+  528| <section className="section" id="summary1">
+  530| <h2 className="sec-title">Continue</h2>
+  535| </main>
+  536| </StudyGuideShell>
+==========================================================================================
+src/pages/linearAlgebra/MatricesGuide.jsx
+   11| if (part === 2) {
+   23| <main className="main">
+   27| <p className="ch-sub">Determinants, invertibility, and inverse algorithms</p>
+   31| <section className="section" id="la-m-det">
+   33| <h2 className="sec-title">Determinants — deep theory</h2>
+   69| <section className="section" id="la-m-proc2">
+   71| <h2 className="sec-title">How to compute determinants and decide invertibility</h2>
+   86| <section className="section" id="la-m-ex-p2">
+   88| <h2 className="sec-title">Six detailed worked examples</h2>
+  224| <section className="section" id="la-m-inv">
+  226| <h2 className="sec-title">Inverses — deep theory</h2>
+  288| <section className="section" id="summary">
+  290| <h2 className="sec-title">Part 2 complete</h2>
+  303| </main>
+  304| </StudyGuideShell>
+  319| <main className="main">
+  323| <p className="ch-sub">Matrix algebra as linear maps — theory and calculations</p>
+  327| <section className="section" id="la-m-intro">
+  329| <h2 className="sec-title">What is a matrix? — deep theory</h2>
+  353| <section className="section" id="la-m-proc1">
+  355| <h2 className="sec-title">How to work with matrices as maps</h2>
+  371| <section className="section" id="la-m-ex-p1">
+  373| <h2 className="sec-title">Six detailed worked examples</h2>
+  509| <section className="section" id="la-m-ops">
+  511| <h2 className="sec-title">Matrix operations — deep theory</h2>
+  568| <section className="section" id="summary1">
+  570| <h2 className="sec-title">Continue</h2>
+  578| </main>
+  579| </StudyGuideShell>
+==========================================================================================
+src/pages/linearAlgebra/SystemsGuide.jsx
+   11| if (part === 2) {
+   23| <main className="main">
+   27| <p className="ch-sub">Rank, free variables, nullspace, and solution geometry</p>
+   31| <section className="section" id="la-s-rank">
+   33| <h2 className="sec-title">Rank and consistency — deep theory</h2>
+   69| <section className="section" id="la-s-proc2">
+   71| <h2 className="sec-title">How to read rank, free variables, and nullspace</h2>
+   87| <section className="section" id="la-s-ex-p2">
+   89| <h2 className="sec-title">Six detailed worked examples</h2>
+  225| <section className="section" id="la-s-geo">
+  227| <h2 className="sec-title">Geometry of solutions — deep theory</h2>
+  284| <section className="section" id="summary">
+  286| <h2 className="sec-title">Part 2 complete</h2>
+  299| </main>
+  300| </StudyGuideShell>
+  315| <main className="main">
+  319| <p className="ch-sub">Augmented matrices and Gaussian elimination — deep dive</p>
+  323| <section className="section" id="la-s-intro">
+  325| <h2 className="sec-title">Linear systems — deep theory</h2>
+  349| <section className="section" id="la-s-proc1">
+  351| <h2 className="sec-title">How to solve Ax=b by elimination</h2>
+  367| <section className="section" id="la-s-ex-p1">
+  369| <h2 className="sec-title">Six detailed worked examples</h2>
+  505| <section className="section" id="la-s-gauss">
+  507| <h2 className="sec-title">Gaussian elimination — deep theory</h2>
+  564| <section className="section" id="summary1">
+  566| <h2 className="sec-title">Continue</h2>
+  574| </main>
+  575| </StudyGuideShell>
+==========================================================================================
+src/pages/linearAlgebra/EigenGuide.jsx
+   12| if (part === 2) {
+   24| <main className="main">
+   28| <p className="ch-sub">Diagonalization and applications — theory plus calculations</p>
+   32| <section className="section" id="la-e-diag">
+   34| <h2 className="sec-title">Diagonalization — deep theory</h2>
+   70| <section className="section" id="la-e-proc2">
+   72| <h2 className="sec-title">How to diagonalize a matrix</h2>
+   87| <section className="section" id="la-e-ex-p2">
+   89| <h2 className="sec-title">Six detailed worked examples</h2>
+  225| <section className="section" id="la-e-apps">
+  227| <h2 className="sec-title">Why eigenvalues matter — deep theory</h2>
+  284| <section className="section" id="summary">
+  286| <h2 className="sec-title">Module complete</h2>
+  298| </main>
+  299| </StudyGuideShell>
+  314| <main className="main">
+  318| <p className="ch-sub">Special directions of a linear map — theory and calculations</p>
+  322| <section className="section" id="la-e-intro">
+  324| <h2 className="sec-title">Definition — deep theory</h2>
+  348| <section className="section" id="la-e-proc1">
+  350| <h2 className="sec-title">How to find eigenvalues and eigenvectors</h2>
+  365| <section className="section" id="la-e-ex-p1">
+  367| <h2 className="sec-title">Six detailed worked examples</h2>
+  503| <section className="section" id="la-e-char">
+  505| <h2 className="sec-title">Characteristic polynomial — deep theory</h2>
+  562| <section className="section" id="summary1">
+  564| <h2 className="sec-title">Continue</h2>
+  572| </main>
+  573| </StudyGuideShell>
+==========================================================================================
+src/pages/probabilityStatistics/ProbabilityBasicsGuide.jsx
+   11| if (part === 2) {
+   23| <main className="main">
+   27| <p className="ch-sub">Update beliefs when new information arrives</p>
+   31| <section className="section" id="ps-b-cond">
+   33| <h2 className="sec-title">Conditional probability — deep theory</h2>
+   56| <section className="section" id="ps-b-proc2">
+   58| <h2 className="sec-title">How to compute conditionals</h2>
+   71| <section className="section" id="ps-b-ex-p2">
+   73| <h2 className="sec-title">Four detailed examples</h2>
+  169| <section className="section" id="ps-b-bayes">
+  171| <h2 className="sec-title">Bayes’ theorem</h2>
+  261| <section className="section" id="summary">
+  263| <h2 className="sec-title">Part 2 complete</h2>
+  267| </main>
+  268| </StudyGuideShell>
+  283| <main className="main">
+  287| <p className="ch-sub">Sample spaces, events, and the axioms</p>
+  297| <section className="section" id="ps-b-intro">
+  299| <h2 className="sec-title">Sample spaces and axioms</h2>
+  317| <section className="section" id="ps-b-proc1">
+  319| <h2 className="sec-title">How to set up a probability model</h2>
+  332| <section className="section" id="ps-b-ex-p1">
+  334| <h2 className="sec-title">Four detailed examples</h2>
+  428| <section className="section" id="ps-b-combo">
+  430| <h2 className="sec-title">Equally likely outcomes &amp; counting</h2>
+  479| <section className="section" id="summary">
+  481| <h2 className="sec-title">Part 1 complete</h2>
+  484| </main>
+  485| </StudyGuideShell>
+==========================================================================================
+src/pages/probabilityStatistics/RandomVariablesGuide.jsx
+   11| if (part === 2) {
+   24| <main className="main">
+   28| <p className="ch-sub">PDFs, CDFs, and standard families</p>
+   32| <section className="section" id="ps-rv-cont">
+   34| <h2 className="sec-title">Continuous random variables</h2>
+   52| <section className="section" id="ps-rv-proc2">
+   66| <section className="section" id="ps-rv-ex-p2">
+  160| <section className="section" id="ps-rv-named">
+  162| <h2 className="sec-title">Named distributions</h2>
+  185| <section className="section" id="ps-rv-named-ex">
+  187| <h2 className="sec-title">Two detailed examples</h2>
+  257| <section className="section" id="summary">
+  259| <h2 className="sec-title">Part 2 complete</h2>
+  263| </main>
+  264| </StudyGuideShell>
+  279| <main className="main">
+  283| <p className="ch-sub">From events to numerical outcomes</p>
+  287| <section className="section" id="ps-rv-intro">
+  289| <h2 className="sec-title">Discrete random variables</h2>
+  307| <section className="section" id="ps-rv-proc1">
+  321| <section className="section" id="ps-rv-ex-p1">
+  417| <section className="section" id="ps-rv-moments">
+  419| <h2 className="sec-title">Expectation and variance</h2>
+  468| <section className="section" id="summary">
+  470| <h2 className="sec-title">Part 1 complete</h2>
+  473| </main>
+  474| </StudyGuideShell>
+==========================================================================================
+src/pages/probabilityStatistics/DescriptiveStatsGuide.jsx
+   11| if (part === 2) {
+   23| <main className="main">
+   27| <p className="ch-sub">Compare values across different scales</p>
+   31| <section className="section" id="ps-d-spread">
+   33| <h2 className="sec-title">Variance, SD, and z-scores</h2>
+   51| <section className="section" id="ps-d-proc2">
+   65| <section className="section" id="ps-d-ex-p2">
+  160| <section className="section" id="ps-d-plots">
+  162| <h2 className="sec-title">Visual summaries</h2>
+  252| <section className="section" id="summary">
+  254| <h2 className="sec-title">Part 2 complete</h2>
+  258| </main>
+  259| </StudyGuideShell>
+  274| <main className="main">
+  278| <p className="ch-sub">Summarize data before modeling it</p>
+  282| <section className="section" id="ps-d-center">
+  284| <h2 className="sec-title">Measures of center</h2>
+  302| <section className="section" id="ps-d-proc1">
+  316| <section className="section" id="ps-d-ex-p1">
+  409| <section className="section" id="ps-d-quant">
+  411| <h2 className="sec-title">Percentiles and quartiles</h2>
+  460| <section className="section" id="summary">
+  462| <h2 className="sec-title">Part 1 complete</h2>
+  465| </main>
+  466| </StudyGuideShell>
+==========================================================================================
+src/pages/probabilityStatistics/HypothesisTestingGuide.jsx
+   11| if (part === 2) {
+   23| <main className="main">
+   27| <p className="ch-sub">How strong is the evidence against $H_0$?</p>
+   31| <section className="section" id="ps-h-pval">
+   33| <h2 className="sec-title">p-values</h2>
+   51| <section className="section" id="ps-h-proc2">
+   65| <section className="section" id="ps-h-ex-p2">
+  158| <section className="section" id="ps-h-errors">
+  160| <h2 className="sec-title">Errors and power</h2>
+  250| <section className="section" id="summary">
+  252| <h2 className="sec-title">Part 2 complete</h2>
+  256| </main>
+  257| </StudyGuideShell>
+  272| <main className="main">
+  276| <p className="ch-sub">Formal decisions from noisy data</p>
+  280| <section className="section" id="ps-h-framework">
+  282| <h2 className="sec-title">Hypotheses and significance</h2>
+  300| <section className="section" id="ps-h-proc1">
+  314| <section className="section" id="ps-h-ex-p1">
+  406| <section className="section" id="ps-h-tests">
+  408| <h2 className="sec-title">Common one-sample tests</h2>
+  457| <section className="section" id="summary">
+  459| <h2 className="sec-title">Part 1 complete</h2>
+  462| </main>
+  463| </StudyGuideShell>
+==========================================================================================
+src/pages/probabilityStatistics/RegressionGuide.jsx
+   11| if (part === 2) {
+   23| <main className="main">
+   27| <p className="ch-sub">Predict $y$ from $x$ and check the fit</p>
+   31| <section className="section" id="ps-r-fit">
+   33| <h2 className="sec-title">Least-squares line</h2>
+   51| <section className="section" id="ps-r-proc2">
+   65| <section className="section" id="ps-r-ex-p2">
+  156| <section className="section" id="ps-r-resid">
+  158| <h2 className="sec-title">Residual diagnostics</h2>
+  247| <section className="section" id="summary">
+  249| <h2 className="sec-title">Course module complete</h2>
+  253| </main>
+  254| </StudyGuideShell>
+  269| <main className="main">
+  273| <p className="ch-sub">Measure and model linear association</p>
+  277| <section className="section" id="ps-r-corr">
+  279| <h2 className="sec-title">Correlation coefficient</h2>
+  297| <section className="section" id="ps-r-proc1">
+  311| <section className="section" id="ps-r-ex-p1">
+  405| <section className="section" id="ps-r-assoc">
+  407| <h2 className="sec-title">Association vocabulary</h2>
+  456| <section className="section" id="summary">
+  458| <h2 className="sec-title">Part 1 complete</h2>
+  461| </main>
+  462| </StudyGuideShell>

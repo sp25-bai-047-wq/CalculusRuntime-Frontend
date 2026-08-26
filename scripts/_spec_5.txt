@@ -1,0 +1,74 @@
+DESC: Divergence and curl quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\mvDivCurlQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Multivariable Calculus — the Divergence & Curl / Vector Calculus guide)
+Each export holds **exactly 15 questions with exactly 3 options each**. The eight banks sit in eight different sections of the same guide, so keep each bank focused on its own slice and do not repeat ideas between banks.
+- `FIELD_CONCEPT_QUIZ` — vector fields themselves: what $\mathbf F(x,y,z)$ outputs, sketching/identifying radial, rotational and constant fields, component functions $P,Q,R$, gradient fields $\mathbf F=\nabla f$, flow lines, evaluating a field at a point.
+- `DIV_FORMULA_QUIZ` — the divergence operator: $\nabla\cdot\mathbf F = P_x+Q_y+R_z$, computing divergence of concrete fields, evaluating it at a point, sign interpretation (source vs sink), incompressible/solenoidal fields with zero divergence, divergence of a gradient giving the Laplacian.
+- `CURL_CORE_QUIZ` — the curl operator: the determinant formula, computing $\nabla\times\mathbf F$ for concrete fields, curl of a 2D field being $(Q_x-P_y)\mathbf k$, irrotational fields, curl at a point, curl of a rigid rotation field.
+- `VECTOR_CATALOG_QUIZ` — physical interpretation and flow mechanics: which physical quantity divergence or curl models, conservative fields and potential functions, path independence, work as a line integral, flux across a curve, recognizing whether a given field is conservative via the mixed-partial test and finding its potential.
+- `VECTOR_IDENTITY_QUIZ` — differential operator identities: $\nabla\times(\nabla f)=\mathbf 0$, $\nabla\cdot(\nabla\times\mathbf F)=0$, $\nabla\cdot(f\mathbf F)=f\,\nabla\cdot\mathbf F+\nabla f\cdot\mathbf F$, $\nabla\times(f\mathbf F)$, the Laplacian $\nabla^2 f$, applying identities to concrete fields, and surface-integral basics ($dS$, parameterized surfaces).
+- `DIV_THEOREM_QUIZ` — the Divergence (Gauss) theorem: the statement $\iint_S \mathbf F\cdot \mathbf n\,dS=\iiint_E \nabla\cdot\mathbf F\,dV$, hypotheses (closed surface, outward normal), computing flux the easy way for spheres/boxes/cylinders, flux of $\mathbf F=\langle x,y,z\rangle$ giving $3\times$volume, zero-divergence consequences.
+- `STOKES_THEOREM_QUIZ` — the Stokes conservation framework as presented in this guide: relating $\oint_C\mathbf F\cdot d\mathbf r$ to $\iint_S(\nabla\times\mathbf F)\cdot\mathbf n\,dS$, Green's theorem as the flat case, orientation compatibility, replacing a surface with another sharing the same boundary, and closed-surface curl flux being zero.
+- `DIVCURL_CHALLENGE_QUIZ` — harder mixed practice combining several of the above: multi-step flux and circulation computations, deciding which theorem is cheapest, fields with singularities at the origin, Maxwell-style identities, and numeric answers requiring two or three steps.
+
+IMPORTANT: another writer is covering a separate Stokes' Theorem guide with its own line-integral and surface-choice questions. Keep `STOKES_THEOREM_QUIZ` anchored to concrete computations and the divergence/curl framing of this guide, and always include the specific field or surface in the prompt so no prompt could collide.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Divergence & Curl guide — 15 MCQs per section. */
+
+export const FIELD_CONCEPT_QUIZ = [
+  {
+    prompt: "Evaluate the field $\\mathbf F(x,y)=\\langle y,-x\\rangle$ at the point $(2,3)$.",
+    options: ["$\\langle 3,-2\\rangle$", "$\\langle -3,2\\rangle$", "$\\langle 2,-3\\rangle$"],
+    answer: "A",
+    explanation: "Substituting $x=2$, $y=3$ into the components gives first component $y=3$ and second component $-x=-2$.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (compute a divergence, a curl, a flux, a potential function). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to", "Which statement is always safe exam advice?", or anything resembling "Checkpoint 4: which statement fits this section?".
+6. Prompts must be unique across the whole app, so make them concrete: put the actual field, surface or point into the prompt. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. summing all nine partials, sign errors in the curl determinant, forgetting the outward normal), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars: `"$\\nabla\\cdot\\mathbf F$"`. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\dfrac{\\partial P}{\\partial x}$"`.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \partial \nabla \mathbf \vec \hat \sum \int \iint \iiint \oint \lim \infty \pi \theta \phi \rho \le \ge \ne \approx \to \cdot \times \left \right \begin{vmatrix}...\end{vmatrix} \begin{pmatrix}...\end{pmatrix} \text{...} \operatorname{...} \langle \rangle`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a cost of 250 dollars"`, never `"$\\$250$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/mvDivCurlQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/mvDivCurlQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

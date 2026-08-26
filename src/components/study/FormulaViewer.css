@@ -1,0 +1,96 @@
+.formula-viewer-scalable {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.formula-viewer-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.formula-display-area {
+  position: relative;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 10px;
+  padding: 1.25rem 1rem;
+  overflow-x: auto;
+}
+
+.formula-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.formula-copy-btn:hover {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.formula-description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.formula-breakdown-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formula-toggle-btn {
+  align-self: flex-start;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.8125rem !important;
+}
+
+.formula-breakdown-list {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.formula-breakdown-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.breakdown-symbol {
+  font-family: monospace;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.breakdown-sep {
+  color: #64748b;
+}
+
+.breakdown-meaning {
+  color: #cbd5e1;
+}

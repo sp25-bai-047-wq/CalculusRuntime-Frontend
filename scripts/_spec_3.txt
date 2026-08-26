@@ -1,0 +1,68 @@
+DESC: MV integrals and Stokes quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\mvIntegralsStokesQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Multivariable Calculus)
+Each export holds **exactly 15 questions with exactly 3 options each**.
+- `MV_INTEGRALS_P1_QUIZ` — Multiple Integrals, Part 1: double integrals over rectangles, iterated integrals, Fubini's theorem, double integrals over general (Type I / Type II) regions, changing the order of integration, area and volume via double integrals, triple integrals over boxes and general solids, setting up limits.
+- `MV_INTEGRALS_P2_QUIZ` — Multiple Integrals, Part 2: double integrals in polar coordinates (the $r\,dr\,d\theta$ factor), cylindrical coordinates, spherical coordinates (the $\rho^2\sin\phi$ factor), converting between coordinate systems, the Jacobian for a general change of variables, mass/centroid/moment applications.
+- `MV_STOKES_F_QUIZ` — Stokes' Theorem foundations: circulation and line integrals of $\mathbf F\cdot d\mathbf r$, curl of a vector field, oriented surfaces and unit normals, the boundary curve of a surface, the right-hand rule linking boundary orientation to normal direction, the statement $\oint_C \mathbf F\cdot d\mathbf r=\iint_S (\nabla\times\mathbf F)\cdot \mathbf n\,dS$, and how Green's theorem is the planar special case.
+- `MV_STOKES_A_QUIZ` — Stokes' Theorem applications: choosing a convenient surface with the same boundary, evaluating the flux of a curl over a disk / paraboloid / hemisphere, computing circulation the easy way, checking orientation consistency, conservative fields having zero circulation, and physical uses (Ampere's law, circulation of a fluid).
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Multiple Integrals and Stokes' Theorem guides — 15 MCQs per section. */
+
+export const MV_INTEGRALS_P1_QUIZ = [
+  {
+    prompt: "Evaluate $\\int_0^1\\int_0^2 xy\\,dx\\,dy$.",
+    options: ["$1$", "$2$", "$1/2$"],
+    answer: "A",
+    explanation: "The inner integral gives $2y$, and $\\int_0^1 2y\\,dy = 1$.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (evaluate an iterated integral, convert limits to polar, compute a curl, evaluate a flux). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to", "Which statement is always safe exam advice?", or anything resembling "Checkpoint 4: which statement fits this section?".
+6. Prompts must be unique across the whole app, so make them concrete: put the actual integrand, region, field or surface into the prompt. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. forgetting the $r$ in polar, using $\rho\sin\phi$ instead of $\rho^2\sin\phi$, wrong orientation sign), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars: `"$\\iint_R f\\,dA$"`. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\int_0^{\\pi} \\sin\\theta\\,d\\theta$"`.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \partial \nabla \mathbf \vec \hat \sum \int \iint \iiint \oint \lim \infty \pi \theta \phi \rho \le \ge \ne \approx \to \cdot \times \left \right \begin{pmatrix}...\end{pmatrix} \text{...} \operatorname{...} \langle \rangle`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a cost of 250 dollars"`, never `"$\\$250$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/mvIntegralsStokesQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/mvIntegralsStokesQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

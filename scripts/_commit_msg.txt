@@ -1,0 +1,3 @@
+Expand every in-guide study quiz from ~5 to 15 unique on-topic MCQs.
+
+Extract quiz banks into src/data modules and wire Calc AG, MV, LA, and PS guides to GuideMcq/LaMcq with balanced A/B/C answers.

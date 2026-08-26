@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { PROBABILITY_STATISTICS_DATA } from "../data/probabilityStatisticsData";
+import { PROBABILITY_STATISTICS_DATA } from "../../data/probabilityStatisticsData";
 
 export default function ProbStatsTopic() {
   const location = useLocation();

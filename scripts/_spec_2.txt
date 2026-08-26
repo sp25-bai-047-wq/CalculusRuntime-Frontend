@@ -1,0 +1,75 @@
+DESC: MV partial derivatives quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\mvPartialQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Multivariable Calculus — the Partial Derivatives guide)
+Each export holds **exactly 15 questions with exactly 3 options each**.
+- `MV_141_QUIZ` — Functions of Several Variables: domains and ranges of $f(x,y)$, evaluating multivariable functions, level curves and contour maps, surfaces $z=f(x,y)$, traces, functions of three variables and level surfaces.
+- `MV_142_QUIZ` — Limits and Continuity in two variables: evaluating limits along paths, showing a limit fails via two different paths, polar-coordinate limit arguments, the squeeze theorem in 2D, continuity of multivariable functions.
+- `MV_143_QUIZ` — Partial Derivatives: computing $f_x$ and $f_y$, evaluating partials at a point, second-order and mixed partials, Clairaut's theorem, implicit partial differentiation, partial derivatives of three-variable functions, Laplace's equation checks.
+- `MV_144_QUIZ` — The Chain Rule for multivariable functions: tree diagrams, $\frac{dz}{dt}$ for $z=f(x(t),y(t))$, $\partial z/\partial s$ and $\partial z/\partial t$ for two intermediate variables, implicit differentiation via $F_x/F_y$, related-rate style applications.
+- `MV_145_QUIZ` — Directional Derivatives and the Gradient: computing $\nabla f$, directional derivative $D_{\mathbf u}f = \nabla f\cdot\mathbf u$ with a UNIT vector, maximum rate of increase $|\nabla f|$ and its direction, gradient orthogonal to level curves, zero directional derivative directions.
+- `MV_146_QUIZ` — Tangent Planes and Differentials: tangent plane to $z=f(x,y)$ at a point, tangent plane to a level surface $F(x,y,z)=k$ via $\nabla F$, normal lines, linear approximation, total differential $dz$, estimating error/percentage error.
+- `MV_147_QUIZ` — Extreme Values and Saddle Points: critical points where $f_x=f_y=0$, the second-derivative test with $D = f_{xx}f_{yy}-f_{xy}^2$, classifying local max / local min / saddle, absolute extrema on a closed bounded region, boundary analysis.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Multivariable Partial Derivatives guide — 15 MCQs per section. */
+
+export const MV_141_QUIZ = [
+  {
+    prompt: "For $f(x,y)=\\ln(9-x^2-y^2)$, which points are in the domain?",
+    options: [
+      "All $(x,y)$ with $x^2+y^2<9$",
+      "All $(x,y)$ with $x^2+y^2\\le 9$",
+      "All $(x,y)$ with $x^2+y^2>9$",
+    ],
+    answer: "A",
+    explanation: "The logarithm needs a strictly positive argument, so $9-x^2-y^2>0$, the open disk of radius 3.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (compute a partial, evaluate a gradient, run the D-test, build a tangent plane). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to", "Which statement is always safe exam advice?", or anything resembling "Checkpoint 4: which statement fits this section?".
+6. Prompts must be unique across the whole app, so make them concrete: put the actual function, point or vector into the prompt. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. forgetting to normalize the direction vector, swapping $f_{xx}$ and $f_{yy}$), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars: `"$f_x$"`. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\dfrac{\\partial f}{\\partial x}$"`.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \partial \nabla \mathbf \vec \hat \sum \int \iint \lim \infty \pi \theta \le \ge \ne \approx \to \cdot \times \left \right \begin{pmatrix}...\end{pmatrix} \text{...} \operatorname{...} \langle \rangle`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a cost of 250 dollars"`, never `"$\\$250$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/mvPartialQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/mvPartialQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

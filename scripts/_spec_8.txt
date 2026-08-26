@@ -1,0 +1,72 @@
+DESC: LA systems and eigen quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\laSystemsEigenQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Linear Algebra)
+Each export holds **exactly 15 questions with exactly 3 options each**.
+- `LA_S_INTRO_QUIZ` — Linear systems basics: what makes an equation linear, solving concrete 2x2 and 3x3 systems, the three possible solution counts (unique / none / infinitely many), consistency, augmented matrices, writing a system as $A\mathbf x=\mathbf b$, homogeneous systems always having the trivial solution.
+- `LA_S_GAUSS_QUIZ` — Gaussian elimination: elementary row operations, row echelon and reduced row echelon form, pivots, back substitution on concrete augmented matrices, spotting an inconsistent row such as $[0\ 0\ 0\mid 5]$, identifying free variables, counting operations conceptually.
+- `LA_S_RANK_QUIZ` — Rank and consistency: reading the rank off an echelon form, rank-nullity ($\text{rank}+\text{nullity}=n$), the consistency criterion $\text{rank}(A)=\text{rank}([A\mid \mathbf b])$, dimension of the nullspace and column space, number of free variables, rank of concrete matrices.
+- `LA_S_GEO_QUIZ` — Geometry of solutions: solution sets as points, lines and planes; parametric vector form of a solution; particular plus homogeneous solution structure; two planes intersecting in a line; three planes with no common point; parallel and coincident lines; geometric meaning of a singular coefficient matrix.
+- `LA_E_INTRO_QUIZ` — Eigenvalues and eigenvectors, definition level: the equation $A\mathbf v=\lambda\mathbf v$ with $\mathbf v\ne\mathbf 0$, verifying that a given vector is an eigenvector and finding its eigenvalue, eigenvalues of diagonal and triangular matrices, eigenvalue 0 meaning singular, eigenspaces, scaling an eigenvector.
+- `LA_E_CHAR_QUIZ` — The characteristic polynomial: forming $\det(A-\lambda I)=0$, computing characteristic polynomials and eigenvalues of concrete 2x2 and small 3x3 matrices, trace equal to the sum of eigenvalues, determinant equal to the product, algebraic multiplicity, complex eigenvalues from a rotation matrix.
+- `LA_E_DIAG_QUIZ` — Diagonalization: $A=PDP^{-1}$, when a matrix is diagonalizable (enough independent eigenvectors), geometric vs algebraic multiplicity, building $P$ and $D$ for concrete matrices, computing $A^k$ via diagonalization, defective matrices, symmetric matrices being orthogonally diagonalizable.
+- `LA_E_APPS_QUIZ` — Why eigenvalues matter: powers and long-run behavior of a Markov/transition matrix, stability of a discrete system based on $|\lambda|$, principal component directions, systems of differential equations $\mathbf x'=A\mathbf x$, dominant eigenvalue and the power method, vibration/mode interpretations.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Linear Algebra Systems and Eigenvalues guides — 15 MCQs per section. */
+
+export const LA_S_INTRO_QUIZ = [
+  {
+    prompt: "Solve the system $x+y=5$, $x-y=1$.",
+    options: ["$x=3,\\ y=2$", "$x=2,\\ y=3$", "$x=4,\\ y=1$"],
+    answer: "A",
+    explanation: "Adding the two equations gives $2x=6$, so $x=3$ and then $y=2$.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (solve a system, row reduce, read a rank, find eigenvalues, diagonalize). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to" or "Which statement is always safe exam advice?" (the current file is full of those — none may survive).
+6. Prompts must be unique across the whole app, so make them concrete: write out the actual systems and matrices. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. off-by-one in rank, swapping algebraic and geometric multiplicity, sign slips in $\det(A-\lambda I)$), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$"` — note that a LaTeX row break `\\` becomes `\\\\` in the JS string.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \sum \mathbf \vec \lambda \mu \det \text{...} \operatorname{...} \mathbb{R} \begin{pmatrix}...\end{pmatrix} \begin{bmatrix}...\end{bmatrix} \begin{vmatrix}...\end{vmatrix} \langle \rangle \mid \cdot \times \le \ge \ne \approx \to \left \right \|`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a cost of 250 dollars"`, never `"$\\$250$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/laSystemsEigenQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/laSystemsEigenQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

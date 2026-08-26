@@ -1,0 +1,4 @@
+files: 9
+strings scanned: 3186
+math segments rendered: 3247
+failures: 0

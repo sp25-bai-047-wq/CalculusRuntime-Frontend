@@ -1,0 +1,50 @@
+.guide-part-wrapper {
+  position: relative;
+}
+
+.guide-part-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
+  padding: 0.65rem 1.5rem;
+  position: sticky;
+  top: var(--header-h, 64px);
+  z-index: 118;
+}
+
+.guide-part-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.guide-part-badge {
+  background: var(--gold);
+  border-radius: 99px;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  white-space: nowrap;
+}
+
+.guide-part-title {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .guide-part-topbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .guide-part-title {
+    display: none;
+  }
+}

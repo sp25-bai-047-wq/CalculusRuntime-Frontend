@@ -1,5 +1,5 @@
-import StudyGuideShell from "../StudyGuideShell";
-import "../PartialDerivativesGuide.css";
+import StudyGuideShell from "../courses/StudyGuideShell";
+import "../multivariableCalculus/PartialDerivativesGuide.css";
 import { LaMcqSection } from "./LaMcq";
 import {
   LA_LE_FORMS_QUIZ,
@@ -239,6 +239,7 @@ function LinearEquationsGuide({ part = 1 }) {
         <a className="sb-link" href="#la-le-2var">Two variables</a>
         <a className="sb-link" href="#la-le-3var">Three variables</a>
         <a className="sb-link" href="#la-le-nvar">n variables</a>
+        <a className="sb-link" href="#la-le-slope">What is slope?</a>
         <a className="sb-link" href="#quiz-la-le-forms">Quiz</a>
         <a className="sb-link" href="#la-le-graph">Graphing &amp; intercepts</a>
         <a className="sb-link" href="#quiz-la-le-graph">Quiz</a>
@@ -324,6 +325,55 @@ function LinearEquationsGuide({ part = 1 }) {
             </p>
           </TheoremBox>
           <RealLifeUse>{"A nutrition constraint balancing dozens of ingredients, or the weighted sum $\\mathbf{w}\\cdot\\mathbf{x}=b$ inside a single artificial neuron, are both linear equations in $n$ variables — the exact same object you just met in 2D and 3D, just with more coordinates."}</RealLifeUse>
+        </section>
+
+        <section className="section" id="la-le-slope">
+          <div className="sec-badge">Concept spotlight</div>
+          <h2 className="sec-title">What is slope? From 2D to n dimensions</h2>
+          <p>
+            {"Before graphing, it's worth pausing on one plain-English question: what does "}<strong>slope</strong>{" actually mean — and what happens to that idea once you have more than two variables?"}
+          </p>
+          <TheoryBox title="Slope in 2D: how steep is the line?">
+            <p>
+              {"Slope answers a simple question: "}<strong>if I move 1 step to the right, how many steps up (or down) does the line go?</strong>{" That's it — it's a measure of steepness, nothing more."}
+            </p>
+            <p>
+              {"It's usually written as \"rise over run\": $m=\\dfrac{\\text{rise}}{\\text{run}}=\\dfrac{\\Delta y}{\\Delta x}$. A slope of $2$ means every $1$ step right takes you $2$ steps up — a steep line. A slope of $\\tfrac{1}{2}$ means it barely climbs. A negative slope means it goes downhill instead."}
+            </p>
+            <p>
+              {"In two variables, one number is enough to describe the tilt because there's only one direction to walk in: along the $x$-axis."}
+            </p>
+          </TheoryBox>
+          <TheoremBox title="Why one number isn't enough anymore">
+            <p>
+              {"With three variables you're no longer looking at a line — you're looking at a flat plane. On a plane, you can walk in the $x$ direction, the $y$ direction, or anywhere in between, and the plane can tilt differently each way. One single number can't capture all of that at once."}
+            </p>
+            <p>
+              {"So instead of one slope, you get "}<em>one steepness number per variable</em>{" — how much the equation's value changes for each variable, one at a time."}
+            </p>
+          </TheoremBox>
+          <TheoryBox title="Slope in n dimensions, in plain terms">
+            <p>
+              {"Look back at the general form from Section 0.3: $a_1x_1+a_2x_2+\\cdots+a_nx_n=b$. Each coefficient $a_i$ is answering the exact same question the 2D slope did, just for its own variable: "}<strong>{"\"if I nudge $x_i$ up by 1 and leave every other variable alone, how much does the total change?\""}</strong>
+            </p>
+            <p>
+              {"So 'slope' in $n$ variables isn't one number anymore — it's the whole list of coefficients $(a_1,a_2,\\ldots,a_n)$, one steepness value per variable. Nothing new is being invented here; it's the same rise-over-run idea, just written down once for every direction instead of squeezed into a single ratio."}
+            </p>
+          </TheoryBox>
+          <WorkedExample
+            number={"2.5"}
+            title="Read the 'slope' straight off the coefficients"
+            setup={"For $2x+3y-z=10$, what does each coefficient tell you?"}
+            steps={[
+              { text: "Coefficient of $x$ is $2$: increasing $x$ by $1$ (holding $y,z$ fixed) increases the total by $2$." },
+              { text: "Coefficient of $y$ is $3$: increasing $y$ by $1$ increases the total by $3$ — steeper than the $x$ direction." },
+              { text: "Coefficient of $z$ is $-1$: increasing $z$ by $1$ decreases the total by $1$ — that direction slopes downward." },
+              { text: "Compare to plain 2D slope: this is exactly the same reading you'd give $m$ in $y=mx+b$ — just done three times instead of once." },
+            ]}
+            result={"The coefficient list $(2,3,-1)$ is the slope here — one steepness value per variable."}
+            check={"Set two of the three variables' changes to $0$ and you're back to a plain single-variable slope, exactly like the 2D case."}
+          />
+          <RealLifeUse>{"Think of a hiking trail app estimating your fatigue from distance, elevation gain, and pack weight. Each factor gets its own 'slope' — maybe every extra kilogram of pack weight tires you out as much as an extra 100 meters of elevation. That per-variable steepness is precisely the idea above, just with everyday units instead of $x_1,\\ldots,x_n$."}</RealLifeUse>
         </section>
 
         <LaMcqSection

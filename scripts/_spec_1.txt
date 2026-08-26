@@ -1,0 +1,74 @@
+DESC: Calculus AG quiz banks
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+REWRITE exactly one file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\calcAgStudyQuizzes.js`
+
+It currently holds 11 exported arrays of 5 questions each (with 4 options each). Replace its entire contents so that each of the same 11 exports holds **exactly 15 questions with exactly 3 options each**. Keep the export names identical. Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Calculus & Analytical Geometry, single-variable)
+- `LIMITS_P1_QUIZ` — limits, part 1: evaluating limits algebraically (factoring, rationalizing, conjugates), one-sided limits, limits of piecewise functions, the squeeze theorem, continuity at a point, removable vs jump discontinuities.
+- `LIMITS_P2_QUIZ` — limits, part 2: limits at infinity, horizontal/vertical/slant asymptotes, indeterminate forms, the Intermediate Value Theorem, trig limits like $\lim_{x\to0}\sin x/x$, and a couple of two-path multivariable limit checks.
+- `DIFF_RULES_QUIZ` — differentiation rules: power, product, quotient, chain; derivatives of trig, exponential and logarithmic functions; derivatives evaluated at a point.
+- `DIFF_APPS_QUIZ` — applications of the derivative: related rates, optimization, increasing/decreasing intervals, concavity, first and second derivative tests, L'Hopital's rule.
+- `DIFF_ADV_QUIZ` — advanced differentiation: implicit differentiation, logarithmic differentiation, higher-order derivatives, the Mean Value Theorem and Rolle's theorem, linear approximation and differentials, derivatives of inverse functions.
+- `INT_FUND_QUIZ` — integration foundations: antiderivatives, the Fundamental Theorem of Calculus (both parts), definite integrals, u-substitution, area between curves, average value.
+- `INT_TECH_QUIZ` — integration techniques: integration by parts, trigonometric integrals, trigonometric substitution, partial fractions, improper integrals, arc length / volumes of revolution.
+- `SERIES_P1_QUIZ` — sequences and basic series: sequence convergence, geometric series sums, telescoping series, the nth-term divergence test, p-series, harmonic series, partial sums.
+- `SERIES_P2_QUIZ` — series tests and power series: comparison and limit-comparison tests, ratio test, root test, alternating series test and error bound, absolute vs conditional convergence, radius and interval of convergence of a power series.
+- `CONICS_P1_QUIZ` — distance, circles and standard conics: distance/midpoint formulas, completing the square for circles, standard-form parabolas (vertex, focus, directrix), ellipses (center, vertices, foci, eccentricity), hyperbolas (foci, asymptotes).
+- `CONICS_P2_QUIZ` — general conics and applications: the general second-degree equation, the discriminant $B^2-4AC$ classification, rotation of axes, translation, polar equations of conics, parametric conics, reflective properties and applied problems.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for Calculus & Analytical Geometry — 15 MCQs per section. */
+
+export const LIMITS_P1_QUIZ = [
+  {
+    prompt: "Evaluate $\\lim_{x\\to 3}\\dfrac{x^2-9}{x-3}$.",
+    options: ["$6$", "$0$", "The limit does not exist"],
+    answer: "A",
+    explanation: "Factor the numerator as $(x-3)(x+3)$ and cancel, leaving $x+3\\to 6$.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (differentiate, integrate, evaluate a limit, apply a convergence test, complete the square). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to" or "Which statement is always safe exam advice?".
+6. Prompts must be unique across the whole app, so make them concrete: put the actual function, numbers or equation into the prompt. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars: `"$x^2$"`. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\dfrac{d}{dx}\\ln x = \\dfrac{1}{x}$"`.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe commands: `\frac \dfrac \sqrt \sum \int \lim \infty \pi \theta \ln \log \sin \cos \tan \sec \csc \cot \exp \binom \cdot \times \pm \le \ge \ne \approx \to \left \right \begin{pmatrix}...\end{pmatrix} \text{...} \operatorname{...}`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a cost of 250 dollars"`, never `"$\\$250$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/calcAgStudyQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/calcAgStudyQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

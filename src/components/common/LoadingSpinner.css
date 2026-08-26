@@ -1,0 +1,70 @@
+.spinner-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.spinner-circle {
+  border-radius: 50%;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.15);
+  animation: spinnerRotate 0.8s linear infinite;
+}
+
+.spinner-sm .spinner-circle {
+  width: 18px;
+  height: 18px;
+  border-width: 2px;
+}
+
+.spinner-md .spinner-circle {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+.spinner-lg .spinner-circle {
+  width: 48px;
+  height: 48px;
+  border-width: 4px;
+}
+
+.spinner-xl .spinner-circle {
+  width: 64px;
+  height: 64px;
+  border-width: 5px;
+}
+
+.spinner-color-primary {
+  border-top-color: #3b82f6 !important;
+}
+
+.spinner-color-secondary {
+  border-top-color: #a855f7 !important;
+}
+
+.spinner-color-white {
+  border-top-color: #ffffff !important;
+}
+
+.spinner-text {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.spinner-full-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  width: 100%;
+}
+
+@keyframes spinnerRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,17 @@
+src/pages/linearAlgebra/EigenGuide.jsx                       lines=  577 worked=12 part2blocks=1 eight=0
+src/pages/linearAlgebra/LaBlocks.jsx                         lines=  143 worked= 0 part2blocks=0 eight=0
+src/pages/linearAlgebra/LaMcq.jsx                            lines=   55 worked= 0 part2blocks=0 eight=0
+src/pages/linearAlgebra/LaParts.jsx                          lines=  118 worked= 0 part2blocks=0 eight=0
+src/pages/linearAlgebra/LaTopicPart.jsx                      lines=   45 worked= 0 part2blocks=0 eight=0
+src/pages/linearAlgebra/MatricesGuide.jsx                    lines=  583 worked=12 part2blocks=1 eight=0
+src/pages/linearAlgebra/MatrixSandbox.jsx                    lines=  982 worked= 0 part2blocks=0 eight=0
+src/pages/linearAlgebra/SystemsGuide.jsx                     lines=  579 worked=12 part2blocks=1 eight=0
+src/pages/linearAlgebra/VectorsGuide.jsx                     lines=  540 worked=12 part2blocks=1 eight=0
+src/pages/probabilityStatistics/BayesLab.jsx                 lines=  157 worked= 0 part2blocks=0 eight=0
+src/pages/probabilityStatistics/DescriptiveStatsGuide.jsx    lines=  470 worked=10 part2blocks=1 eight=0
+src/pages/probabilityStatistics/HypothesisTestingGuide.jsx   lines=  467 worked=10 part2blocks=1 eight=0
+src/pages/probabilityStatistics/ProbabilityBasicsGuide.jsx   lines=  489 worked=10 part2blocks=1 eight=0
+src/pages/probabilityStatistics/PsParts.jsx                  lines=  147 worked= 0 part2blocks=0 eight=0
+src/pages/probabilityStatistics/PsTopicPart.jsx              lines=   42 worked= 0 part2blocks=0 eight=0
+src/pages/probabilityStatistics/RandomVariablesGuide.jsx     lines=  478 worked=10 part2blocks=1 eight=0
+src/pages/probabilityStatistics/RegressionGuide.jsx          lines=  466 worked=10 part2blocks=1 eight=0

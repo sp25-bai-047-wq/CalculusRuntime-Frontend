@@ -1,0 +1,132 @@
+.scb-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--card, #faf7f2);
+  border: 1.5px solid var(--line, #e0d6c8);
+  border-radius: 10px;
+  padding: 1rem 1.4rem;
+  margin: 2.5rem auto;
+  max-width: 1000px;
+  position: relative;
+  z-index: 5;
+}
+
+.scb-wrap--done {
+  background: rgba(47, 116, 107, 0.08);
+  border-color: var(--teal);
+}
+
+.scb-wrap--guest {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.scb-wrap--guest a {
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.scb-wrap--guest a:hover {
+  text-decoration: underline;
+}
+
+.scb-done-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.scb-mark-btn {
+  background: var(--teal);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.55rem 1.2rem;
+  transition: opacity 0.15s;
+}
+
+.scb-mark-btn:hover {
+  opacity: 0.85;
+}
+
+.scb-mark-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.scb-wrap--locked .scb-mark-btn {
+  background: #8a8378;
+}
+
+.scb-mark-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: min(100%, 22rem);
+}
+
+.scb-lock-hint {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--muted, #7a7268);
+  max-width: 28rem;
+}
+
+.scb-error {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  color: #b84a2e;
+}
+
+.scb-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #8a6410;
+  border: 1px solid #6f500c;
+  border-radius: 8px;
+  color: #fff !important;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+  min-height: 2.4rem;
+  padding: 0.55rem 1.2rem;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.scb-next:hover {
+  background: #a0720a;
+  color: #fff !important;
+  opacity: 1;
+}
+
+.scb-cert-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--teal);
+  border: 1px solid var(--teal);
+  border-radius: 8px;
+  color: #fff !important;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+  min-height: 2.4rem;
+  padding: 0.55rem 1.2rem;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.scb-cert-cta:hover {
+  opacity: 0.85;
+}

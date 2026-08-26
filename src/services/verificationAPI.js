@@ -1,4 +1,4 @@
-import { verifyCourseCompletion } from './courseVerificationService';
+import { verifyCourseCompletion } from "./courseVerificationService";
 
 export async function runBackgroundVerification(userProgress, courseData) {
   await new Promise((resolve) => setTimeout(resolve, 300));

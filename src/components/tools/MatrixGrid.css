@@ -1,0 +1,99 @@
+.matrix-grid-container {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.matrix-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.matrix-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.matrix-size-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.matrix-size-select-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.matrix-select {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #f8fafc;
+  border-radius: 4px;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.75rem;
+  outline: none;
+}
+
+.matrix-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.matrix-bracket {
+  width: 6px;
+  border: 2px solid #60a5fa;
+}
+
+.matrix-bracket-left {
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+}
+
+.matrix-bracket-right {
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+}
+
+.matrix-cells-grid {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.25rem;
+}
+
+.matrix-cell-input {
+  width: 100%;
+  padding: 0.4rem 0.25rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #f8fafc;
+  font-family: monospace;
+  font-size: 0.9375rem;
+  text-align: center;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.matrix-cell-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  background: #1e293b;
+}
+
+.matrix-actions {
+  display: flex;
+  gap: 0.5rem;
+}

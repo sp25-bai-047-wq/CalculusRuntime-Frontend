@@ -33,7 +33,7 @@ async function requestAuth(path, body) {
     });
   } catch {
     return {
-      error: `Could not reach the backend at ${API_URL}. Make sure it is running on port 8002.`,
+      error: `Could not reach the server at ${API_URL}. If the server was idle, it may take ~30 seconds to wake up.`,
     };
   }
 

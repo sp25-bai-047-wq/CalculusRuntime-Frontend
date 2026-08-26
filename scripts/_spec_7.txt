@@ -1,0 +1,72 @@
+DESC: LA vectors and matrices quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\laVectorsMatricesQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Linear Algebra)
+Each export holds **exactly 15 questions with exactly 3 options each**.
+- `LA_V_INTRO_QUIZ` — Vectors in R^n basics: components, geometric interpretation, vector equality, the zero vector, position vectors, magnitude $\|\mathbf v\|$, unit vectors, distance between points in R^3.
+- `LA_V_OPS_QUIZ` — Vector operations: addition and scalar multiplication computed on concrete vectors, dot product and the angle between vectors, orthogonality tests, projections $\text{proj}_{\mathbf u}\mathbf v$, cross product in R^3 and its magnitude as parallelogram area, triple products.
+- `LA_V_SPAN_QUIZ` — Span and basis: what a span is geometrically, deciding whether a given vector lies in the span of others, spanning sets for R^2 and R^3, bases and coordinates relative to a basis, dimension of a subspace, standard basis.
+- `LA_V_INDEP_QUIZ` — Linear independence: testing concrete sets for independence, the trivial-solution criterion, why more than $n$ vectors in R^n must be dependent, dependence relations, independence and determinants, independence of columns and rank.
+- `LA_M_INTRO_QUIZ` — What a matrix is: size/shape, entries $a_{ij}$, matrices as linear maps, the standard matrix of a transformation (rotation, reflection, scaling, projection), identity and zero matrices, diagonal/triangular/symmetric matrices, transpose.
+- `LA_M_OPS_QUIZ` — Matrix operations: addition, scalar multiples, matrix multiplication computed on concrete small matrices, dimension compatibility, non-commutativity, powers of a matrix, transpose rules such as $(AB)^T=B^TA^T$, trace.
+- `LA_M_DET_QUIZ` — Determinants: 2x2 and 3x3 determinants computed on concrete matrices, cofactor expansion, effect of row operations on the determinant, determinant of a triangular matrix, $\det(AB)=\det A\det B$, $\det(A^{-1})$, $\det(kA)$ for an $n\times n$ matrix, determinant zero meaning singular, area/volume interpretation.
+- `LA_M_INV_QUIZ` — Inverses: the 2x2 inverse formula, invertibility criteria, computing an inverse by Gauss-Jordan, $(AB)^{-1}=B^{-1}A^{-1}$, solving $A\mathbf x=\mathbf b$ with $A^{-1}$, the adjugate formula, when an inverse fails to exist.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Linear Algebra Vectors and Matrices guides — 15 MCQs per section. */
+
+export const LA_V_INTRO_QUIZ = [
+  {
+    prompt: "What is the magnitude of $\\mathbf v=\\langle 3,-4\\rangle$?",
+    options: ["$5$", "$7$", "$\\sqrt{7}$"],
+    answer: "A",
+    explanation: "The magnitude is $\\sqrt{3^2+(-4)^2}=\\sqrt{25}=5$.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (compute a dot product, multiply matrices, evaluate a determinant, invert a 2x2, test independence). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to" or "Which statement is always safe exam advice?" (the current file is full of those — none may survive).
+6. Prompts must be unique across the whole app, so make them concrete: write out the actual vectors and matrices. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. forgetting the minus in the 2x2 inverse, transposing when multiplying), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$"` — note that a LaTeX row break `\\` becomes `\\\\` in the JS string.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \sum \mathbf \vec \hat \det \text{...} \operatorname{...} \begin{pmatrix}...\end{pmatrix} \begin{bmatrix}...\end{bmatrix} \begin{vmatrix}...\end{vmatrix} \langle \rangle \cdot \times \le \ge \ne \approx \to \left \right \|`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a cost of 250 dollars"`, never `"$\\$250$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text. Write "R^n" outside math as `$\\mathbb{R}^n$` inside math instead — `\mathbb` is safe in KaTeX.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/laVectorsMatricesQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/laVectorsMatricesQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

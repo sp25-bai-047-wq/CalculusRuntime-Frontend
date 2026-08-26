@@ -1,0 +1,480 @@
+==========================================================================================
+src/pages/PartialDerivativesGuide.jsx
+   heading: Where This Shows Up in Real Life
+   heading: Part 1 Key Formulas
+   --- quiz keys ---
+   quiz section: 141
+   quiz section: 141
+   quiz section: 141
+   quiz section: 141
+   quiz section: 141
+   quiz section: 142
+   quiz section: 142
+   quiz section: 142
+   quiz section: 142
+   quiz section: 142
+   quiz section: 143
+   quiz section: 143
+   quiz section: 143
+   quiz section: 143
+   quiz section: 143
+   quiz section: 144
+   quiz section: 144
+   quiz section: 144
+   quiz section: 144
+   quiz section: 144
+   quiz section: 145
+   quiz section: 145
+   quiz section: 145
+   quiz section: 145
+   quiz section: 145
+   quiz section: 146
+   quiz section: 146
+   quiz section: 146
+   quiz section: 146
+   quiz section: 146
+   quiz section: 147
+   quiz section: 147
+   quiz section: 147
+   quiz section: 147
+   quiz section: 147
+   data-section: 141
+   data-section: 142
+   data-section: 143
+   data-section: 144
+   data-section: 145
+   data-section: 146
+   data-section: 147
+==========================================================================================
+src/pages/MultipleIntegralsGuide.jsx
+   heading: Double Integrals over Rectangles
+   heading: Fubini's Theorem
+   heading: Changing the Order of Integration
+   heading: Triple Integrals
+   heading: Double Integrals in Polar Coordinates
+   heading: Cylindrical Coordinates
+   heading: Spherical Coordinates
+   heading: Order Changes and Jacobians
+   heading: Part 1 Quiz
+   heading: Part 2 Quiz
+   heading: Where This Shows Up in Real Life
+   --- quiz keys ---
+   quiz section: integrals-p1
+   quiz section: integrals-p1
+   quiz section: integrals-p1
+   quiz section: integrals-p1
+   quiz section: integrals-p1
+   quiz section: integrals-p2
+   quiz section: integrals-p2
+   quiz section: integrals-p2
+   quiz section: integrals-p2
+   quiz section: integrals-p2
+   quiz section: integrals-p2
+   data-section: integrals-p1
+   data-section: integrals-p2
+==========================================================================================
+src/pages/StokesTheoremGuide.jsx
+   heading: Why Stokes&apos; Theorem Matters
+   heading: Circulation Intuition
+   heading: Oriented Surfaces and Boundary Curves
+   heading: The Stokes Statement
+   heading: Stokes Foundations
+   heading: Choosing a Convenient Surface
+   heading: Right-Hand Orientation Checks
+   heading: Operational Workflow
+   heading: Stokes Applications
+   heading: Where This Shows Up in Real Life
+   heading: Part 1 Complete
+   --- quiz keys ---
+   quiz section: stokes-f
+   quiz section: stokes-f
+   quiz section: stokes-f
+   quiz section: stokes-f
+   quiz section: stokes-f
+   quiz section: stokes-a
+   quiz section: stokes-a
+   quiz section: stokes-a
+   quiz section: stokes-a
+   quiz section: stokes-a
+   data-section: stokes-f
+   data-section: stokes-a
+==========================================================================================
+src/pages/LagrangeMultipliersGuide.jsx
+   heading: The Geometric Core Intuition
+   heading: Geometric Intuition Assessments
+   heading: Mathematical Derivation of Gradient Alignment
+   heading: Mathematical Structure Verifications
+   heading: Deconstructing Objective vs Constraint Fields
+   heading: Field Deconstruction Drills
+   heading: Single Constraint Computational Workflows
+   heading: Workflow Calculation Drills
+   heading: Multi-Constraint Optimization Spaces
+   heading: Multi-Constraint System Drills
+   heading: Extreme Value Verification Tests
+   heading: Verification Theory Assessments
+   heading: Industrial Physics & Economic Dynamics
+   heading: Industrial Physics Applications
+   heading: Sensitivity of $\\lambda$ and Second Checks
+   heading: Medium & Hard Practice
+   heading: Where This Shows Up in Real Life
+   heading: Part 1 Foundations Complete
+   --- quiz keys ---
+   quiz section: lagrange-geometry
+   quiz section: lagrange-geometry
+   quiz section: lagrange-geometry
+   quiz section: lagrange-geometry
+   quiz section: lagrange-geometry
+   quiz section: lagrange-math
+   quiz section: lagrange-math
+   quiz section: lagrange-math
+   quiz section: lagrange-math
+   quiz section: lagrange-math
+   quiz section: lagrange-fields
+   quiz section: lagrange-fields
+   quiz section: lagrange-fields
+   quiz section: lagrange-fields
+   quiz section: lagrange-fields
+   quiz section: lagrange-calc
+   quiz section: lagrange-calc
+   quiz section: lagrange-calc
+   quiz section: lagrange-calc
+   quiz section: lagrange-calc
+   quiz section: lagrange-multi
+   quiz section: lagrange-multi
+   quiz section: lagrange-multi
+   quiz section: lagrange-multi
+   quiz section: lagrange-multi
+   quiz section: lagrange-verify
+   quiz section: lagrange-verify
+   quiz section: lagrange-verify
+   quiz section: lagrange-verify
+   quiz section: lagrange-verify
+   quiz section: lagrange-industry
+   quiz section: lagrange-industry
+   quiz section: lagrange-industry
+   quiz section: lagrange-industry
+   quiz section: lagrange-industry
+   quiz section: lagrange-challenge
+   quiz section: lagrange-challenge
+   quiz section: lagrange-challenge
+   quiz section: lagrange-challenge
+   quiz section: lagrange-challenge
+   data-section: lagrange-geometry
+   data-section: lagrange-math
+   data-section: lagrange-fields
+   data-section: lagrange-calc
+   data-section: lagrange-multi
+   data-section: lagrange-verify
+   data-section: lagrange-industry
+   data-section: lagrange-challenge
+==========================================================================================
+src/pages/DivergenceAndCurlGuide.jsx
+   heading: Conceptual Vector Fields Space
+   heading: Vector Field Assessments
+   heading: The Divergence Operator
+   heading: Divergence Structure Verifications
+   heading: The Curl Operator
+   heading: Curl Reduction Drills
+   heading: Physical Vector Flow Mechanics Mapping
+   heading: Physical Catalog Assessments
+   heading: Core Differential Operator Vector Identities
+   heading: Surface Integrals
+   heading: Vector Identity Verifications
+   heading: The Divergence Theorem Spatial Boundary
+   heading: Divergence Theorem Assessments
+   heading: Stokes Conservation Framework
+   heading: Stokes Workflow Drills
+   heading: Medium & Hard Practice
+   heading: Where This Shows Up in Real Life
+   heading: Part 1 Foundations Complete
+   --- quiz keys ---
+   quiz section: field-concept
+   quiz section: field-concept
+   quiz section: field-concept
+   quiz section: field-concept
+   quiz section: field-concept
+   quiz section: div-formula
+   quiz section: div-formula
+   quiz section: div-formula
+   quiz section: div-formula
+   quiz section: div-formula
+   quiz section: curl-core
+   quiz section: curl-core
+   quiz section: curl-core
+   quiz section: curl-core
+   quiz section: curl-core
+   quiz section: vector-catalog
+   quiz section: vector-catalog
+   quiz section: vector-catalog
+   quiz section: vector-catalog
+   quiz section: vector-catalog
+   quiz section: vector-identity
+   quiz section: vector-identity
+   quiz section: vector-identity
+   quiz section: vector-identity
+   quiz section: vector-identity
+   quiz section: div-theorem
+   quiz section: div-theorem
+   quiz section: div-theorem
+   quiz section: div-theorem
+   quiz section: div-theorem
+   quiz section: stokes-theorem
+   quiz section: stokes-theorem
+   quiz section: stokes-theorem
+   quiz section: stokes-theorem
+   quiz section: stokes-theorem
+   quiz section: divcurl-challenge
+   quiz section: divcurl-challenge
+   quiz section: divcurl-challenge
+   quiz section: divcurl-challenge
+   quiz section: divcurl-challenge
+   data-section: field-concept
+   data-section: div-formula
+   data-section: curl-core
+   data-section: vector-catalog
+   data-section: vector-identity
+   data-section: div-theorem
+   data-section: stokes-theorem
+   data-section: divcurl-challenge
+==========================================================================================
+src/pages/TaylorSeriesGuide.jsx
+   heading: Conceptual Polynomial Approximation Space
+   heading: Approximation Space Assessments
+   heading: The General Taylor Series Formula
+   heading: Formula Structure Verifications
+   heading: Maclaurin Special Case Reductions
+   heading: Maclaurin Reduction Drills
+   heading: Common Transcendental Maclaurin Expansions
+   heading: Catalog Manipulation Drills
+   heading: Radius & Intervals of Convergence Boundaries
+   heading: Convergence Limit Verifications
+   heading: Taylor's Inequality & Remainder Error Bounds
+   heading: Error Bounder Assessments
+   heading: Applied Computational Engineering Workflows
+   heading: Engineering Workflow Drills
+   heading: Remainder Estimates and Catalog Moves
+   heading: Medium & Hard Practice
+   heading: Part 1 Foundations Complete
+   --- quiz keys ---
+   quiz section: taylor-concept
+   quiz section: taylor-concept
+   quiz section: taylor-concept
+   quiz section: taylor-concept
+   quiz section: taylor-concept
+   quiz section: taylor-formula
+   quiz section: taylor-formula
+   quiz section: taylor-formula
+   quiz section: taylor-formula
+   quiz section: taylor-formula
+   quiz section: maclaurin-core
+   quiz section: maclaurin-core
+   quiz section: maclaurin-core
+   quiz section: maclaurin-core
+   quiz section: maclaurin-core
+   quiz section: taylor-catalog
+   quiz section: taylor-catalog
+   quiz section: taylor-catalog
+   quiz section: taylor-catalog
+   quiz section: taylor-catalog
+   quiz section: taylor-convergence
+   quiz section: taylor-convergence
+   quiz section: taylor-convergence
+   quiz section: taylor-convergence
+   quiz section: taylor-convergence
+   quiz section: taylor-error
+   quiz section: taylor-error
+   quiz section: taylor-error
+   quiz section: taylor-error
+   quiz section: taylor-error
+   quiz section: taylor-engineering
+   quiz section: taylor-engineering
+   quiz section: taylor-engineering
+   quiz section: taylor-engineering
+   quiz section: taylor-engineering
+   quiz section: taylor-challenge
+   quiz section: taylor-challenge
+   quiz section: taylor-challenge
+   quiz section: taylor-challenge
+   quiz section: taylor-challenge
+   data-section: taylor-concept
+   data-section: taylor-formula
+   data-section: maclaurin-core
+   data-section: taylor-catalog
+   data-section: taylor-convergence
+   data-section: taylor-error
+   data-section: taylor-engineering
+   data-section: taylor-challenge
+==========================================================================================
+src/pages/linearAlgebra/VectorsGuide.jsx
+   heading: Span and basis — deep theory
+   heading: How to work with span and bases
+   heading: Six detailed worked examples
+   heading: Linear independence — deep theory
+   heading: Part 2 complete
+   heading: Vectors in Rⁿ — deep theory
+   heading: How to compute with vectors
+   heading: Six detailed worked examples
+   heading: Dot product — more detail
+   heading: Continue
+   --- quiz keys ---
+   quiz section: la-v-span
+   quiz section: la-v-indep
+   quiz section: la-v-intro
+   quiz section: la-v-ops
+   quiz title: Span & Basis
+   quiz title: Independence
+   quiz title: Vector basics
+   quiz title: Operations
+==========================================================================================
+src/pages/linearAlgebra/MatricesGuide.jsx
+   heading: Determinants — deep theory
+   heading: How to compute determinants and decide invertibility
+   heading: Six detailed worked examples
+   heading: Inverses — deep theory
+   heading: Part 2 complete
+   heading: What is a matrix? — deep theory
+   heading: How to work with matrices as maps
+   heading: Six detailed worked examples
+   heading: Matrix operations — deep theory
+   heading: Continue
+   --- quiz keys ---
+   quiz section: la-m-det
+   quiz section: la-m-inv
+   quiz section: la-m-intro
+   quiz section: la-m-ops
+   quiz title: Determinants
+   quiz title: Inverses
+   quiz title: Matrix basics
+   quiz title: Operations
+==========================================================================================
+src/pages/linearAlgebra/SystemsGuide.jsx
+   heading: Rank and consistency — deep theory
+   heading: How to read rank, free variables, and nullspace
+   heading: Six detailed worked examples
+   heading: Geometry of solutions — deep theory
+   heading: Part 2 complete
+   heading: Linear systems — deep theory
+   heading: How to solve Ax=b by elimination
+   heading: Six detailed worked examples
+   heading: Gaussian elimination — deep theory
+   heading: Continue
+   --- quiz keys ---
+   quiz section: la-s-rank
+   quiz section: la-s-geo
+   quiz section: la-s-intro
+   quiz section: la-s-gauss
+   quiz title: Rank
+   quiz title: Geometry
+   quiz title: Systems basics
+   quiz title: Row reduction
+==========================================================================================
+src/pages/linearAlgebra/EigenGuide.jsx
+   heading: Diagonalization — deep theory
+   heading: How to diagonalize a matrix
+   heading: Six detailed worked examples
+   heading: Why eigenvalues matter — deep theory
+   heading: Module complete
+   heading: Definition — deep theory
+   heading: How to find eigenvalues and eigenvectors
+   heading: Six detailed worked examples
+   heading: Characteristic polynomial — deep theory
+   heading: Continue
+   --- quiz keys ---
+   quiz section: la-e-diag
+   quiz section: la-e-apps
+   quiz section: la-e-intro
+   quiz section: la-e-char
+   quiz title: Diagonalization
+   quiz title: Applications
+   quiz title: Eigen basics
+   quiz title: Characteristic polynomial
+==========================================================================================
+src/pages/probabilityStatistics/ProbabilityBasicsGuide.jsx
+   heading: Conditional probability — deep theory
+   heading: How to compute conditionals
+   heading: Four detailed examples
+   heading: Bayes’ theorem
+   heading: Part 2 complete
+   heading: Sample spaces and axioms
+   heading: How to set up a probability model
+   heading: Four detailed examples
+   heading: Equally likely outcomes &amp; counting
+   heading: Part 1 complete
+   --- quiz keys ---
+   quiz section: ps-b-cond
+   quiz section: ps-b-bayes
+   quiz section: ps-b-intro
+   quiz section: ps-b-combo
+   quiz title: Conditionals
+   quiz title: Bayes
+   quiz title: Axioms
+   quiz title: Counting
+==========================================================================================
+src/pages/probabilityStatistics/RandomVariablesGuide.jsx
+   heading: Continuous random variables
+   heading: Named distributions
+   heading: Two detailed examples
+   heading: Part 2 complete
+   heading: Discrete random variables
+   heading: Expectation and variance
+   heading: Part 1 complete
+   --- quiz keys ---
+   quiz section: ps-rv-cont
+   quiz section: ps-rv-named
+   quiz section: ps-rv-intro
+   quiz section: ps-rv-moments
+   quiz title: Continuous
+   quiz title: Families
+   quiz title: Discrete RVs
+   quiz title: Moments
+==========================================================================================
+src/pages/probabilityStatistics/DescriptiveStatsGuide.jsx
+   heading: Variance, SD, and z-scores
+   heading: Visual summaries
+   heading: Part 2 complete
+   heading: Measures of center
+   heading: Percentiles and quartiles
+   heading: Part 1 complete
+   --- quiz keys ---
+   quiz section: ps-d-spread
+   quiz section: ps-d-plots
+   quiz section: ps-d-center
+   quiz section: ps-d-quant
+   quiz title: Spread
+   quiz title: Plots
+   quiz title: Center
+   quiz title: Quantiles
+==========================================================================================
+src/pages/probabilityStatistics/HypothesisTestingGuide.jsx
+   heading: p-values
+   heading: Errors and power
+   heading: Part 2 complete
+   heading: Hypotheses and significance
+   heading: Common one-sample tests
+   heading: Part 1 complete
+   --- quiz keys ---
+   quiz section: ps-h-pval
+   quiz section: ps-h-errors
+   quiz section: ps-h-framework
+   quiz section: ps-h-tests
+   quiz title: p-values
+   quiz title: Errors
+   quiz title: Framework
+   quiz title: Tests
+==========================================================================================
+src/pages/probabilityStatistics/RegressionGuide.jsx
+   heading: Least-squares line
+   heading: Residual diagnostics
+   heading: Course module complete
+   heading: Correlation coefficient
+   heading: Association vocabulary
+   heading: Part 1 complete
+   --- quiz keys ---
+   quiz section: ps-r-fit
+   quiz section: ps-r-resid
+   quiz section: ps-r-corr
+   quiz section: ps-r-assoc
+   quiz title: Least squares
+   quiz title: Residuals
+   quiz title: Correlation
+   quiz title: Association

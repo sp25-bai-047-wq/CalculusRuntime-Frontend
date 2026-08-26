@@ -1,0 +1,74 @@
+DESC: Taylor series quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\mvTaylorQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (the Taylor Series guide)
+Each export holds **exactly 15 questions with exactly 3 options each**. The eight banks sit in eight different sections of the same guide, so keep each bank focused on its own slice and do not repeat ideas between banks.
+- `TAYLOR_CONCEPT_QUIZ` — the idea of polynomial approximation: matching value and derivatives at a center, first- and second-degree Taylor polynomials, why approximation degrades away from the center, comparing linearization to a quadratic approximation, reading a graph of $f$ against $T_n$.
+- `TAYLOR_FORMULA_QUIZ` — the general Taylor formula $\sum f^{(n)}(a)(x-a)^n/n!$: identifying the center, computing individual coefficients $c_n=f^{(n)}(a)/n!$ for concrete functions, building $T_2$ or $T_3$ about a nonzero center such as $a=1$ or $a=\pi/2$, recovering $f^{(n)}(a)$ from a given coefficient.
+- `MACLAURIN_CORE_QUIZ` — Maclaurin series (the $a=0$ case): deriving Maclaurin coefficients from derivatives at 0, the first few terms of $e^x$, $\sin x$, $\cos x$, $\ln(1+x)$, $1/(1-x)$, even/odd symmetry of the series, and the general term.
+- `TAYLOR_CATALOG_QUIZ` — manipulating known expansions: substitution ($e^{-x^2}$, $\sin(2x)$, $\cos(x^2)$), multiplying by a power of $x$, term-by-term differentiation and integration, combining two series, extracting a specific coefficient from a product.
+- `TAYLOR_CONVERGENCE_QUIZ` — radius and interval of convergence: applying the ratio test to a power series, the radius $R$ for concrete series, testing endpoints, intervals for $\ln(1+x)$ and the geometric series, series with $R=0$ or $R=\infty$, effect of a shifted center on the interval.
+- `TAYLOR_ERROR_QUIZ` — Taylor's inequality and remainder bounds: $|R_n(x)|\le M|x-a|^{n+1}/(n+1)!$, choosing $M$, bounding the error of a concrete approximation numerically, the alternating series error bound, choosing $n$ so the error is below a tolerance, Lagrange form of the remainder.
+- `TAYLOR_ENGINEERING_QUIZ` — applied computational workflows: small-angle approximations, evaluating hard limits with series, approximating a definite integral such as $\int_0^1 e^{-x^2}dx$ with a few terms, relativistic/pendulum style linearizations described in words, and numerical evaluation of transcendental values.
+- `TAYLOR_CHALLENGE_QUIZ` — harder mixed practice: composing two series, dividing series or finding the first terms of a quotient, using series to evaluate an indeterminate limit to a specified order, binomial series with fractional exponent, Euler's formula, and multi-step coefficient extraction.
+
+IMPORTANT: another writer is covering single-variable sequences-and-series (convergence tests, geometric and p-series) in a different subject. Stay on Taylor/Maclaurin material and always put the concrete function, center or series into the prompt so no prompt could collide.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Taylor Series guide — 15 MCQs per section. */
+
+export const TAYLOR_CONCEPT_QUIZ = [
+  {
+    prompt: "What is the first-degree Taylor polynomial of $f(x)=e^x$ centered at $a=0$?",
+    options: ["$1+x$", "$x$", "$1+x+\\dfrac{x^2}{2}$"],
+    answer: "A",
+    explanation: "Since $f(0)=1$ and $f'(0)=1$, the linearization is $T_1(x)=1+x$.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (compute a coefficient, build a polynomial, apply the ratio test, bound an error). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to", "Which statement is always safe exam advice?", or anything resembling "Checkpoint 4: which statement fits this section?".
+6. Prompts must be unique across the whole app, so make them concrete: put the actual function, center or series into the prompt. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. forgetting the $n!$, wrong sign pattern, off-by-one in the general term), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars: `"$\\sum_{n=0}^{\\infty} \\dfrac{x^n}{n!}$"`. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \sum \int \lim \infty \pi \theta \le \ge \ne \approx \to \cdot \times \pm \left \right \binom \ln \log \sin \cos \tan \exp \text{...} \operatorname{...}`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a cost of 250 dollars"`, never `"$\\$250$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/mvTaylorQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/mvTaylorQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

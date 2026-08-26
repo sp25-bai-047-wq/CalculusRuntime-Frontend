@@ -1,53 +1,53 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import { ProgressProvider } from "./pages/ProgressContext";
-import Layout from "./components/Layout";
+import { ProgressProvider } from "./pages/courses/ProgressContext";
+import Layout from "./components/common/Layout";
 import ScrollToTop from "./utils/ScrollToTop";
-import ErrorBoundary from "./components/ErrorBoundary";
-import SiteThemeManager from "./components/SiteThemeManager";
+import ErrorBoundary from "./components/common/ErrorBoundary";
+import SiteThemeManager from "./components/common/SiteThemeManager";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-import AISolver from "./pages/AISolver";
-import NotFound from "./pages/NotFound";
-import CourseHub from "./pages/CourseHub";
-import SimpleConcepts from "./pages/SimpleConcepts";
-import ConceptExplore from "./pages/ConceptExplore";
+import Home from "./pages/home/Home";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
+import Dashboard from "./pages/dashboard/Dashboard";
+import AISolver from "./pages/tools/AISolver";
+import NotFound from "./pages/system/NotFound";
+import CourseHub from "./pages/courses/CourseHub";
+import SimpleConcepts from "./pages/courses/SimpleConcepts";
+import ConceptExplore from "./pages/courses/ConceptExplore";
 
-import IntegralsPart1 from "./pages/IntegralsPart1";
-import IntegralsPart2 from "./pages/IntegralsPart2";
-import PartialPart1 from "./pages/PartialPart1";
-import PartialPart2 from "./pages/PartialPart2";
-import VectorPart1 from "./pages/VectorPart1";
-import VectorPart2 from "./pages/VectorPart2";
-import LimitsPart1 from "./pages/LimitsPart1";
-import LimitsPart2 from "./pages/LimitsPart2";
-import TaylorPart1 from "./pages/TaylorPart1";
-import TaylorPart2 from "./pages/TaylorPart2";
-import LagrangePart1 from "./pages/LagrangePart1";
-import LagrangePart2 from "./pages/LagrangePart2";
-import StokesPart1 from "./pages/StokesPart1";
-import StokesPart2 from "./pages/StokesPart2";
-import DivergencePart1 from "./pages/DivergencePart1";
-import DivergencePart2 from "./pages/DivergencePart2";
-import PractiseSection from "./pages/PractiseSection";
-import PersonalizedStudyPlan from "./pages/PersonalizedStudyPlan";
-import ContinuityFinder from "./pages/ContinuityFinder";
-import ExtremeValueFunction from "./pages/ExtremeValueFinder";
-import VolumeCalculator from "./pages/VolumeCalculator";
-import DerivativeTool from "./components/DerivativeTool";
-import VectorFieldVisualizer from "./pages/VectorFieldVisualizer";
-import CheatSheet from "./pages/CheatSheet";
-import Leaderboard from "./pages/Leaderboard";
+import IntegralsPart1 from "./pages/multivariableCalculus/IntegralsPart1";
+import IntegralsPart2 from "./pages/multivariableCalculus/IntegralsPart2";
+import PartialPart1 from "./pages/multivariableCalculus/PartialPart1";
+import PartialPart2 from "./pages/multivariableCalculus/PartialPart2";
+import VectorPart1 from "./pages/multivariableCalculus/VectorPart1";
+import VectorPart2 from "./pages/multivariableCalculus/VectorPart2";
+import LimitsPart1 from "./pages/multivariableCalculus/LimitsPart1";
+import LimitsPart2 from "./pages/multivariableCalculus/LimitsPart2";
+import TaylorPart1 from "./pages/multivariableCalculus/TaylorPart1";
+import TaylorPart2 from "./pages/multivariableCalculus/TaylorPart2";
+import LagrangePart1 from "./pages/multivariableCalculus/LagrangePart1";
+import LagrangePart2 from "./pages/multivariableCalculus/LagrangePart2";
+import StokesPart1 from "./pages/multivariableCalculus/StokesPart1";
+import StokesPart2 from "./pages/multivariableCalculus/StokesPart2";
+import DivergencePart1 from "./pages/multivariableCalculus/DivergencePart1";
+import DivergencePart2 from "./pages/multivariableCalculus/DivergencePart2";
+import PractiseSection from "./pages/courses/PractiseSection";
+import PersonalizedStudyPlan from "./pages/courses/PersonalizedStudyPlan";
+import ContinuityFinder from "./pages/tools/ContinuityFinder";
+import ExtremeValueFunction from "./pages/tools/ExtremeValueFinder";
+import VolumeCalculator from "./pages/tools/VolumeCalculator";
+import DerivativeTool from "./components/tools/DerivativeTool";
+import VectorFieldVisualizer from "./pages/tools/VectorFieldVisualizer";
+import CheatSheet from "./pages/courses/CheatSheet";
+import Leaderboard from "./pages/dashboard/Leaderboard";
 import Certificate from "./pages/calculus/Certificate";
-import CourseQuiz from "./pages/CourseQuiz";
-import MyCertificates from "./pages/MyCertificates";
-import VerifyCertificate from "./pages/VerifyCertificate";
-import SavedForLater from "./pages/SavedForLater";
+import CourseQuiz from "./pages/courses/CourseQuiz";
+import MyCertificates from "./pages/certificates/MyCertificates";
+import VerifyCertificate from "./pages/certificates/VerifyCertificate";
+import SavedForLater from "./pages/dashboard/SavedForLater";
 import Chatbot from "./components/Chatbot/Chatbot";
-import BackToTop from "./components/BackToTop";
+import BackToTop from "./components/common/BackToTop";
 
 import {
   LinearEquationsPart1,
@@ -209,12 +209,12 @@ function App() {
               <Route path="/linear-algebra/transformations" element={<Navigate to="/linear-algebra/transformations/1" replace />} />
               <Route path="/linear-algebra/transformations/1" element={<Layout body={<TransformPart1 />} />} />
               <Route path="/linear-algebra/transformations/2" element={<Layout body={<TransformPart2 />} />} />
-              
+
               {/* Orthogonality & Least Squares */}
               <Route path="/linear-algebra/orthogonality" element={<Navigate to="/linear-algebra/orthogonality/1" replace />} />
               <Route path="/linear-algebra/orthogonality/1" element={<Layout body={<OrthoPart1 />} />} />
               <Route path="/linear-algebra/orthogonality/2" element={<Layout body={<OrthoPart2 />} />} />
-              
+
               {/* Singular Value Decomposition */}
               <Route path="/linear-algebra/svd" element={<Navigate to="/linear-algebra/svd/1" replace />} />
               <Route path="/linear-algebra/svd/1" element={<Layout body={<SvdPart1 />} />} />

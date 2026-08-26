@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import StudyGuideShell from "../StudyGuideShell";
-import "../PartialDerivativesGuide.css";
+import StudyGuideShell from "../courses/StudyGuideShell";
+import "../multivariableCalculus/PartialDerivativesGuide.css";
 import { LaMcqSection } from "./LaMcq";
 import { TheoryBox, TheoremBox, ProcedureBox, WorkedExample, PracticalTheory, RealLifeUse } from "./LaBlocks";
 

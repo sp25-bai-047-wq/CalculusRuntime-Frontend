@@ -1,5 +1,5 @@
-import StudyGuideShell from "../StudyGuideShell";
-import "../PartialDerivativesGuide.css";
+import StudyGuideShell from "../courses/StudyGuideShell";
+import "../multivariableCalculus/PartialDerivativesGuide.css";
 import { LaMcqSection } from "../linearAlgebra/LaMcq";
 import {
   PS_H_FRAMEWORK_QUIZ,

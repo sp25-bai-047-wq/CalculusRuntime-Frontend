@@ -1,0 +1,77 @@
+DESC: Statistics quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\psStatsQuizzes.js`
+
+This is the largest of the workstreams: **12 exported arrays of 15 questions each = 180 questions.** Budget your effort and work through them methodically, one export at a time.
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Probability & Statistics)
+- `PS_D_CENTER_QUIZ` — Measures of center: computing mean, median and mode from small concrete data sets, effect of an outlier, effect of adding a constant or multiplying by a constant, weighted means, combining two group means, when the median beats the mean, skew and the relative position of mean vs median.
+- `PS_D_QUANT_QUIZ` — Percentiles and quartiles: finding $Q_1$, $Q_2$, $Q_3$ from concrete ordered data, the interquartile range, the five-number summary, percentile rank, the 1.5*IQR outlier rule applied numerically, deciles, reading a quantile off a small data set.
+- `PS_D_SPREAD_QUIZ` — Variance, standard deviation and z-scores: sample vs population variance and the $n-1$ divisor, computing variance and standard deviation of a small data set, range, coefficient of variation, z-score computations and interpretation, effect of linear transformations on the standard deviation, the empirical 68-95-99.7 rule.
+- `PS_D_PLOTS_QUIZ` — Visual summaries: reading a histogram's shape and skew, box plots and what the whiskers show, stem-and-leaf plots, scatterplots, identifying the distribution shape from a described plot, choosing the right plot for a data type, spotting outliers on a box plot, bimodality.
+- `PS_H_FRAMEWORK_QUIZ` — Hypotheses and significance: writing $H_0$ and $H_a$ for a described situation, one-tailed vs two-tailed, the significance level $\alpha$, the meaning of "reject $H_0$", test statistic construction, why $H_0$ is never "accepted", choosing $\alpha$ before seeing the data.
+- `PS_H_TESTS_QUIZ` — Common one-sample tests: the z-test statistic $(\bar x-\mu_0)/(\sigma/\sqrt n)$ computed with numbers, the t-test and degrees of freedom $n-1$, when to use t instead of z, one-proportion z-tests, critical values for common $\alpha$, computing a test statistic from summary statistics, confidence-interval / test duality.
+- `PS_H_PVAL_QUIZ` — p-values: the correct definition, computing or bounding a p-value from a z statistic, one-tailed vs two-tailed p-values (doubling), comparing p to $\alpha$, what a p-value is NOT (not the probability $H_0$ is true), effect of sample size on the p-value, borderline results.
+- `PS_H_ERRORS_QUIZ` — Errors and power: Type I and Type II errors identified in described scenarios, $\alpha$ as the Type I rate and $\beta$ as the Type II rate, power $=1-\beta$, how sample size / effect size / $\alpha$ change power, the trade-off between the two error types, numeric power reasoning.
+- `PS_R_CORR_QUIZ` — Correlation coefficient: the range of $r$, computing or interpreting $r$ for described scatterplots, $r$ being unitless and unchanged by linear rescaling, $r^2$ as the fraction of variance explained, $r$ near zero with a strong nonlinear relationship, sensitivity to outliers, the sign of $r$ matching the slope sign.
+- `PS_R_ASSOC_QUIZ` — Association vocabulary: correlation versus causation, lurking and confounding variables, observational study versus randomized experiment, Simpson's paradox, extrapolation beyond the data range, ecological correlation, direction/form/strength language for describing a scatterplot.
+- `PS_R_FIT_QUIZ` — The least-squares line: computing the slope $b=r\,s_y/s_x$ and intercept $a=\bar y-b\bar x$ from summary statistics, predicting $\hat y$ at a given $x$, the line always passing through $(\bar x,\bar y)$, interpreting the slope in context, minimizing the sum of squared residuals, effect of an influential point.
+- `PS_R_RESID_QUIZ` — Residual diagnostics: computing a residual $y-\hat y$ numerically, residuals summing to zero for a least-squares fit, reading a residual plot for curvature or non-constant variance, high-leverage and influential points, the standard error of the estimate, when a linear model is inappropriate.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Descriptive Statistics, Hypothesis Testing and Regression guides — 15 MCQs per section. */
+
+export const PS_D_CENTER_QUIZ = [
+  {
+    prompt: "Find the median of the data set $2, 5, 7, 8, 20$.",
+    options: ["$7$", "$8.4$", "$5$"],
+    answer: "A",
+    explanation: "With five ordered values the median is the third one, which is 7.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (compute a mean, an IQR, a z-score, a test statistic, a slope, a residual). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to" or "Which statement is always safe exam advice?" (the current guides are full of those — none may survive).
+6. Prompts must be unique across the whole app, so make them concrete: put the actual data set, summary statistics or scenario into the prompt. Never reuse the same data set twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. dividing by $n$ instead of $n-1$, forgetting to double a two-tailed p-value, reading the p-value as $P(H_0\text{ true})$), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\bar{x}=\\dfrac{\\sum x_i}{n}$"`.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \sum \int \infty \pi \mu \sigma \alpha \beta \lambda \bar{x} \hat{y} \hat{p} \le \ge \ne \approx \to \cdot \times \pm \left \right \text{...} \operatorname{...} \mid`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a mean salary of 52000 dollars"`, never `"$\\$52000$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/psStatsQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/psStatsQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 25 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.

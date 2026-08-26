@@ -1,0 +1,7 @@
+files checked:      10
+banks:              82
+questions:          1230
+math segments:      5907
+answer letters:     A=410 (33.3%)  B=410 (33.3%)  C=410 (33.3%)
+warnings:           0
+failures:           0

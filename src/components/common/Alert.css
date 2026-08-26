@@ -1,0 +1,86 @@
+.alert-scalable {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  backdrop-filter: blur(8px);
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.alert-icon-container {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.alert-content-container {
+  flex: 1 1 auto;
+}
+
+.alert-title {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  font-size: 0.9375rem;
+}
+
+.alert-message {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.alert-dismiss-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+  padding: 0.2rem;
+  margin-top: -0.2rem;
+}
+
+.alert-dismiss-btn:hover {
+  opacity: 1;
+}
+
+/* Variants */
+.alert-info {
+  background: rgba(14, 165, 233, 0.12);
+  border-color: rgba(14, 165, 233, 0.3);
+  color: #bae6fd;
+}
+.alert-info .alert-title {
+  color: #38bdf8;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #a7f3d0;
+}
+.alert-success .alert-title {
+  color: #34d399;
+}
+
+.alert-warning {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fde68a;
+}
+.alert-warning .alert-title {
+  color: #fbbf24;
+}
+
+.alert-danger {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fecaca;
+}
+.alert-danger .alert-title {
+  color: #f87171;
+}

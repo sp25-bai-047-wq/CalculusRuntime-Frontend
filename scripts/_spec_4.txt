@@ -1,0 +1,72 @@
+DESC: Lagrange multipliers quizzes
+
+You are authoring multiple-choice quiz banks for the CalcVoyager React study app.
+
+Repository: `d:\OneDrive\Desktop\calculus runtime\frontend` (Windows, PowerShell — chain commands with `;` never `&&`).
+
+## Your job
+CREATE exactly one new file: `d:\OneDrive\Desktop\calculus runtime\frontend\src\data\mvLagrangeQuizzes.js`
+
+Do not modify, create, or delete any other file (a checker script `_quiz_check.mjs` already exists in the frontend folder — use it, don't edit it).
+
+## Exports and their topics (subject: Multivariable Calculus — the Lagrange Multipliers guide)
+Each export holds **exactly 15 questions with exactly 3 options each**. The eight banks sit in eight different sections of the same guide, so keep each bank clearly focused on its own slice and do not repeat ideas between banks.
+- `LAGRANGE_GEOMETRY_QUIZ` — the geometric core: level curves of the objective tangent to the constraint curve at an optimum, gradients parallel at tangency, why $\nabla f=\lambda\nabla g$ geometrically, what happens when gradients are not parallel, reading a contour picture.
+- `LAGRANGE_MATH_QUIZ` — the mathematical derivation and structure: the Lagrangian $\mathcal L=f-\lambda g$, the full system $\nabla f=\lambda\nabla g$ together with $g=k$, counting equations vs unknowns, the regularity condition $\nabla g\ne\mathbf 0$, the sign/meaning of $\lambda$.
+- `LAGRANGE_FIELDS_QUIZ` — separating objective from constraint: given a word problem, identify which function is $f$ and which is $g=k$; write the constraint in the form $g(x,y)=k$; compute $\nabla f$ and $\nabla g$ for concrete functions; spot a mis-stated constraint.
+- `LAGRANGE_CALC_QUIZ` — single-constraint computational workflow: fully solve concrete problems, e.g. extremize $f(x,y)=xy$ on $x^2+y^2=8$, $f=x+2y$ on $x^2+y^2=5$, minimize distance to a line/plane, maximize a box volume with fixed surface area. Ask for the optimal value, the optimal point, or the value of $\lambda$.
+- `LAGRANGE_MULTI_QUIZ` — multiple constraints: $\nabla f=\lambda\nabla g+\mu\nabla h$, optimizing on the intersection curve of two surfaces, how many equations the system has, concrete two-constraint problems such as extremizing a linear function on the intersection of a plane and a sphere or a plane and a cylinder.
+- `LAGRANGE_VERIFY_QUIZ` — verifying and classifying results: comparing candidate values to decide max vs min, why the second-derivative test does not directly apply, checking that the constraint is satisfied, the role of compactness (Extreme Value Theorem) in guaranteeing extrema exist, handling unbounded constraint sets, endpoint/boundary candidates.
+- `LAGRANGE_INDUSTRY_QUIZ` — applications in physics and economics: utility maximization subject to a budget constraint, Cobb-Douglas production with a cost constraint, minimizing surface area (material) for a fixed volume, least-cost input mixes, entropy maximization, shadow-price problems phrased in plain words (write money amounts as "40 dollars", never with a dollar sign).
+- `LAGRANGE_CHALLENGE_QUIZ` — harder mixed practice: sensitivity interpretation $\lambda = df^*/dk$, inequality constraints becoming active, degenerate cases where $\nabla g=\mathbf 0$, three-variable problems, problems with symmetry that collapse the algebra, and problems mixing Lagrange with the tangent-plane picture.
+
+## FILE FORMAT
+Only a leading block comment plus the exported arrays:
+
+```js
+/** Study-guide quiz banks for the Lagrange Multipliers guide — 15 MCQs per section. */
+
+export const LAGRANGE_GEOMETRY_QUIZ = [
+  {
+    prompt: "At a constrained optimum of $f$ on the curve $g(x,y)=k$, the level curve of $f$ and the constraint curve are:",
+    options: ["Tangent to each other", "Perpendicular to each other", "Always parallel straight lines"],
+    answer: "A",
+    explanation: "If they crossed transversally you could slide along the constraint and change $f$, so at an optimum they must touch tangentially.",
+  },
+  // ... exactly 15 objects
+];
+```
+
+## HARD RULES
+1. Exactly 15 question objects per exported array. Exactly 3 options per question.
+2. `answer` is `"A"`, `"B"` or `"C"` pointing at `options[0]`, `options[1]`, `options[2]`. **Every answer must be genuinely correct — recompute each one before writing it.** A wrong key is the worst possible failure here.
+3. At least 10 of the 15 in each bank must require actually working something out (solve the Lagrange system, compute gradients, evaluate candidates, find $\lambda$). At most 5 may be definition recall. Order roughly easy to hard.
+4. `explanation` is one or two sentences with the real reasoning or arithmetic. **Never mention option letters** anywhere (no "option A", no "(B)") — a later automated pass reshuffles options.
+5. Banned content: "All of the above", "None of the above", options referencing each other, and vague filler such as "A quick consistency check is to", "Which statement is always safe exam advice?", or anything resembling "Checkpoint 4: which statement fits this section?".
+6. Prompts must be unique across the whole app, so make them concrete: put the actual objective, constraint and numbers into the prompt. Never reuse the same setup twice in your file.
+7. Distractors must be plausible (typical student mistakes — e.g. forgetting the constraint equation, dropping a sign, reporting the point instead of the value), not silly.
+8. MATH FORMATTING (critical):
+   - Inline LaTeX only, single dollars: `"$\\nabla f=\\lambda\\nabla g$"`. Never `$$...$$`, never `\\[ \\]`.
+   - Ordinary double-quoted JS strings so every backslash is doubled: `"$\\dfrac{\\partial f}{\\partial x}$"`.
+   - Must render under KaTeX 0.16 with `throwOnError: true, strict: false`. Safe: `\frac \dfrac \sqrt \partial \nabla \mathbf \vec \hat \lambda \mu \sum \int \lim \infty \pi \theta \le \ge \ne \approx \to \cdot \times \left \right \mathcal{L} \begin{pmatrix}...\end{pmatrix} \text{...} \operatorname{...} \langle \rangle`. Do NOT use `\label`, `\align`, `\newcommand`, `\require`, or raw unicode math symbols inside `$...$`.
+   - NEVER put a literal currency dollar next to math: write `"a budget of 240 dollars"`, never `"$\\$240$"`.
+   - No unpaired `$` in any string.
+9. Text outside math is plain ASCII, plus at most the em dash, ≈, ≤, ≥. No emoji, no mojibake, no placeholder text.
+10. Style: 2-space indent, double quotes, trailing comma after `explanation`, blank line between exports.
+11. Vary the correct letter: each bank must have at least 3 and at most 7 of each of A/B/C, must never have three identical letters in a row, and must not follow a repeating 3-cycle.
+
+## SELF-CHECK — you must run this and get a clean pass before reporting back
+```
+cd "d:\OneDrive\Desktop\calculus runtime\frontend"
+node _quiz_check.mjs src/data/mvLagrangeQuizzes.js
+```
+Fix every FAIL it reports and re-run until it exits clean. Then also run:
+```
+npx eslint src/data/mvLagrangeQuizzes.js
+```
+and fix anything it flags.
+
+Finally, re-read your own file end to end and sanity-check a random sample of at least 20 answers by recomputing them.
+
+## Report back
+One short paragraph: confirmation the checker and eslint pass, the total question count, and the A/B/C distribution the checker printed.
